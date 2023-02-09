@@ -13,7 +13,8 @@ Doing this means the pole $v=is/k$ moves from the upper half complex $v$-plane i
 ![Landau Contours for Kappa, Figure 2](Papers/SummersThorne_LandauContour.png){max-height: 400px,float: right}
 They perform the same computation as Landau for the Lorentizian and Kappa distribution functions in the 3D case projected into 1D. Given the principle root $\xi=\frac{\omega_R+i\gamma}{k\theta}$, they define the *modified plasma dispersion function* for $\kappa\in\mathbb{Z}^+$ by 
 
-$${Z}_\kappa^*(\xi)=\frac{1}{\sqrt{\pi}}\frac{\Gamma(\kappa+1)}{\kappa^{3/2}\Gamma(\kappa-1/2)}\times \int_{-\infty}^\infty\frac{dv}{(v-\xi)(1+v^2/\kappa)^{\kappa+1}}$$
+$$Z_\kappa^*(\xi)=\frac{1}{\sqrt{\pi}}\frac{\Gamma(\kappa+1)}{\kappa^{3/2}\Gamma(\kappa-1/2)}\times \int_{-\infty}^\infty\frac{dv}{(v-\xi)(1+v^2/\kappa)^{\kappa+1}}$$
+
 and call the integral $F(\xi)=\int_{-\infty}^\infty\frac{\phi(v)}{(v-\xi)}dv$ with  $\phi(v)=(v^2+\kappa)^{-(\kappa+1)}$. Then they extend $F(\xi)$
 for $\xi$ in the lower half $v$-complex plane by:
 
@@ -22,6 +23,7 @@ $$F(\xi)=\begin{cases} \displaystyle
 \lim_{R\rightarrow\infty,\epsilon\rightarrow 0} \left(\int_{-R}^{\xi-\epsilon} \frac{\phi(v)}{v-\xi}dv+\int_{\xi+\epsilon}^R \frac{\phi(v)}{v-\xi}dv\right) +\lim_{\epsilon\rightarrow 0} \int_{C_2} \frac{\phi(v)}{v-\xi}dv&\text{Im}(\xi)=0\\ \displaystyle 
 \lim_{R\rightarrow\infty} \int_{-R}^R \frac{\phi(v)}{v-\xi}dv + \int_{C_3} \frac{\phi(v)}{v-\xi}dv&\text{Im}(\xi)<0
 \end{cases}.$$ 
+
 In each case the resulting formula is $F(\xi)=2\pi i \left[\text{Res}(i\sqrt{\kappa})+\text{Res}(\xi)\right]$. 
 See the figure on the right for the contours. Their integration variable is $s$, while here I use $v$.
 
@@ -30,25 +32,26 @@ $$\lim_{\delta\rightarrow 0^+}\int_{-\infty}^\infty \frac{\phi(v)}{v-\alpha+i\de
 $$\lim_{\delta\rightarrow 0^+}\int_{-\infty}^\infty \frac{\phi(v)}{v-\alpha-i\delta}dv = \mathcal{P}\int_{-\infty}^\infty\frac{\phi(v)}{v-\alpha}dv+i\pi\phi(\alpha)$$
 where $\mathcal{P}$ is the Cauchy principle value of the integral. They also write explicit results of $\bm{Z}_\kappa^*(\xi)$ for integer values of $\kappa\in[1,6]$.
 
-$$Z_1^*(\xi)=-(\xi/2+i)/(\xi+i)^2$$
-$$Z_2^*(\xi)=-(3\xi^2/4+9\sqrt{2}i\xi/4-4)/(\xi+\sqrt{2}i)^3$$
+$$Z_{1}^{*}(\xi)=-(\xi/2+i)/(\xi+i)^2$$
+$$Z_{2}^{*}(\xi)=-(3\xi^2/4+9\sqrt{2}i\xi/4-4)/(\xi+\sqrt{2}i)^3$$
+
 They also give general results for $\xi=0$, $\xi\rightarrow 0$, and $|\xi|\rightarrow \infty$ by power series (convergent for $|\xi|<\sqrt{\kappa}$ and $|\xi|>\sqrt{\kappa}$). Additionally, they provide a recursion relaton between $\bm{Z}_{\kappa+1}^*(\xi)$ and $\bm{Z}_\kappa^*(\xi)$ using the derivative with respect to $\xi$. 
 
 Finally, applying this to Vlasov-Poisson, they give the following as the dispersion relation for the kappa distribution function:
-$$1+\frac{2\omega_p^2}{k^2\theta^2}\left[1-\frac{1}{2\kappa}+\frac{\omega}{k\theta}\bm{Z}_\kappa^*\left(\frac{\omega}{k\theta}\right)\right]=0$$
+$$1+\frac{2\omega_p^2}{k^2\theta^2}\left[1-\frac{1}{2\kappa}+\frac{\omega}{k\theta}Z_\kappa^*\left(\frac{\omega}{k\theta}\right)\right]=0$$
 where $\theta=[(2\kappa-3)/\kappa]^{1/2}(T/m)^{1/2}$ is the electron thermal speed, $\omega=\omega_R+i\gamma$ is the wave frequency, and $\omega_p=(4\pi i e^2/m)^{1/2}$ is the electron plasma frequency. They published an accompanying paper with more details for this. 
 
-Note the relationships between the plasma dispersion function $\bm{Z}(\xi)$, the Fadeeva function $w(\xi)$, and the complex error function $\text{erf}(i\xi)$.
+Note the relationships between the plasma dispersion function $Z(\xi)$, the Fadeeva function $w(\xi)$, and the complex error function $\text{erf}(i\xi)$.
 $$Z(\xi)=\frac{1}{\sqrt{\pi}}\int_{-\infty}^\infty \frac{e^{-v^2}}{v-\xi}dv, \text{Im}(\xi)>0$$
-$$w(\xi)=\frac{1}{i\sqrt{\pi}}\bm{Z}(\xi)$$
+$$w(\xi)=\frac{1}{i\sqrt{\pi}}Z(\xi)$$
 $$Z(\xi)=i\sqrt{\pi}e^{-\xi^2}\left[1+\text{erf}(i\xi)\right]$$
 ***
 ## Computation of the Complex Error Function, J.A.C. Weideman (1994)
-[[Weidman 1994|Papers/Weidman1994siam.pdf]]. The above realtionships give the following relations:
+The above realtionships give the following relations:
 $$w(\xi)=e^{-\xi^2}\left[1+\text{erf}(i\xi)\right]=e^{-\xi^2}\text{erfc}(-i\xi)$$
 $$w(\xi)=\frac{i}{\pi}\int_{-\infty}^\infty \frac{e^{-v^2}}{\xi-v}dv, \text{Im}(\xi)>0$$
 This paper builds an algorithm to compute $w(\xi)$ based on the integral representation. Weideman starts by assuming the existance of an expansion
-$$[W(v)]^{-1}e^{-v^2}=\sum_{n=-\infty}^\infty a_n \psi_n(v), v\in\R$$
+$$[W(v)]^{-1}e^{-v^2}=\sum_{n=-\infty}^\infty a_n \psi_n(v), v\in\mathbb{R}$$
 where $\{\psi_n(v)\}$ is an orthogonal basis set in $L_2(\mathbb{R};W(v))$ with appropriate weight function $W(v)$.
 From this we can rearrange for the integrand of $w(\xi)$:
 $$\frac{e^{-v^2}}{\xi-v}=\sum_{n=-\infty}^\infty a_n \left[W(v) \frac{\psi_n(v)}{\xi-v}\right].$$
@@ -77,7 +80,6 @@ where $N$ is the truncation of the Fourier series.
 
 ***
 ## Generalized plasma dispersion relation, Xie (2013)
-[[Xie 2013|Papers/Xie2013plasmaphys.pdf]]. 
 This paper applys the method from Weideman (1994) to various functions, listed below. He also provides Matlab files which does the computation. 
 $$\begin{align} 
 F_M&=\frac{1}{v_t\sqrt{\pi}}e^{-\frac{v^2}{v_t^2}}\\
@@ -91,21 +93,17 @@ F_{BoTM}&=\frac{0.9}{\sqrt{\pi}}e^{-v^2}+\frac{0.1}{\sqrt{\pi}}e^{-(v-2)^2}
 \end{align}$$
 
 When applying these formulae, Xie gives two equations which are solved:
-$$\begin{align} 
-Z(\xi)&=\int_C\frac{F}{z-\xi}dz\\
-Z_p(\xi)&=\int_C\frac{\partial F/\partial z}{z-\xi}dz
-\end{align}$$
+
+$$Z(\xi)&=\int_C\frac{F}{z-\xi}dz$$
+$$Z_p(\xi)&=\int_C\frac{\partial F/\partial z}{z-\xi}dz$$
+
 where $C$ is the Landau integral contour. He notes that the dispersion relation is given by:
-$$\begin{align} 
-D(\omega,k)=1-\frac{\omega_p^2}{k^2}\int_C \frac{\partial f_0/\partial v}{v-\omega/k}dv=0
-\end{align}$$
+$$D(\omega,k)=1-\frac{\omega_p^2}{k^2}\int_C \frac{\partial f_0/\partial v}{v-\omega/k}dv=0$$
 where $k$ is the wave vector, $\omega=\omega_r+i\gamma$ is the frequency, and $\omega_p=\sqrt{\frac{4\pi n_0q^2}{m}}$ is the plasma frequency.
 
 To apply the Weideman algorithm for the Lorentzian or Kappa distributions, we need to assume that Fourier expansions of the following functions exist:
-$$\begin{align}
-F_L(v)&=(L^2+v^2)\frac{v}{(v^2+1)^2} \\
-F_\kappa(v)&=(L^2+v^2)\frac{v}{(v^2+\kappa)^{\kappa+2}}
-\end{align}$$
+$$F_L(v)&=(L^2+v^2)\frac{v}{(v^2+1)^2}$$
+$$F_\kappa(v)=(L^2+v^2)\frac{v}{(v^2+\kappa)^{\kappa+2}}$$
 
 ***
 ## An introductory guide to fluid models with anisotropic temperatures. _Part 2. kinetic theory_, pad ́e approximants and landau fluid closures. Peter Hunana et al. (2019)
