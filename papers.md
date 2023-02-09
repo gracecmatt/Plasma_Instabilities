@@ -21,9 +21,10 @@ Doing this means the pole $v=is/k$ moves from the upper half complex $v$-plane i
 [[Summers & Thorne 1991|Papers/SummersThorne1991plasmaphys.pdf]].
 They perform the same computation as Landau for the Lorentizian and Kappa distribution functions in the 3D case projected into 1D. Given the principle root $\xi=\frac{\omega_R+i\gamma}{k\theta}$, they define the *modified plasma dispersion function* for $\kappa\in\mathbb{Z}^+$ by 
 
-$$\displaystyle 
-\begin{align}\bm{Z}_\kappa^*(\xi)=\frac{1}{\sqrt{\pi}}\frac{\Gamma(\kappa+1)}{\kappa^{3/2}\Gamma(\kappa-1/2)}\times \int_{-\infty}^\infty\frac{dv}{(v-\xi)(1+v^2/\kappa)^{\kappa+1}}
-\end{align}$$
+\displaystyle 
+\begin{align}\displaystyle 
+\bm{Z}_\kappa^*(\xi)=\frac{1}{\sqrt{\pi}}\frac{\Gamma(\kappa+1)}{\kappa^{3/2}\Gamma(\kappa-1/2)}\times \int_{-\infty}^\infty\frac{dv}{(v-\xi)(1+v^2/\kappa)^{\kappa+1}}
+\end{align}
 and call the integral $F(\xi)=\int_{-\infty}^\infty\frac{\phi(v)}{(v-\xi)}dv$ with  $\phi(v)=(v^2+\kappa)^{-(\kappa+1)}$. Then they extend $F(\xi)$
 for $\xi$ in the lower half $v$-complex plane by:
 
