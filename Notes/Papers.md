@@ -93,6 +93,15 @@ $$a_n=\frac{L}{\pi}\int_{-\infty}^\infty \frac{f(v)}{L^2+v^2}\left(\frac{L-iv}{L
 using that $F(v)=[W(v)]^{-1}e^{-v^2}=(L^2+v^2)e^{-v^2}$ in the equations above. The optimal parameter is $L=N^{1/2}2^{-1/4}$
 where $N$ is the truncation of the Fourier series.
 
+**Second Basis Set** 
+$$\rho_n(v)=\frac{1}{L-iv}\sigma_n(v)= \frac{1}{L-iv}\left(\frac{L+iv}{L-iv}\right)^n$$
+
+These functions are complete and orthogonal in $L_2(\mathbb{R};W(v))$ with corresponding weight function $W(v)=1$. 
+They write the expansion of $f(v)=e^{-v^2}=\sum_n b_n\rho(v)$ with coefficients given by
+
+$$b_n=\frac{L}{\pi}\int_{-\infty}^\infty \frac{f(v)}{L+iv}\left(\frac{L-iv}{L+iv}\right)^n dv=\frac{L}{\pi}\int_{-\infty}^\infty e^{-v^2}\frac{(L-iv)^n}{(L+iv)^{n+1}} dv.$$
+
+They have the same optimal value of $L$ and the coefficients $b_n$ decay faster than $a_n$ due to the extra power of $v$ in the denominator.
 
 ***
 ## Generalized plasma dispersion relation, Xie (2013)
@@ -117,7 +126,9 @@ Z_{p}(\xi)&=\int_C\frac{\partial F/\partial z}{z-\xi}dz
 \end{align}$$
 
 where $C$ is the Landau integral contour. He notes that the dispersion relation is given by:
+
 $$D(\omega,k)=1-\frac{\omega_p^2}{k^2}\int_C \frac{\partial f_0/\partial v}{v-\omega/k}dv=0$$
+
 where $k$ is the wave vector, $\omega=\omega_r+i\gamma$ is the frequency, and $\omega_p=\sqrt{\frac{4\pi n_0q^2}{m}}$ is the plasma frequency.
 
 To apply the Weideman algorithm for the Lorentzian or Kappa distributions, we need to assume that Fourier expansions of the following functions exist:
