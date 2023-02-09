@@ -10,7 +10,7 @@ As the Laplace transform is defined only for $\text{Re}(s)>0$, we must analytica
 Doing this means the pole $v=is/k$ moves from the upper half complex $v$-plane into the lower half plane. The analytic continuation must be applied to this pole as well. Thus the integrals over the real line of $v$ become deformed to include the pole $v=is/k$ in the upper half plane. 
 ***
 ## Modified Dispersion Relation, Summers and Thorne (1991)
-![Landau Contours for Kappa, Figure 2](SummersThorne_LandauContour.png)
+![Landau Contours for Kappa, Figure 2](SummersThorne_LandauContour.png){max-height: 400px,float: right}
 They perform the same computation as Landau for the Lorentizian and Kappa distribution functions in the 3D case projected into 1D. Given the principle root $\xi=\frac{\omega_R+i\gamma}{k\theta}$, they define the *modified plasma dispersion function* for $\kappa\in\mathbb{Z}^+$ by 
 
 $$Z_\kappa^*(\xi)=\frac{1}{\sqrt{\pi}}\frac{\Gamma(\kappa+1)}{\kappa^{3/2}\Gamma(\kappa-1/2)}\times \int_{-\infty}^\infty\frac{dv}{(v-\xi)(1+v^2/\kappa)^{\kappa+1}}$$
@@ -89,7 +89,8 @@ where $N$ is the truncation of the Fourier series.
 
 ***
 ## Generalized plasma dispersion relation, Xie (2013)
-This paper applys the method from Weideman (1994) to various functions, listed below. He also provides Matlab files which does the computation. 
+This paper applys the method from Weideman (1994) to various functions, listed below. He also provides Matlab files which does the computation.
+
 $$\begin{align}
 F_M&=\frac{1}{v_t\sqrt{\pi}}e^{-\frac{v^2}{v_t^2}} \\
 F_\kappa&=A_\kappa \left[1+ \frac{1}{\kappa}\frac{v^2}{v_t^2}\right]^{-\kappa}, \hspace{0.5cm} A_\kappa=\frac{1}{v_t}\frac{\Gamma(\kappa)}{\Gamma(\kappa-1/2)}\frac{1}{\sqrt{\pi\kappa}} \\
@@ -112,9 +113,10 @@ $$D(\omega,k)=1-\frac{\omega_p^2}{k^2}\int_C \frac{\partial f_0/\partial v}{v-\o
 where $k$ is the wave vector, $\omega=\omega_r+i\gamma$ is the frequency, and $\omega_p=\sqrt{\frac{4\pi n_0q^2}{m}}$ is the plasma frequency.
 
 To apply the Weideman algorithm for the Lorentzian or Kappa distributions, we need to assume that Fourier expansions of the following functions exist:
+
 $$\begin{align}
-F_L(v)&=(L^2+v^2)\frac{v}{(v^2+1)^2} \\
-F_\kappa(v)&=(L^2+v^2)\frac{v}{(v^2+\kappa)^{\kappa+2}}
+F_{L}(v)&=(L^2+v^2)\frac{v}{(v^2+1)^2} \\
+F_{\kappa}(v)&=(L^2+v^2)\frac{v}{(v^2+\kappa)^{\kappa+2}}
 \end{align}$$
 
 ***
