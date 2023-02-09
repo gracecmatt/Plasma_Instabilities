@@ -1,11 +1,3 @@
----
-id: qbky7m8ovmqcvgo2gbt5e15
-title: Xie_Code
-desc: ''
-updated: 1675893480486
-created: 1675891706220
----
-
 ## zetaph.m
 **Objective:** Given a distribution,   
 **Inputs:** `z`= discretized complex independent variable, `Fn` = choice of function to model, `F` = distribution?, `N` = number of points  
