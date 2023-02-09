@@ -12,7 +12,7 @@ Doing this means the pole $v=is/k$ moves from the upper half complex $v$-plane i
 ## Modified Dispersion Relation, Summers and Thorne (1991)
 <img src="SummersThorne_LandauContour.png" width="261x" height="600x" align="right">
 
-They perform the same computation as Landau for the Lorentizian and Kappa distribution functions in the 3D case projected into 1D. Given the principle root $\xi=\frac{\omega_R+i\gamma}{k\theta}$, they define the *modified plasma dispersion function* for $\kappa\in\mathbb{Z}^{+}$ by 
+They perform the same computation as Landau for the Lorentizian and Kappa distribution functions in the 3D case projected into 1D. Given the principle root $\xi=\frac{\omega_R+i\gamma}{k\theta}$, they define the *modified plasma dispersion function* for $\kappa\in\mathbb{Z}^+$ by 
 
 $$Z_\kappa^*(\xi)=\frac{1}{\sqrt{\pi}}\frac{\Gamma(\kappa+1)}{\kappa^{3/2}\Gamma(\kappa-1/2)}\times \int_{-\infty}^\infty\frac{dv}{(v-\xi)(1+v^2/\kappa)^{\kappa+1}}$$
 
@@ -35,6 +35,7 @@ where $\mathcal{P}$ is the Cauchy principle value of the integral. They also wri
 for integer values of $\kappa\in [1,6]$.
 
 $$Z_{1}^{\*}(\xi)=-(\xi/2+i)/(\xi+i)^2$$
+
 $$Z_{2}^{\*}(\xi)=-(3\xi^2/4+9\sqrt{2}i\xi/4-4)/(\xi+\sqrt{2}i)^3$$
 
 They also give general results for $\xi=0$, $\xi\rightarrow 0$, and $|\xi|\rightarrow \infty$ by power series (convergent for $|\xi|<\sqrt{\kappa}$ and $|\xi|>\sqrt{\kappa}$). Additionally, they provide a recursion relaton between $Z_{\kappa+1}^{\*}(\xi)$ 
