@@ -19,8 +19,8 @@ and call the integral $F(\xi)=\int_{-\infty}^\infty\frac{\phi(v)}{(v-\xi)}dv$ wi
 for $\xi$ in the lower half $v$-complex plane by:
 
 $$F(\xi)=\begin{cases} \displaystyle 
-\lim_{R\rightarrow\infty} \int_{-R}^R \frac{\phi(v)}{v-\xi}dv &\text{Im}(\xi)>0\\ \displaystyle 
-\lim_{R\rightarrow\infty,\epsilon\rightarrow 0} \left(\int_{-R}^{\xi-\epsilon} \frac{\phi(v)}{v-\xi}dv+\int_{\xi+\epsilon}^R \frac{\phi(v)}{v-\xi}dv\right) +\lim_{\epsilon\rightarrow 0} \int_{C_2} \frac{\phi(v)}{v-\xi}dv&\text{Im}(\xi)=0\\ \displaystyle 
+\lim_{R\rightarrow\infty} \int_{-R}^R \frac{\phi(v)}{v-\xi}dv &\text{Im}(\xi)>0\\ \n \displaystyle 
+\lim_{R\rightarrow\infty,\epsilon\rightarrow 0} \left(\int_{-R}^{\xi-\epsilon} \frac{\phi(v)}{v-\xi}dv+\int_{\xi+\epsilon}^R \frac{\phi(v)}{v-\xi}dv\right) +\lim_{\epsilon\rightarrow 0} \int_{C_2} \frac{\phi(v)}{v-\xi}dv&\text{Im}(\xi)=0\\ \n \displaystyle 
 \lim_{R\rightarrow\infty} \int_{-R}^R \frac{\phi(v)}{v-\xi}dv + \int_{C_3} \frac{\phi(v)}{v-\xi}dv&\text{Im}(\xi)<0
 \end{cases}.$$ 
 
@@ -28,14 +28,16 @@ In each case the resulting formula is $F(\xi)=2\pi i \left[\text{Res}(i\sqrt{\ka
 See the figure on the right for the contours. Their integration variable is $s$, while here I use $v$.
 
 They provide a verification of these formulae using the Sokhotcki-Plemelj Theorem for the real line (citation needed):
-$$\lim_{\delta\rightarrow 0^+}\int_{-\infty}^\infty \frac{\phi(v)}{v-\alpha+i\delta}dv = \mathcal{P}\int_{-\infty}^\infty\frac{\phi(v)}{v-\alpha}dv-i\pi\phi(\alpha)$$
-$$\lim_{\delta\rightarrow 0^+}\int_{-\infty}^\infty \frac{\phi(v)}{v-\alpha-i\delta}dv = \mathcal{P}\int_{-\infty}^\infty\frac{\phi(v)}{v-\alpha}dv+i\pi\phi(\alpha)$$
-where $\mathcal{P}$ is the Cauchy principle value of the integral. They also write explicit results of $\bm{Z}_\kappa^*(\xi)$ for integer values of $\kappa\in[1,6]$.
+$$\displaystyle \lim_{\delta\rightarrow 0^+}\int_{-\infty}^\infty \frac{\phi(v)}{v-\alpha+i\delta}dv = \mathcal{P}\int_{-\infty}^\infty\frac{\phi(v)}{v-\alpha}dv-i\pi\phi(\alpha)$$
+$$\displaystyle \lim_{\delta\rightarrow 0^+}\int_{-\infty}^\infty \frac{\phi(v)}{v-\alpha-i\delta}dv = \mathcal{P}\int_{-\infty}^\infty\frac{\phi(v)}{v-\alpha}dv+i\pi\phi(\alpha)$$
+where $\mathcal{P}$ is the Cauchy principle value of the integral. They also write explicit results of $Z_\kappa^*(\xi)$
+for integer values of $\kappa\in [1,6]$.
 
-$$Z_{1}^{*}(\xi)=-(\xi/2+i)/(\xi+i)^2$$
-$$Z_{2}^{*}(\xi)=-(3\xi^2/4+9\sqrt{2}i\xi/4-4)/(\xi+\sqrt{2}i)^3$$
+$$Z_{1}^{\*}(\xi)=-(\xi/2+i)/(\xi+i)^2$$
+$$Z_{2}^{\*}(\xi)=-(3\xi^2/4+9\sqrt{2}i\xi/4-4)/(\xi+\sqrt{2}i)^3$$
 
-They also give general results for $\xi=0$, $\xi\rightarrow 0$, and $|\xi|\rightarrow \infty$ by power series (convergent for $|\xi|<\sqrt{\kappa}$ and $|\xi|>\sqrt{\kappa}$). Additionally, they provide a recursion relaton between $\bm{Z}_{\kappa+1}^*(\xi)$ and $\bm{Z}_\kappa^*(\xi)$ using the derivative with respect to $\xi$. 
+They also give general results for $\xi=0$, $\xi\rightarrow 0$, and $|\xi|\rightarrow \infty$ by power series (convergent for $|\xi|<\sqrt{\kappa}$ and $|\xi|>\sqrt{\kappa}$). Additionally, they provide a recursion relaton between $Z_{\kappa+1}^*(\xi)$ 
+and $\bm{Z}_\kappa^*(\xi)$ using the derivative with respect to $\xi$. 
 
 Finally, applying this to Vlasov-Poisson, they give the following as the dispersion relation for the kappa distribution function:
 $$1+\frac{2\omega_p^2}{k^2\theta^2}\left[1-\frac{1}{2\kappa}+\frac{\omega}{k\theta}Z_\kappa^*\left(\frac{\omega}{k\theta}\right)\right]=0$$
@@ -68,7 +70,7 @@ The paper consists of (1) introducing one set of basis functions $\psi_n(v)$, (2
 **First Basis Set** 
 $$\sigma_n(v)=\left(\frac{L+iv}{L-iv}\right)^n$$
 
-where $L\in\R^+$ is a parameter to be chosen for optimal accuracy. The set $\{\sigma_n(v)\}$ is complete and orthogonal in $L_2(\R;W(v))$ with corresponding weight function $W(v)=\frac{1}{L^2+v^2}$.
+where $L\in\mathbb{R}^+$ is a parameter to be chosen for optimal accuracy. The set $\{\sigma_n(v)\}$ is complete and orthogonal in $L_2(\mathbb{R};W(v))$ with corresponding weight function $W(v)=\frac{1}{L^2+v^2}$.
 Making the substitution $v=L\tan{\theta/2}$, $v\in[-\infty,\infty]$ is mapped to $\theta\in[-\pi,\pi]$, and this basis is the Fourier series with $\sigma_n(v)=e^{in\theta}$.
 Let $f(v)=\sum_n a_n\sigma_n(v)$, then the coefficients are given by 
 
@@ -81,28 +83,26 @@ where $N$ is the truncation of the Fourier series.
 ***
 ## Generalized plasma dispersion relation, Xie (2013)
 This paper applys the method from Weideman (1994) to various functions, listed below. He also provides Matlab files which does the computation. 
-$$\begin{align} 
-F_M&=\frac{1}{v_t\sqrt{\pi}}e^{-\frac{v^2}{v_t^2}}\\
+$$\begin{align} F_M&=\frac{1}{v_t\sqrt{\pi}}e^{-\frac{v^2}{v_t^2}}\\
 F_\kappa&=A_\kappa \left[1+ \frac{1}{\kappa}\frac{v^2}{v_t^2}\right]^{-\kappa}, \hspace{0.5cm} A_\kappa=\frac{1}{v_t}\frac{\Gamma(\kappa)}{\Gamma(\kappa-1/2)}\frac{1}{\sqrt{\pi\kappa}}\\
 F_\delta&=\delta(z-z_d)\\
 F_{IM}&=H(v-\nu)\frac{1}{\sqrt{\pi}}e^{-v^2}\\
 F_{FT}&=\frac{H(z-z_a)-H(z-z_b)}{z_b-z_a}\\
 F_{Tri}&=\frac{H(z-z_a)-H(z-z_b)}{z_b-z_a}\frac{2(z-z_a)}{z_c-z_a}-\frac{H(z-z_b)-H(z-z_c)}{z_c-z_b}\frac{2(z-z_c)}{z_c-z_a}\\
 F_{SD}&=\frac{3\sqrt{3}v_t^2}{4\pi}\frac{1}{|v|^3+v_t^3}H(v_c-|v|)\\
-F_{BoTM}&=\frac{0.9}{\sqrt{\pi}}e^{-v^2}+\frac{0.1}{\sqrt{\pi}}e^{-(v-2)^2}
-\end{align}$$
+F_{BoTM}&=\frac{0.9}{\sqrt{\pi}}e^{-v^2}+\frac{0.1}{\sqrt{\pi}}e^{-(v-2)^2} \end{align}$$
 
 When applying these formulae, Xie gives two equations which are solved:
 
-$$Z(\xi)&=\int_C\frac{F}{z-\xi}dz$$
-$$Z_p(\xi)&=\int_C\frac{\partial F/\partial z}{z-\xi}dz$$
+$$Z(\xi)=\int_C\frac{F}{z-\xi}dz$$
+$$Z_p(\xi)=\int_C\frac{\partial F/\partial z}{z-\xi}dz$$
 
 where $C$ is the Landau integral contour. He notes that the dispersion relation is given by:
 $$D(\omega,k)=1-\frac{\omega_p^2}{k^2}\int_C \frac{\partial f_0/\partial v}{v-\omega/k}dv=0$$
 where $k$ is the wave vector, $\omega=\omega_r+i\gamma$ is the frequency, and $\omega_p=\sqrt{\frac{4\pi n_0q^2}{m}}$ is the plasma frequency.
 
 To apply the Weideman algorithm for the Lorentzian or Kappa distributions, we need to assume that Fourier expansions of the following functions exist:
-$$F_L(v)&=(L^2+v^2)\frac{v}{(v^2+1)^2}$$
+$$F_L(v)=(L^2+v^2)\frac{v}{(v^2+1)^2}$$
 $$F_\kappa(v)=(L^2+v^2)\frac{v}{(v^2+\kappa)^{\kappa+2}}$$
 
 ***
