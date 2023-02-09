@@ -30,8 +30,8 @@ $$\lim_{\delta\rightarrow 0^+}\int_{-\infty}^\infty \frac{\phi(v)}{v-\alpha+i\de
 $$\lim_{\delta\rightarrow 0^+}\int_{-\infty}^\infty \frac{\phi(v)}{v-\alpha-i\delta}dv = \mathcal{P}\int_{-\infty}^\infty\frac{\phi(v)}{v-\alpha}dv+i\pi\phi(\alpha)$$
 where $\mathcal{P}$ is the Cauchy principle value of the integral. They also write explicit results of $\bm{Z}_\kappa^*(\xi)$ for integer values of $\kappa\in[1,6]$.
 
-$${Z}_1^*(\xi)=-(\xi/2+i)/(\xi+i)^2$$
-$${Z}_2^*(\xi)=-(3\xi^2/4+9\sqrt{2}i\xi/4-4)/(\xi+\sqrt{2}i)^3$$
+$$Z_1^*(\xi)=-(\xi/2+i)/(\xi+i)^2$$
+$$Z_2^*(\xi)=-(3\xi^2/4+9\sqrt{2}i\xi/4-4)/(\xi+\sqrt{2}i)^3$$
 They also give general results for $\xi=0$, $\xi\rightarrow 0$, and $|\xi|\rightarrow \infty$ by power series (convergent for $|\xi|<\sqrt{\kappa}$ and $|\xi|>\sqrt{\kappa}$). Additionally, they provide a recursion relaton between $\bm{Z}_{\kappa+1}^*(\xi)$ and $\bm{Z}_\kappa^*(\xi)$ using the derivative with respect to $\xi$. 
 
 Finally, applying this to Vlasov-Poisson, they give the following as the dispersion relation for the kappa distribution function:
@@ -39,34 +39,38 @@ $$1+\frac{2\omega_p^2}{k^2\theta^2}\left[1-\frac{1}{2\kappa}+\frac{\omega}{k\the
 where $\theta=[(2\kappa-3)/\kappa]^{1/2}(T/m)^{1/2}$ is the electron thermal speed, $\omega=\omega_R+i\gamma$ is the wave frequency, and $\omega_p=(4\pi i e^2/m)^{1/2}$ is the electron plasma frequency. They published an accompanying paper with more details for this. 
 
 Note the relationships between the plasma dispersion function $\bm{Z}(\xi)$, the Fadeeva function $w(\xi)$, and the complex error function $\text{erf}(i\xi)$.
-$${Z}(\xi)=\frac{1}{\sqrt{\pi}}\int_{-\infty}^\infty \frac{e^{-v^2}}{v-\xi}dv, &\text{Im}(\xi)>0$$
+$$Z(\xi)=\frac{1}{\sqrt{\pi}}\int_{-\infty}^\infty \frac{e^{-v^2}}{v-\xi}dv, \text{Im}(\xi)>0$$
 $$w(\xi)=\frac{1}{i\sqrt{\pi}}\bm{Z}(\xi)$$
-$${Z}(\xi)=i\sqrt{\pi}e^{-\xi^2}\left[1+\text{erf}(i\xi)\right]$$
+$$Z(\xi)=i\sqrt{\pi}e^{-\xi^2}\left[1+\text{erf}(i\xi)\right]$$
 ***
 ## Computation of the Complex Error Function, J.A.C. Weideman (1994)
 [[Weidman 1994|Papers/Weidman1994siam.pdf]]. The above realtionships give the following relations:
 $$w(\xi)=e^{-\xi^2}\left[1+\text{erf}(i\xi)\right]=e^{-\xi^2}\text{erfc}(-i\xi)$$
-$$w(\xi)=\frac{i}{\pi}\int_{-\infty}^\infty \frac{e^{-v^2}}{\xi-v}dv, &\text{Im}(\xi)>0$$
+$$w(\xi)=\frac{i}{\pi}\int_{-\infty}^\infty \frac{e^{-v^2}}{\xi-v}dv, \text{Im}(\xi)>0$$
 This paper builds an algorithm to compute $w(\xi)$ based on the integral representation. Weideman starts by assuming the existance of an expansion
 $$[W(v)]^{-1}e^{-v^2}=\sum_{n=-\infty}^\infty a_n \psi_n(v), v\in\R$$
 where $\{\psi_n(v)\}$ is an orthogonal basis set in $L_2(\mathbb{R};W(v))$ with appropriate weight function $W(v)$.
 From this we can rearrange for the integrand of $w(\xi)$:
 $$\frac{e^{-v^2}}{\xi-v}=\sum_{n=-\infty}^\infty a_n \left[W(v) \frac{\psi_n(v)}{\xi-v}\right].$$
 Integrate both sides term by term to get 
+
 $$w(\xi)=\sum_{n=-\infty}^\infty a_n \Psi_n(\xi), \hspace{1cm} \text{Im}(\xi)>0$$
+
 where
+
 $$\Psi_n(\xi)=\frac{i}{\pi}\int_{-\infty}^\infty W(v)\frac{\psi_n(v)}{\xi-v}dv.$$
 
-The paper consists of (1) introducing one set of basis functions $\psi_n(v)$
-, (2) deriving recurrance relations for $a_n$,
-(3) estiamting asympototics of decay of coefficients $a_n$.
+The paper consists of (1) introducing one set of basis functions $\psi_n(v)$, (2) deriving recurrance relations for $a_n$, (3) estiamting asympototics of decay of coefficients $a_n$.
 
 **First Basis Set** 
 $$\sigma_n(v)=\left(\frac{L+iv}{L-iv}\right)^n$$
+
 where $L\in\R^+$ is a parameter to be chosen for optimal accuracy. The set $\{\sigma_n(v)\}$ is complete and orthogonal in $L_2(\R;W(v))$ with corresponding weight function $W(v)=\frac{1}{L^2+v^2}$.
 Making the substitution $v=L\tan{\theta/2}$, $v\in[-\infty,\infty]$ is mapped to $\theta\in[-\pi,\pi]$, and this basis is the Fourier series with $\sigma_n(v)=e^{in\theta}$.
 Let $f(v)=\sum_n a_n\sigma_n(v)$, then the coefficients are given by 
+
 $$a_n=\frac{L}{\pi}\int_{-\infty}^\infty \frac{f(v)}{L^2+v^2}\left(\frac{L-iv}{L+iv}\right)^n dv=\frac{L}{\pi}\int_{-\infty}^\infty e^{-v^2}\left(\frac{L-iv}{L+iv}\right)^n dv,$$
+
 using that $F(v)=[W(v)]^{-1}e^{-v^2}=(L^2+v^2)e^{-v^2}$ in the equations above. The optimal parameter is $L=N^{1/2}2^{-1/4}$
 where $N$ is the truncation of the Fourier series.
 
