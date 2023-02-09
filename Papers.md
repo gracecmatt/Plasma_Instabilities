@@ -37,7 +37,7 @@ $$Z_{1}^{\*}(\xi)=-(\xi/2+i)/(\xi+i)^2$$
 $$Z_{2}^{\*}(\xi)=-(3\xi^2/4+9\sqrt{2}i\xi/4-4)/(\xi+\sqrt{2}i)^3$$
 
 They also give general results for $\xi=0$, $\xi\rightarrow 0$, and $|\xi|\rightarrow \infty$ by power series (convergent for $|\xi|<\sqrt{\kappa}$ and $|\xi|>\sqrt{\kappa}$). Additionally, they provide a recursion relaton between $Z_{\kappa+1}^{\*}(\xi)$ 
-and $\bm{Z}_\kappa^{\*}(\xi)$ using the derivative with respect to $\xi$. 
+and $Z_\kappa^{\*}(\xi)$ using the derivative with respect to $\xi$. 
 
 Finally, applying this to Vlasov-Poisson, they give the following as the dispersion relation for the kappa distribution function:
 $$1+\frac{2\omega_p^2}{k^2\theta^2}\left[1-\frac{1}{2\kappa}+\frac{\omega}{k\theta}Z_\kappa^*\left(\frac{\omega}{k\theta}\right)\right]=0$$
@@ -47,6 +47,14 @@ Note the relationships between the plasma dispersion function $Z(\xi)$, the Fade
 $$Z(\xi)=\frac{1}{\sqrt{\pi}}\int_{-\infty}^\infty \frac{e^{-v^2}}{v-\xi}dv, \text{Im}(\xi)>0$$
 $$w(\xi)=\frac{1}{i\sqrt{\pi}}Z(\xi)$$
 $$Z(\xi)=i\sqrt{\pi}e^{-\xi^2}\left[1+\text{erf}(i\xi)\right]$$
+
+$$\begin{align}
+Z(\xi)&=\frac{1}{\sqrt{\pi}}\int_{-\infty}^\infty \frac{e^{-v^2}}{v-\xi}dv, \text{Im}(\xi)>0 \\
+w(\xi)&=\frac{1}{i\sqrt{\pi}}Z(\xi) \\
+Z(\xi)&=i\sqrt{\pi}e^{-\xi^2}\left[1+\text{erf}(i\xi)\right]
+\end{align}$$
+
+
 ***
 ## Computation of the Complex Error Function, J.A.C. Weideman (1994)
 The above realtionships give the following relations:
