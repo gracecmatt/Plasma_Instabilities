@@ -1,4 +1,4 @@
-# Papers and Summaries
+# Summaries of Papers
 ## On the Vibrations of the Electrostatic Plasma, Lev Landau (1946)
 Governing equations are Vlasov-Poisson for an elecron plasma with neutralizing ionic background projected along the $x$ direction. He takes the Fourier transform in $x$ and Laplace transform in $t$ of both the kinetic equation and potential integral, resulting in the following solution in the form of an inverse Laplace transform:
 
@@ -29,14 +29,17 @@ In each case the resulting formula is $F(\xi)=2\pi i \left[\text{Res}(i\sqrt{\ka
 See the figure on the right for the contours. Their integration variable is $s$, while here I use $v$.
 
 They provide a verification of these formulae using the Sokhotcki-Plemelj Theorem for the real line (citation needed):
+
 $$\displaystyle \lim_{\delta\rightarrow 0^+}\int_{-\infty}^\infty \frac{\phi(v)}{v-\alpha+i\delta}dv = \mathcal{P}\int_{-\infty}^\infty\frac{\phi(v)}{v-\alpha}dv-i\pi\phi(\alpha)$$
 $$\displaystyle \lim_{\delta\rightarrow 0^+}\int_{-\infty}^\infty \frac{\phi(v)}{v-\alpha-i\delta}dv = \mathcal{P}\int_{-\infty}^\infty\frac{\phi(v)}{v-\alpha}dv+i\pi\phi(\alpha)$$
+
 where $\mathcal{P}$ is the Cauchy principle value of the integral. They also write explicit results of $Z_\kappa^*(\xi)$
 for integer values of $\kappa\in [1,6]$.
 
-$$Z_{1}^{\*}(\xi)=-(\xi/2+i)/(\xi+i)^2$$
-
-$$Z_{2}^{\*}(\xi)=-(3\xi^2/4+9\sqrt{2}i\xi/4-4)/(\xi+\sqrt{2}i)^3$$
+$$\begin{align}
+Z_{1}^{\*}(\xi)&=-(\xi/2+i)/(\xi+i)^2 \\
+Z_{2}^{\*}(\xi)&=-(3\xi^2/4+9\sqrt{2}i\xi/4-4)/(\xi+\sqrt{2}i)^3
+\end{align}$$
 
 They also give general results for $\xi=0$, $\xi\rightarrow 0$, and $|\xi|\rightarrow \infty$ by power series (convergent for $|\xi|<\sqrt{\kappa}$ and $|\xi|>\sqrt{\kappa}$). Additionally, they provide a recursion relaton between $Z_{\kappa+1}^{\*}(\xi)$ 
 and $Z_\kappa^{\*}(\xi)$ using the derivative with respect to $\xi$. 
@@ -57,10 +60,12 @@ Z(\xi)&=i\sqrt{\pi}e^{-\xi^2}\left[1+\text{erf}(i\xi)\right]
 ***
 ## Computation of the Complex Error Function, J.A.C. Weideman (1994)
 The above realtionships give the following relations:
+
 $$\begin{align}
 w(\xi)&=e^{-\xi^2}\left[1+\text{erf}(i\xi)\right]=e^{-\xi^2}\text{erfc}(-i\xi) \\
 w(\xi)&=\frac{i}{\pi}\int_{-\infty}^\infty \frac{e^{-v^2}}{\xi-v}dv, \text{Im}(\xi)>0
 \end{align}$$
+
 This paper builds an algorithm to compute $w(\xi)$ based on the integral representation. Weideman starts by assuming the existance of an expansion
 $$[W(v)]^{-1}e^{-v^2}=\sum_{n=-\infty}^\infty a_n \psi_n(v), v\in\mathbb{R}$$
 where $\{\psi_n(v)\}$ is an orthogonal basis set in $L_2(\mathbb{R};W(v))$ with appropriate weight function $W(v)$.
@@ -106,9 +111,10 @@ F_{BoTM}&=\frac{0.9}{\sqrt{\pi}}e^{-v^2}+\frac{0.1}{\sqrt{\pi}}e^{-(v-2)^2}
 
 When applying these formulae, Xie gives two equations which are solved:
 
-$$Z(\xi)=\int_C\frac{F}{z-\xi}dz$$
-
-$$Z_{p}(\xi)=\int_C\frac{\partial F/\partial z}{z-\xi}dz$$
+$$\begin{align}
+Z(\xi)&=\int_C\frac{F}{z-\xi}dz \\
+Z_{p}(\xi)&=\int_C\frac{\partial F/\partial z}{z-\xi}dz
+\end{align}$$
 
 where $C$ is the Landau integral contour. He notes that the dispersion relation is given by:
 $$D(\omega,k)=1-\frac{\omega_p^2}{k^2}\int_C \frac{\partial f_0/\partial v}{v-\omega/k}dv=0$$
@@ -122,8 +128,3 @@ F_{\kappa}(v)&=(L^2+v^2)\frac{v}{(v^2+\kappa)^{\kappa+2}}
 \end{align}$$
 
 ***
-## An introductory guide to fluid models with anisotropic temperatures. _Part 2. kinetic theory_, pad ́e approximants and landau fluid closures. Peter Hunana et al. (2019)
-[[Hunana et al. 2019|Papers/Hunana2019plasmaphys.pdf]]
-
-
-## Active Subspaces Constantine 2015 Ch 1 (Algorithm in 3.1)
