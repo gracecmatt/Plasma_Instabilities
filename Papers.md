@@ -1,22 +1,19 @@
 # Papers and Summaries
 ## On the Vibrations of the Electrostatic Plasma, Lev Landau (1946)
-[[Landau 1946|Papers/Landau1946phys.pdf]]. Governing equations are Vlasov-Poisson for an elecron plasma with neutralizing ionic background projected along the $x$ direction. He takes the Fourier transform in $x$ and Laplace transform in $t$ of both the kinetic equation and potential integral, resulting in the following solution in the form of an inverse Laplace transform:
+Governing equations are Vlasov-Poisson for an elecron plasma with neutralizing ionic background projected along the $x$ direction. He takes the Fourier transform in $x$ and Laplace transform in $t$ of both the kinetic equation and potential integral, resulting in the following solution in the form of an inverse Laplace transform:
 
 $$\displaystyle \phi(t) = \frac{1}{2\pi i}\int_{\delta-i\infty}^{\delta+i\infty}\frac{\frac{4\pi e}{k^2}\int_{-\infty}^\infty \frac{g(v)}{s+ikv}dv}{1-\frac{4\pi i e^2}{k m}\int_{-\infty}^\infty \frac{df_0(v)}{dv}\frac{dv}{s+ikv}} e^{-st}ds.$$
 
-The vertical line $\delta\in\R$ is defined so that all of the poles of $F(s)=\frac{\frac{4\pi e}{k^2}\int_{-\infty}^\infty \frac{g(v)}{s+ikv}dv}{1-\frac{4\pi i e^2}{k m}\int_{-\infty}^\infty \frac{df_0(v)}{dv}\frac{dv}{s+ikv}}$ are to the left of the line. 
+The vertical line $\delta\in\mathbb{R}$ is defined so that all of the poles of $F(s)=\frac{\frac{4\pi e}{k^2}\int_{-\infty}^\infty \frac{g(v)}{s+ikv}dv}{1-\frac{4\pi i e^2}{k m}\int_{-\infty}^\infty \frac{df_0(v)}{dv}\frac{dv}{s+ikv}}$ are to the left of the line. 
 
 As the Laplace transform is defined only for $\text{Re}(s)>0$, we must analytically continue the function $F(s)$ into the left half complex $s$-plane.
 Doing this means the pole $v=is/k$ moves from the upper half complex $v$-plane into the lower half plane. The analytic continuation must be applied to this pole as well. Thus the integrals over the real line of $v$ become deformed to include the pole $v=is/k$ in the upper half plane. 
 ***
 ## Modified Dispersion Relation, Summers and Thorne (1991)
 ![Landau Contours for Kappa, Figure 2](Papers/SummersThorne_LandauContour.png){max-height: 400px,float: right}
-
-[[Summers & Thorne 1991|Papers/SummersThorne1991plasmaphys.pdf]].
 They perform the same computation as Landau for the Lorentizian and Kappa distribution functions in the 3D case projected into 1D. Given the principle root $\xi=\frac{\omega_R+i\gamma}{k\theta}$, they define the *modified plasma dispersion function* for $\kappa\in\mathbb{Z}^+$ by 
 
-$$\displaystyle \bm{Z}_\kappa^*(\xi)=\frac{1}{\sqrt{\pi}}\frac{\Gamma(\kappa+1)}{\kappa^{3/2}\Gamma(\kappa-1/2)}\times \int_{-\infty}^\infty\frac{dv}{(v-\xi)(1+v^2/\kappa)^{\kappa+1}}$$
-
+$${Z}_\kappa^*(\xi)=\frac{1}{\sqrt{\pi}}\frac{\Gamma(\kappa+1)}{\kappa^{3/2}\Gamma(\kappa-1/2)}\times \int_{-\infty}^\infty\frac{dv}{(v-\xi)(1+v^2/\kappa)^{\kappa+1}}$$
 and call the integral $F(\xi)=\int_{-\infty}^\infty\frac{\phi(v)}{(v-\xi)}dv$ with  $\phi(v)=(v^2+\kappa)^{-(\kappa+1)}$. Then they extend $F(\xi)$
 for $\xi$ in the lower half $v$-complex plane by:
 
@@ -29,72 +26,49 @@ In each case the resulting formula is $F(\xi)=2\pi i \left[\text{Res}(i\sqrt{\ka
 See the figure on the right for the contours. Their integration variable is $s$, while here I use $v$.
 
 They provide a verification of these formulae using the Sokhotcki-Plemelj Theorem for the real line (citation needed):
-
-$$\displaystyle \lim_{\delta\rightarrow 0^+}\int_{-\infty}^\infty \frac{\phi(v)}{v-\alpha+i\delta}dv = \mathcal{P}\int_{-\infty}^\infty\frac{\phi(v)}{v-\alpha}dv-i\pi\phi(\alpha)\\
-\lim_{\delta\rightarrow 0^+}\int_{-\infty}^\infty \frac{\phi(v)}{v-\alpha-i\delta}dv = \mathcal{P}\int_{-\infty}^\infty\frac{\phi(v)}{v-\alpha}dv+i\pi\phi(\alpha)$$
+$$\lim_{\delta\rightarrow 0^+}\int_{-\infty}^\infty \frac{\phi(v)}{v-\alpha+i\delta}dv = \mathcal{P}\int_{-\infty}^\infty\frac{\phi(v)}{v-\alpha}dv-i\pi\phi(\alpha)$$
+$$\lim_{\delta\rightarrow 0^+}\int_{-\infty}^\infty \frac{\phi(v)}{v-\alpha-i\delta}dv = \mathcal{P}\int_{-\infty}^\infty\frac{\phi(v)}{v-\alpha}dv+i\pi\phi(\alpha)$$
 where $\mathcal{P}$ is the Cauchy principle value of the integral. They also write explicit results of $\bm{Z}_\kappa^*(\xi)$ for integer values of $\kappa\in[1,6]$.
 
-$$\begin{align}
-\bm{Z}_1^*(\xi)&=-(\xi/2+i)/(\xi+i)^2\\
-\bm{Z}_2^*(\xi)&=-(3\xi^2/4+9\sqrt{2}i\xi/4-4)/(\xi+\sqrt{2}i)^3\\
-\vdots
-\end{align}$$
+$${Z}_1^*(\xi)=-(\xi/2+i)/(\xi+i)^2$$
+$${Z}_2^*(\xi)=-(3\xi^2/4+9\sqrt{2}i\xi/4-4)/(\xi+\sqrt{2}i)^3$$
 They also give general results for $\xi=0$, $\xi\rightarrow 0$, and $|\xi|\rightarrow \infty$ by power series (convergent for $|\xi|<\sqrt{\kappa}$ and $|\xi|>\sqrt{\kappa}$). Additionally, they provide a recursion relaton between $\bm{Z}_{\kappa+1}^*(\xi)$ and $\bm{Z}_\kappa^*(\xi)$ using the derivative with respect to $\xi$. 
 
 Finally, applying this to Vlasov-Poisson, they give the following as the dispersion relation for the kappa distribution function:
-$$\begin{align}
-1+\frac{2\omega_p^2}{k^2\theta^2}\left[1-\frac{1}{2\kappa}+\frac{\omega}{k\theta}\bm{Z}_\kappa^*\left(\frac{\omega}{k\theta}\right)\right]=0
-\end{align}$$
+$$1+\frac{2\omega_p^2}{k^2\theta^2}\left[1-\frac{1}{2\kappa}+\frac{\omega}{k\theta}\bm{Z}_\kappa^*\left(\frac{\omega}{k\theta}\right)\right]=0$$
 where $\theta=[(2\kappa-3)/\kappa]^{1/2}(T/m)^{1/2}$ is the electron thermal speed, $\omega=\omega_R+i\gamma$ is the wave frequency, and $\omega_p=(4\pi i e^2/m)^{1/2}$ is the electron plasma frequency. They published an accompanying paper with more details for this. 
 
 Note the relationships between the plasma dispersion function $\bm{Z}(\xi)$, the Fadeeva function $w(\xi)$, and the complex error function $\text{erf}(i\xi)$.
-$$\begin{align}
-\bm{Z}(\xi)&=\frac{1}{\sqrt{\pi}}\int_{-\infty}^\infty \frac{e^{-v^2}}{v-\xi}dv, &\text{Im}(\xi)>0\\
-w(\xi)&=\frac{1}{i\sqrt{\pi}}\bm{Z}(\xi)\\
-\bm{Z}(\xi)&=i\sqrt{\pi}e^{-\xi^2}\left[1+\text{erf}(i\xi)\right]
-\end{align}$$
+$${Z}(\xi)=\frac{1}{\sqrt{\pi}}\int_{-\infty}^\infty \frac{e^{-v^2}}{v-\xi}dv, &\text{Im}(\xi)>0$$
+$$w(\xi)=\frac{1}{i\sqrt{\pi}}\bm{Z}(\xi)$$
+$${Z}(\xi)=i\sqrt{\pi}e^{-\xi^2}\left[1+\text{erf}(i\xi)\right]$$
 ***
 ## Computation of the Complex Error Function, J.A.C. Weideman (1994)
 [[Weidman 1994|Papers/Weidman1994siam.pdf]]. The above realtionships give the following relations:
-$$\begin{align}
-w(\xi)&=e^{-\xi^2}\left[1+\text{erf}(i\xi)\right]=e^{-\xi^2}\text{erfc}(-i\xi)\\
-w(\xi)&=\frac{i}{\pi}\int_{-\infty}^\infty \frac{e^{-v^2}}{\xi-v}dv, &\text{Im}(\xi)>0
-\end{align}$$
+$$w(\xi)=e^{-\xi^2}\left[1+\text{erf}(i\xi)\right]=e^{-\xi^2}\text{erfc}(-i\xi)$$
+$$w(\xi)=\frac{i}{\pi}\int_{-\infty}^\infty \frac{e^{-v^2}}{\xi-v}dv, &\text{Im}(\xi)>0$$
 This paper builds an algorithm to compute $w(\xi)$ based on the integral representation. Weideman starts by assuming the existance of an expansion
-$$\begin{align}
-[W(v)]^{-1}e^{-v^2}=\sum_{n=-\infty}^\infty a_n \psi_n(v), v\in\R
-\end{align}$$
-where $\{\psi_n(v)\}$ is an orthogonal basis set in $L_2(\R;W(v))$ with appropriate weight function $W(v)$.
+$$[W(v)]^{-1}e^{-v^2}=\sum_{n=-\infty}^\infty a_n \psi_n(v), v\in\R$$
+where $\{\psi_n(v)\}$ is an orthogonal basis set in $L_2(\mathbb{R};W(v))$ with appropriate weight function $W(v)$.
 From this we can rearrange for the integrand of $w(\xi)$:
-$$\begin{align}
-\frac{e^{-v^2}}{\xi-v}=\sum_{n=-\infty}^\infty a_n \left[W(v) \frac{\psi_n(v)}{\xi-v}\right].
-\end{align}$$
+$$\frac{e^{-v^2}}{\xi-v}=\sum_{n=-\infty}^\infty a_n \left[W(v) \frac{\psi_n(v)}{\xi-v}\right].$$
 Integrate both sides term by term to get 
-$$\begin{align}
-w(\xi)=\sum_{n=-\infty}^\infty a_n \Psi_n(\xi), \hspace{1cm} \text{Im}(\xi)>0
-\end{align}$$
+$$w(\xi)=\sum_{n=-\infty}^\infty a_n \Psi_n(\xi), \hspace{1cm} \text{Im}(\xi)>0$$
 where
-$$\begin{align}
-\Psi_n(\xi)=\frac{i}{\pi}\int_{-\infty}^\infty W(v)\frac{\psi_n(v)}{\xi-v}dv.
-\end{align}$$
+$$\Psi_n(\xi)=\frac{i}{\pi}\int_{-\infty}^\infty W(v)\frac{\psi_n(v)}{\xi-v}dv.$$
 
 The paper consists of (1) introducing one set of basis functions $\psi_n(v)$
 , (2) deriving recurrance relations for $a_n$,
 (3) estiamting asympototics of decay of coefficients $a_n$.
 
 **First Basis Set** 
-$$\begin{align}
-\sigma_n(v)=\left(\frac{L+iv}{L-iv}\right)^n
-\end{align}$$
+$$\sigma_n(v)=\left(\frac{L+iv}{L-iv}\right)^n$$
 where $L\in\R^+$ is a parameter to be chosen for optimal accuracy. The set $\{\sigma_n(v)\}$ is complete and orthogonal in $L_2(\R;W(v))$ with corresponding weight function $W(v)=\frac{1}{L^2+v^2}$.
 Making the substitution $v=L\tan{\theta/2}$, $v\in[-\infty,\infty]$ is mapped to $\theta\in[-\pi,\pi]$, and this basis is the Fourier series with $\sigma_n(v)=e^{in\theta}$.
 Let $f(v)=\sum_n a_n\sigma_n(v)$, then the coefficients are given by 
-$$\begin{align}
-a_n=\frac{L}{\pi}\int_{-\infty}^\infty \frac{f(v)}{L^2+v^2}\left(\frac{L-iv}{L+iv}\right)^n dv=\frac{L}{\pi}\int_{-\infty}^\infty e^{-v^2}\left(\frac{L-iv}{L+iv}\right)^n dv,
-\end{align}$$
+$$a_n=\frac{L}{\pi}\int_{-\infty}^\infty \frac{f(v)}{L^2+v^2}\left(\frac{L-iv}{L+iv}\right)^n dv=\frac{L}{\pi}\int_{-\infty}^\infty e^{-v^2}\left(\frac{L-iv}{L+iv}\right)^n dv,$$
 using that $F(v)=[W(v)]^{-1}e^{-v^2}=(L^2+v^2)e^{-v^2}$ in the equations above. The optimal parameter is $L=N^{1/2}2^{-1/4}$
 where $N$ is the truncation of the Fourier series.
-
 
 
 ***
