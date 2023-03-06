@@ -10,7 +10,7 @@ Current versions of code:
 Figure generated from `Kappa_bump_level_curves.m`.
 ![](figs/kappaBumpImagXieSM_SMInit.svg)
 
-### Spectral Method vs. Xie (with SM initial guess), Re$(\omega)$ vs $k$
+### Spectral Method vs. Xie (with SM initial guess), $\text{Re}(\omega)$ vs $k$
 Figure generated from `Kappa_bump_level_curves.m`.
 ![](figs/kappaBumpRealXieSM_SMInit.svg)
 
@@ -18,6 +18,6 @@ Figure generated from `Kappa_bump_level_curves.m`.
 Figure generated from `Kappa_bump_level_curves_v2.m`.
 ![](figs/kappaBumpXieSM_PreviousInit.svg)
 
-### Spectral Method vs. Xie (with previous $\omega$ as initial guess), Re$(\omega)$ vs $k$
+### Spectral Method vs. Xie (with previous $\omega$ as initial guess), $\text{Re}(\omega)$ vs $k$
 Figure generated from `Kappa_bump_level_curves_v2.m`.
 ![](figs/kappaBumpRealXieSM_PreviousInit.svg)
