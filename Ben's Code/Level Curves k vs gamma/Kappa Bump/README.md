@@ -14,7 +14,7 @@ Figure generated from `Kappa_bump_level_curves.m`.
 Figure generated from `Kappa_bump_level_curves.m`.
 ![](figs/kappaBumpRealXieSM_SMInit.svg)
 
-### Spectral Method vs. Xie (with previous $\gamma$ as initial guess), $\gamma$ vs $k$
+### Spectral Method vs. Xie (with previous $\omega$ as initial guess), $\gamma$ vs $k$
 Figure generated from `Kappa_bump_level_curves_v2.m`.
 ![](figs/kappaBumpXieSM_PreviousInit.svg)
 
