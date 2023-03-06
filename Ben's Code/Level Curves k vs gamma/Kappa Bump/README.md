@@ -1,7 +1,10 @@
 # Kappa Bump-on-Tail - Rate of Instability Code
 Ben's code uploaded from OneDrive March 6, 2023 3:18 PM.
 
-Includes Matlab figure of $\gamma$ vs $k$ using previous guess as initial guess for every step except the first. The spectral method was used to get the first initial guess when $k=1$.
+Current versions of code:
+1. Xie (Weideman) algorithm with root finding using spectral method as initial guess for each $k$
+2. Xie (Weideman) algorithm with root finding using previous $\gamma$ as initial guess for each $k$
+3. Spectral method returning $\gamma$ for each $k$ (using as baseline)
 
 ### Spectral Method vs. Xie (with SM initial guess), $\gamma$ vs $k$
 ![](figs/kappaBumpImagXieSM_SMInit.svg)
