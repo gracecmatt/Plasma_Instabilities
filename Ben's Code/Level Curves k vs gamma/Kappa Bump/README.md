@@ -1,6 +1,11 @@
-# Kappa Bump-on-Tail - Rate of Instability Code
+# Kappa Bump-on-Tail: Rate of Instability Code
 Ben's code uploaded from OneDrive March 6, 2023 3:35 PM.
 
+## Figures for Meeting 3/9/2023
+![](figs/kappaBumpImag_AllRoots.svg)
+![](figs/kappaBumpReal_AllRoots.svg)
+
+## Figures for Meeting 3/6/2023
 Current versions of code:
 1. Xie (Weideman) algorithm with root finding using spectral method as initial guess for each $k$
 2. Xie (Weideman) algorithm with root finding using previous $\gamma$ as initial guess for each $k$
