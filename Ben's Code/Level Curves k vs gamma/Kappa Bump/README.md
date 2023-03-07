@@ -6,7 +6,7 @@ $$f_\kappa(v;\mu_i,\theta_i)=\frac{1}{\sqrt{\pi\theta_i^2(\kappa-1/2)}}\frac{\Ga
 
 Dispersion relation:
 
-$$1-\frac{\beta}{k^2}\int_{-\infty}^\infty \frac{f'_{\kappa}(v,\mu_1,\theta_1)}{v-\omega/k}dv-\frac{1-\beta}{k^2}\int_{-\infty}^\infty \frac{f'_{\kappa}(v,\mu_2,\theta_2)}{v-\omega/k}dv=0$$
+$$1-\frac{\beta}{k^2}\int_{-\infty}^\infty \frac{f'_{\kappa}(v;\mu_1,\theta_1)}{v-\omega/k}dv-\frac{1-\beta}{k^2}\int_{-\infty}^\infty \frac{f'_{\kappa}(v;\mu_2,\theta_2)}{v-\omega/k}dv=0$$
 
 
 ## Figures for Meeting 3/9/2023
