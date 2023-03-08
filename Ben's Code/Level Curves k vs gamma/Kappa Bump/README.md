@@ -11,6 +11,7 @@ $$1-\frac{\beta}{k^2}\int_{-\infty}^\infty \frac{f'_{\kappa}(v;\mu_1,\theta_1)}{
 
 ## Figures for Meeting 3/9/2023
 All roots found using `KappaBump_AllSolScript.m` for $k\in[0.01,1]$ with $dk=0.01$ for the Kappa Bump-on-Tail with $\kappa=1$, $\beta=0.9$, $\mu_1=0$, $\mu_2=4$, $\theta_1=\theta_2=1$.
+
 ![](figs/kappaBumpImag_AllRoots2.svg)
 ![](figs/kappaBumpReal_AllRoots2.svg)
 
