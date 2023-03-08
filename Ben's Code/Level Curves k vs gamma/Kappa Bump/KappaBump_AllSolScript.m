@@ -22,8 +22,8 @@ for i = 1:length(karr)
         omega).*theta2.^3.*(2.*((-1).*k.*mu2+omega).^2+k.^2.*theta2.^2).^(-3));
     
     Y = double(vpasolve(F(omega)==0,omega));
-    gamma = [gamma, imag(Y)]; 
-    Omega = [Omega, real(Y)]; 
+    gamma = [gamma, imag(Y)];
+    Omega = [Omega, real(Y)];
 end
 numSol = length(gamma(:,1));
 
@@ -49,15 +49,15 @@ xlabel("k"); ylabel("\gamma(k)");
 grid on;
 
 function [gamma, Omega, numSol] = getUnique(gamma, Omega)
-    klength = length(gamma(1,:));
-    ImReMatrix = [gamma, Omega];
+    N = 3; % round to account for machine error giving extra duplicates
+    ImReMatrix = [round(gamma,N), round(Omega,N)];
 
     % ----from MATLAB Answers user Walter Roberson 14 August 2020----
     [~,A] = uniquetol(ImReMatrix,'byrows',true); 
-    ImReMatrix=ImReMatrix(sort(A),:); % unique rows in original order
+    ImReMatrix(sort(A),:); % unique rows in original order
     % ---------------------------------------------------------------
 
-    gamma = ImReMatrix(:,1:klength);
-    Omega = ImReMatrix(:,klength+1:end);
+    gamma = gamma(sort(A),:);
+    Omega = Omega(sort(A),:);
     numSol = length(gamma(:,1));
 end
