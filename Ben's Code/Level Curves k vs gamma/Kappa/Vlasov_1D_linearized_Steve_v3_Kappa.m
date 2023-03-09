@@ -27,7 +27,7 @@
 
 % Output of this function is w = Re[w]+1i*Im[w]. Note: the linearized code doesn't show a shift in Re[w] by mu*k if mu=!0
 
-function w = Vlasov_1D_linearized_Steve_v3_Kappa(k, kappa, theta)
+function w = Vlasov_1D_linearized_Steve_v3_Kappa(k, kappa, mu, theta)
 %close all                  
 Vmax = 100;%8  % choose Vmax so that f0(Vmax) < 1e-16           
 L=2*pi/abs(k); % size of the system in x-direction
@@ -76,8 +76,8 @@ nplot = 10000;                    % plot solution every nplot time steps
 % % Kappa Distribution (slow decay f0(v) ~ 1/v^(2*(kappa+1))
 % Changed on 12/13/22
 C=(pi*theta^2*(kappa-0.5))^(-1/2)*exp(gammaln(kappa+1)-gammaln(kappa+0.5));
-f0=C*(1+v.^2/(kappa-0.5)/theta^2).^(-kappa-1); 
-f0_v=C*2*v*(-kappa-1)/(kappa-0.5)/theta^2.*(1+v.^2/(kappa-0.5)/theta^2).^(-kappa-2);
+f0=C*(1+(v-mu).^2/(kappa-0.5)/theta^2).^(-kappa-1); 
+f0_v=C*2*(v-mu)*(-kappa-1)/(kappa-0.5)/theta^2.*(1+(v-mu).^2/(kappa-0.5)/theta^2).^(-kappa-2);
 
 % Initial Condition for pertubation df(v)
 % Gauss
