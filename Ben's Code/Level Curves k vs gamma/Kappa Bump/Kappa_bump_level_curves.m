@@ -10,7 +10,7 @@ mu = [0, 4];
 beta = 0.9;
 
 for k=kplot
-    init_guess = Vlasov_1D_linearized_Steve_v3_Kappa(k, theta, mu, beta, kappa);
+    init_guess = Vlasov_1D_linearized_Steve_v4_Kappa(k, theta, mu, beta, kappa);
     initial_guesses(count) = init_guess;
     % gammas_root_finding(count) = dielectric(k, theta(1), theta(2), mu(1), mu(2), beta, init_guess);
     gammas_xie(count) = Kappa_Bump_Disp_Using_Xie(k, theta(1), theta(2), mu(1), mu(2), beta, init_guess);
