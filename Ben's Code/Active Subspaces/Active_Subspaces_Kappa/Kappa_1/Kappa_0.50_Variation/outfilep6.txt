@@ -10,4 +10,4 @@ For product information, visit www.mathworks.com.
  
 Starting parallel pool (parpool) using the 'local' profile ...
 Connected to the parallel pool (number of workers: 32).
-Elapsed time is 27.266030 seconds.
+Elapsed time is 32.264811 seconds.

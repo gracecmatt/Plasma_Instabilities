@@ -28,8 +28,8 @@ xl = (1-var)*setvals;
 xu = (1+var)*setvals;
 
 % fixing mu
-xl(3) = -1;
-xu(3) = 1;
+xl(3) = -2;
+xu(3) = 2;
 
 % Run simulation
 tic
@@ -88,6 +88,6 @@ evalues = diag(S.^2);
 diff_growth = max(max(grad_growth)) - min(min(grad_growth));
    
 %Save the trial data
-save(['Dispersion_Rate_BiMax_P' int2str(Nparams) '_N' int2str(N) '_' num2str(var) 'data_par.mat'])
+save(['Dispersion_Rate_Kappa_P' int2str(Nparams) '_N' int2str(N) '_' num2str(var) 'data_par.mat'])
 
 %exit
