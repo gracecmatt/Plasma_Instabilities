@@ -28,8 +28,8 @@ xl = (1-var)*setvals;
 xu = (1+var)*setvals;
 
 % fixing mu
-xl(3) = -var;
-xu(3) = var;
+xl(3) = -0.5;
+xu(3) = 0.5;
 
 % Run simulation
 tic
