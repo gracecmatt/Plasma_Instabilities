@@ -1,0 +1,20 @@
++ '[' -z '' ']'
++ case "$-" in
++ __lmod_vx=x
++ '[' -n x ']'
++ set +x
+Shell debugging temporarily silenced: export LMOD_SH_DBG_ON=1 for this output (/sw/apps/lmod/lmod/init/bash)
+Shell debugging restarted
++ unset __lmod_vx
++ cd /wendianHome/u/af/ao/blongaker/research/Kappa_2/Kappa_0.50_Variation
++ module load apps/matlab/2021b
++ '[' -z '' ']'
++ case "$-" in
++ __lmod_sh_dbg=x
++ '[' -n x ']'
++ set +x
+Shell debugging temporarily silenced: export LMOD_SH_DBG_ON=1 for Lmod's output
+Shell debugging restarted
++ unset __lmod_sh_dbg
++ return 0
++ matlab -nodisplay -nosplash -r Global_Sensitivity_PIC_VP_Kappa_dispersion_rate_p6
