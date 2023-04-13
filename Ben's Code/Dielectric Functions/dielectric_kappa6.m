@@ -1,4 +1,4 @@
-function gamma = dielectric_kappa2(k, theta1, theta2, mu1, mu2, beta, init_guess)
+function gamma = dielectric_kappa6(k, theta1, theta2, mu1, mu2, beta, init_guess)
 
 % Kappa = 6 throughout
 
