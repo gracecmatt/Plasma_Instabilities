@@ -1,6 +1,6 @@
 function gamma = dielectric_kappa2(k, theta1, theta2, mu1, mu2, beta, init_guess)
 
-% Kappa = 2 throughout
+% Kappa = 6 throughout
 
 F = @(omega) 1+(-2/3).*beta.*(2.*((-1).*k.*mu1+omega).^2+11.*k.^2.*theta1.^2).^(-8).* ...
   ((-5376).*k.*mu1.*omega.^13+384.*omega.^14+17472.*k.^2.*omega.^12.*(2.* ...
