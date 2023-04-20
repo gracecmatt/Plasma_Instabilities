@@ -4,11 +4,11 @@
 
 #SBATCH --job-name=“Kappa-Bump_Active_Subspaces”
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=4
-#SBATCH --ntasks=4
+#SBATCH --ntasks-per-node=16
+##SBATCH --cpus-per-task=4
+#SBATCH --ntasks=16
 
-#SBATCH --account=181218142210
+##SBATCH --account=181218142210
 #SBATCH --exclusive # this is for an exclusive run on one of the 'pankavic' nodes
 #SBATCH --export=ALL
 #SBATCH --time=5:00:00 
@@ -21,7 +21,11 @@
 ##SBATCH --mail-user=email@mines.edu # if you uncomment this, you will get emails when the job begins and ends
 #SBATCH -o lastrunp6.out # these two are the out and error files for the batch scheduler
 #SBATCH -e lastrunp6.err
-#SBATCH -q pankavic # this is the name of your partition
+#SBATCH -p pankavic # this is the name of your partition
+# choose nodes for compute needs
+##SBATCH -w, --nodelist=compute026 #  this is the 24-core node
+#SBATCH -w, --nodelist=compute124 # this is the 16-core node
+
 ##SBATCH -v # this will give more verbose output from the batch scheduler
 cd $SLURM_SUBMIT_DIR
 
