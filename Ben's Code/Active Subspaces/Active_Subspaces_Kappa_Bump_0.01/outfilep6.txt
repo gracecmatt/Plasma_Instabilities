@@ -9,5 +9,3 @@ To get started, type doc.
 For product information, visit www.mathworks.com.
  
 Starting parallel pool (parpool) using the 'local' profile ...
-Connected to the parallel pool (number of workers: 32).
-Elapsed time is 7.910191 seconds.

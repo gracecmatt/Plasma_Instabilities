@@ -6,15 +6,43 @@
 Shell debugging temporarily silenced: export LMOD_SH_DBG_ON=1 for this output (/sw/apps/lmod/lmod/init/bash)
 Shell debugging restarted
 + unset __lmod_vx
-+ cd /wendianHome/u/af/ao/blongaker/research/Active_Subspaces_Kappa_Bump_0.01
++ cd '/mioHome/u/eu/be/gmattingly/PlasmaResearch/Plasma_Instabilities/Ben'\''s' Code/Active Subspaces/Active_Subspaces_Kappa_Bump_0.01
+/var/spool/slurmd/job13030948/slurm_script: line 30: cd: /mioHome/u/eu/be/gmattingly/PlasmaResearch/Plasma_Instabilities/Ben's: No such file or directory
 + module load apps/matlab/2021b
-+ '[' -z '' ']'
-+ case "$-" in
-+ __lmod_sh_dbg=x
-+ '[' -n x ']'
-+ set +x
-Shell debugging temporarily silenced: export LMOD_SH_DBG_ON=1 for Lmod's output
-Shell debugging restarted
-+ unset __lmod_sh_dbg
-+ return 0
+++ /sw/apps/lmod/lmod/libexec/lmod bash load apps/matlab/2021b
++ eval '__LMOD_REF_COUNT_LD_LIBRARY_PATH=/sw/apps/MATLAB/R2021b/bin/glnxa64:1;' export '__LMOD_REF_COUNT_LD_LIBRARY_PATH;' 'LD_LIBRARY_PATH=/sw/apps/MATLAB/R2021b/bin/glnxa64;' export 'LD_LIBRARY_PATH;' '__LMOD_REF_COUNT_LIBRARY_PATH=/sw/apps/MATLAB/R2021b/bin/glnxa64:1;' export '__LMOD_REF_COUNT_LIBRARY_PATH;' 'LIBRARY_PATH=/sw/apps/MATLAB/R2021b/bin/glnxa64;' export 'LIBRARY_PATH;' '__LMOD_REF_COUNT_LOADEDMODULES=apps/matlab/2021b:1;' export '__LMOD_REF_COUNT_LOADEDMODULES;' 'LOADEDMODULES=apps/matlab/2021b;' export 'LOADEDMODULES;' 'MLM_LICENSE_FILE=17001@enable.mines.edu,17001@entitle.mines.edu,17001@entrust.mines.edu;' export 'MLM_LICENSE_FILE;' '__LMOD_REF_COUNT_MODULEPATH=/sw/mfiles:1;' export '__LMOD_REF_COUNT_MODULEPATH;' 'MODULEPATH=/sw/mfiles;' export 'MODULEPATH;' '__LMOD_REF_COUNT_PATH=/sw/apps/MATLAB/R2021b/bin:1\;/usr/lib64/qt-3.3/bin:1\;/usr/local/bin:1\;/usr/bin:1\;/usr/local/sbin:1\;/usr/sbin:1\;/bin:1\;/usr/lpp/mmfs/bin:1\;/u/eu/be/gmattingly/.local/bin:1\;/u/eu/be/gmattingly/bin:1;' export '__LMOD_REF_COUNT_PATH;' 'PATH=/sw/apps/MATLAB/R2021b/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/bin:/usr/lpp/mmfs/bin:/u/eu/be/gmattingly/.local/bin:/u/eu/be/gmattingly/bin;' export 'PATH;' 'TMPDIR=/u/eu/be/gmattingly;' export 'TMPDIR;' '__LMOD_REF_COUNT__LMFILES_=/sw/mfiles/apps/matlab/2021b.lua:1;' export '__LMOD_REF_COUNT__LMFILES_;' '_LMFILES_=/sw/mfiles/apps/matlab/2021b.lua;' export '_LMFILES_;' '_ModuleTable001_=X01vZHVsZVRhYmxlXz17WyJNVHZlcnNpb24iXT0zLFsiY19yZWJ1aWxkVGltZSJdPWZhbHNlLFsiY19zaG9ydFRpbWUiXT1mYWxzZSxkZXB0aFQ9e30sZmFtaWx5PXt9LG1UPXtbImFwcHMvbWF0bGFiIl09e1siZm4iXT0iL3N3L21maWxlcy9hcHBzL21hdGxhYi8yMDIxYi5sdWEiLFsiZnVsbE5hbWUiXT0iYXBwcy9tYXRsYWIvMjAyMWIiLFsibG9hZE9yZGVyIl09MSxwcm9wVD17fSxbInN0YWNrRGVwdGgiXT0wLFsic3RhdHVzIl09ImFjdGl2ZSIsWyJ1c2VyTmFtZSJdPSJhcHBzL21hdGxhYi8yMDIxYiIsWyJ3ViJdPSIwMDAwMDIwMjEuKmIuKnpmaW5hbCIsfSx9LG1wYXRoQT17Ii9zdy9tZmlsZXMiLH0sWyJzeXN0ZW1CYXNlTVBBVEgiXT0iL3N3L21maWxlcyIsfQ==;' export '_ModuleTable001_;' '_ModuleTable_Sz_=1;' export '_ModuleTable_Sz_;'
+++ __LMOD_REF_COUNT_LD_LIBRARY_PATH=/sw/apps/MATLAB/R2021b/bin/glnxa64:1
+++ export __LMOD_REF_COUNT_LD_LIBRARY_PATH
+++ LD_LIBRARY_PATH=/sw/apps/MATLAB/R2021b/bin/glnxa64
+++ export LD_LIBRARY_PATH
+++ __LMOD_REF_COUNT_LIBRARY_PATH=/sw/apps/MATLAB/R2021b/bin/glnxa64:1
+++ export __LMOD_REF_COUNT_LIBRARY_PATH
+++ LIBRARY_PATH=/sw/apps/MATLAB/R2021b/bin/glnxa64
+++ export LIBRARY_PATH
+++ __LMOD_REF_COUNT_LOADEDMODULES=apps/matlab/2021b:1
+++ export __LMOD_REF_COUNT_LOADEDMODULES
+++ LOADEDMODULES=apps/matlab/2021b
+++ export LOADEDMODULES
+++ MLM_LICENSE_FILE=17001@enable.mines.edu,17001@entitle.mines.edu,17001@entrust.mines.edu
+++ export MLM_LICENSE_FILE
+++ __LMOD_REF_COUNT_MODULEPATH=/sw/mfiles:1
+++ export __LMOD_REF_COUNT_MODULEPATH
+++ MODULEPATH=/sw/mfiles
+++ export MODULEPATH
+++ __LMOD_REF_COUNT_PATH='/sw/apps/MATLAB/R2021b/bin:1;/usr/lib64/qt-3.3/bin:1;/usr/local/bin:1;/usr/bin:1;/usr/local/sbin:1;/usr/sbin:1;/bin:1;/usr/lpp/mmfs/bin:1;/u/eu/be/gmattingly/.local/bin:1;/u/eu/be/gmattingly/bin:1'
+++ export __LMOD_REF_COUNT_PATH
+++ PATH=/sw/apps/MATLAB/R2021b/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/bin:/usr/lpp/mmfs/bin:/u/eu/be/gmattingly/.local/bin:/u/eu/be/gmattingly/bin
+++ export PATH
+++ TMPDIR=/u/eu/be/gmattingly
+++ export TMPDIR
+++ __LMOD_REF_COUNT__LMFILES_=/sw/mfiles/apps/matlab/2021b.lua:1
+++ export __LMOD_REF_COUNT__LMFILES_
+++ _LMFILES_=/sw/mfiles/apps/matlab/2021b.lua
+++ export _LMFILES_
+++ _ModuleTable001_=X01vZHVsZVRhYmxlXz17WyJNVHZlcnNpb24iXT0zLFsiY19yZWJ1aWxkVGltZSJdPWZhbHNlLFsiY19zaG9ydFRpbWUiXT1mYWxzZSxkZXB0aFQ9e30sZmFtaWx5PXt9LG1UPXtbImFwcHMvbWF0bGFiIl09e1siZm4iXT0iL3N3L21maWxlcy9hcHBzL21hdGxhYi8yMDIxYi5sdWEiLFsiZnVsbE5hbWUiXT0iYXBwcy9tYXRsYWIvMjAyMWIiLFsibG9hZE9yZGVyIl09MSxwcm9wVD17fSxbInN0YWNrRGVwdGgiXT0wLFsic3RhdHVzIl09ImFjdGl2ZSIsWyJ1c2VyTmFtZSJdPSJhcHBzL21hdGxhYi8yMDIxYiIsWyJ3ViJdPSIwMDAwMDIwMjEuKmIuKnpmaW5hbCIsfSx9LG1wYXRoQT17Ii9zdy9tZmlsZXMiLH0sWyJzeXN0ZW1CYXNlTVBBVEgiXT0iL3N3L21maWxlcyIsfQ==
+++ export _ModuleTable001_
+++ _ModuleTable_Sz_=1
+++ export _ModuleTable_Sz_
+++ : -s sh
++ eval
 + matlab -nodisplay -nosplash -r Global_Sensitivity_PIC_VP_Kappa_dispersion_rate_p6
