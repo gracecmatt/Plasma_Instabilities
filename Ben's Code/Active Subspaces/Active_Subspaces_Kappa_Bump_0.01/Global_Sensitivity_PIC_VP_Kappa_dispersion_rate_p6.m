@@ -1,6 +1,6 @@
 rng('shuffle');
 % parpool(4);
-parpool(32); %was 32
+parpool(16); %was 32
 % Initialize algorithm parameters
 N = 512;     %Number of samples for each parameter
 h = 1e-6;    %Finite difference step size
