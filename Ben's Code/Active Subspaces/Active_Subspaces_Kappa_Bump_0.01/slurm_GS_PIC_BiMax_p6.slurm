@@ -6,8 +6,9 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=4
+#SBATCH --ntasks=4
 
-##SBATCH --account=181218142210
+#SBATCH --account=181218142210
 #SBATCH --exclusive # this is for an exclusive run on one of the 'pankavic' nodes
 #SBATCH --export=ALL
 #SBATCH --time=5:00:00 
