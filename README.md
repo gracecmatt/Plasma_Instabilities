@@ -1,4 +1,6 @@
 # Plasma Instabilities Research
+### 5/10/2023
+Started moving files to re-organize everything.
 
 ### 4/13/2023 Updates GM
 Added dielectric functions for $\kappa=1,2,6$ with variable `omega` and parameters `k,beta,mu1,mu2,theta1,theta2,init_guess` to `Ben's Code/Dielectric Functions`. Functions were computing using the Mathematica notebook `Disp_Rel_Kappa_04.13.23.nb`, exported to Matlab, then formatted into usable functions calling `fsolve()` to determine the complex solution `omega`. 
