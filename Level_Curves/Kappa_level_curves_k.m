@@ -1,20 +1,20 @@
 kplot = 0.1:0.01:1;
-count=1;
+count=1; % increment variable
 initial_guesses = zeros(1,length(kplot));
 gamma_xie = zeros(1,length(kplot));
 gamma_root = zeros(1,length(kplot));
 
-kappa = 1;
+kappa = 1; % choose from {1,2,6}
 theta = 1;
 mu = 0;
 
 tic;
 
 for k=kplot
-    init_guess = Vlasov_1D_linearized_Steve_v3_Kappa(k, theta, mu, kappa);
+    init_guess = Vlasov_1D_linearized_Steve_v3_Kappa(k, theta, mu, kappa); % spectral method solution
     initial_guesses(count) = init_guess;
-    gamma_xie(count) = Kappa_Disp_Using_Xie(k, theta, mu, kappa, init_guess);
-    gamma_root(count) = dielectric_kappa(k,theta,theta,mu,mu,1,init_guess);
+    gamma_xie(count) = Kappa_Disp_Using_Xie(k, theta, mu, kappa, init_guess); % uses Fourier series approximation of integral
+    gamma_root(count) = dielectric_kappa(k,theta,theta,mu,mu,1,init_guess); % integral computed in Mathematica
     count = count+1;
 end
 
