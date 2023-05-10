@@ -2,7 +2,8 @@ function gamma = dielectric_kappa(k, theta1, theta2, mu1, mu2, beta, kappa, init
 
 if(kappa == 1)
 
-    F = @(omega) 1+(-2).*beta.*(2.*((-1).*k.*mu1+omega).^2+k.^2.*theta1.^2).^(-3).*(4.*(( ...
+    % dielectric function with integral computed in Mathematica
+    D = @(omega) 1+(-2).*beta.*(2.*((-1).*k.*mu1+omega).^2+k.^2.*theta1.^2).^(-3).*(4.*(( ...
     -1).*k.*mu1+omega).^4+12.*k.^2.*((-1).*k.*mu1+omega).^2.*theta1.^2+(-3) ...
     .*k.^4.*theta1.^4+(sqrt(-1)*8).*2.^(1/2).*k.^4.*mu1.*(theta1.^2).^(3/2)+ ...
     (sqrt(-1)*(-8)).*2.^(1/2).*k.^3.*omega.*(theta1.^2).^(3/2))+(-2).*((-1)+ ...
@@ -12,12 +13,15 @@ if(kappa == 1)
     +(sqrt(-1)*8).*2.^(1/2).*k.^3.*omega.*(theta2.^2).^(3/2));
 
     options = optimoptions('fsolve','Display','off');
-    omega = fsolve(F, init_guess, options);
+    % solve for the roots
+    omega = fsolve(D, init_guess, options);
+    % return the imaginary component
     gamma = imag(omega); %imaginary component of angular frequency for GSA
 
 elseif(kappa == 2)
 
-    F = @(omega) 1+(-2).*beta.*(2.*((-1).*k.*mu1+omega).^2+3.*k.^2.*theta1.^2).^(-4).*(( ...
+    % dielectric function with integral computed in Mathematica
+    D = @(omega) 1+(-2).*beta.*(2.*((-1).*k.*mu1+omega).^2+3.*k.^2.*theta1.^2).^(-4).*(( ...
     -48).*k.*mu1.*omega.^5+8.*omega.^6+60.*k.^2.*omega.^4.*(2.*mu1.^2+ ...
     theta1.^2)+(-80).*k.^3.*mu1.*omega.^3.*(2.*mu1.^2+3.*theta1.^2)+30.* ...
     k.^4.*omega.^2.*(2.*mu1.^2+3.*theta1.^2).^2+(-12).*k.^5.*omega.*(4.* ...
@@ -34,12 +38,13 @@ elseif(kappa == 2)
     *144).*6.^(1/2).*mu2.*theta2.^4.*(theta2.^2).^(1/2)));
 
     options = optimoptions('fsolve','Display','off');
-    omega = fsolve(F, init_guess, options);
+    omega = fsolve(D, init_guess, options);
     gamma = imag(omega); %imaginary component of angular frequency for GSA
 
 elseif(kappa == 6)
 
-    F = @(omega) 1+(-2/3).*beta.*(2.*((-1).*k.*mu1+omega).^2+11.*k.^2.*theta1.^2).^(-8).* ...
+    % dielectric function with integral computed in Mathematica
+    D = @(omega) 1+(-2/3).*beta.*(2.*((-1).*k.*mu1+omega).^2+11.*k.^2.*theta1.^2).^(-8).* ...
     ((-5376).*k.*mu1.*omega.^13+384.*omega.^14+17472.*k.^2.*omega.^12.*(2.* ...
     mu1.^2+theta1.^2)+(-69888).*k.^3.*mu1.*omega.^11.*(2.*mu1.^2+3.* ...
     theta1.^2)+(-48048).*k.^9.*mu1.*omega.^5.*(2.*mu1.^2+3.*theta1.^2).*(2.* ...
@@ -85,7 +90,7 @@ elseif(kappa == 6)
     329832448).*22.^(1/2).*mu2.*theta2.^12.*(theta2.^2).^(1/2)));
 
     options = optimoptions('fsolve','Display','off');
-    omega = fsolve(F, init_guess, options);
+    omega = fsolve(D, init_guess, options);
     gamma = imag(omega); %imaginary component of angular frequency for GSA
 
 else
