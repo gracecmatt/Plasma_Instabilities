@@ -1,8 +1,8 @@
 # README
 
 ## Summary of Files
-#### Kappa_Disp_Using_Xie.m
-Solves the dispersion relation for the kappa using Fourier series approximation for the complex integral as in the Xie/Weideman algorithm.
+> `Kappa_Disp_Using_Xie.m`  
+> Solves the dispersion relation for the kappa using Fourier series approximation for the complex integral as in the Xie/Weideman algorithm.
 
 #### Kappa_level_curves_k.m
 Solves for the dispersion relation using Xie and the functional form via Mathematica with the spectral method as initial guess and plots all the solutions for $\gamma(k)$ for $k\in[0,1]$?.
