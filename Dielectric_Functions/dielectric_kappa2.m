@@ -2,7 +2,7 @@ function gamma = dielectric_kappa2(k, theta1, theta2, mu1, mu2, beta, init_guess
 
 % Kappa = 2 throughout
 
-F = @(omega) 1+(-2).*beta.*(2.*((-1).*k.*mu1+omega).^2+3.*k.^2.*theta1.^2).^(-4).*(( ...
+D = @(omega) 1+(-2).*beta.*(2.*((-1).*k.*mu1+omega).^2+3.*k.^2.*theta1.^2).^(-4).*(( ...
   -48).*k.*mu1.*omega.^5+8.*omega.^6+60.*k.^2.*omega.^4.*(2.*mu1.^2+ ...
   theta1.^2)+(-80).*k.^3.*mu1.*omega.^3.*(2.*mu1.^2+3.*theta1.^2)+30.* ...
   k.^4.*omega.^2.*(2.*mu1.^2+3.*theta1.^2).^2+(-12).*k.^5.*omega.*(4.* ...
@@ -19,7 +19,7 @@ F = @(omega) 1+(-2).*beta.*(2.*((-1).*k.*mu1+omega).^2+3.*k.^2.*theta1.^2).^(-4)
   *144).*6.^(1/2).*mu2.*theta2.^4.*(theta2.^2).^(1/2)));
 
 options = optimoptions('fsolve','Display','off');
-omega = fsolve(F, init_guess, options);
+omega = fsolve(D, init_guess, options);
 gamma = imag(omega); %imaginary component of angular frequency for GSA
 
 end
