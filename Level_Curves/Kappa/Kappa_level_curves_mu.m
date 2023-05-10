@@ -4,7 +4,7 @@ initial_guesses = zeros(1,length(kplot));
 gamma_xie = zeros(1,length(kplot));
 gamma_root = zeros(1,length(kplot));
 
-kappa = 1;
+kappa = 1; % choose from {1,2,6}
 theta = 1;
 k = 0.5;
 
@@ -14,7 +14,7 @@ for mu=muplot
     init_guess = Vlasov_1D_linearized_Steve_v3_Kappa(k, theta, mu, kappa);
     initial_guesses(count) = init_guess;
     gamma_xie(count) = Kappa_Disp_Using_Xie(k, theta, mu, kappa, init_guess);
-    gamma_root(count) = dielectric(k,theta,theta,mu,mu,1,init_guess);
+    gamma_root(count) = dielectric_kappa(k,theta,theta,mu,mu,1,init_guess);
     count = count+1;
 end
 
