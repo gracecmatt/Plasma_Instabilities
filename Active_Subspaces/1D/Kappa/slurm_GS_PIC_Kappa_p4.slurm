@@ -9,7 +9,7 @@
 ##SBATCH —-account=181218142210
 #SBATCH --exclusive # this is for an exclusive run on one of the 'pankavic' nodes
 #SBATCH --export=ALL
-#SBATCH --time=5:00:00 
+#SBATCH --time=00:30:00 
 # this is the maximum time limit for a job (DD-HH:MM:SS)
                            # any longer than 6 days and the scheduler will kill
                            # it at the end of that time period
@@ -29,4 +29,4 @@ module load apps/matlab/2021b
 
 # run the code and direct all matlab (i.e., command window) output to outfilep6.txt
 
-matlab -nodisplay -nosplash -r Global_Sensitivity_PIC_VP_Kappa_dispersion_rate_p6  > outfilep6.txt
+matlab -nodisplay -nosplash -r Global_Sensitivity_PIC_VP_Kappa_dispersion_rate_p4  > outfilep6.txt
