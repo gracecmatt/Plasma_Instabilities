@@ -7,6 +7,6 @@ The Kappa/Generalized Lorentzian is found in the `1D` and `Projected1D` subfolde
 - Maxwellian [empty]
 - BiMaxwellian [empty]
 - 1D Kappa [complete]
-- 1D BiKappa [complete]
+- 1D BiKappa [empty]
 - Projected1D Kappa [empty]
 - Projected1D BiKappa [empty]
