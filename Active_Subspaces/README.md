@@ -7,3 +7,6 @@
 - 1D BiKappa [complete]
 - Projected1D Kappa [complete]
 - Projected1D BiKappa [empty]
+
+1D Kappa with 10% variation
+![1D Kappa with 10% variation](Projected1D/Kappa/Figs/EigWVSSPfit_Dispersion_Kappa_10_128_2.svg)
