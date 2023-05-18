@@ -8,7 +8,7 @@ function gamma = BiMaxwellian_Disp_Using_Xie(k,sigma1,sigma2,mu1,mu2,beta,init_g
 
     options = optimoptions('fsolve','Display','none','Algorithm','trust-region','FiniteDifferenceType','central');
     % options = optimoptions('fsolve','Display','off','Algorithm','levenberg-marquardt');
-    Fn = 4; % option to define your own F
+    Fn = 0; % 0 = option to define your own F
     Nfourier = 32 % number of Fourier coefficients to take
     D = @(omega) 1-1/k^2*zetaph(omega/k, Fn, F, Nfourier); % dielectric function
     omega = fsolve(D, init_guess, options);
