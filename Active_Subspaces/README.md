@@ -1,15 +1,7 @@
 # README
 
 ## Sub-Folders:
-- Maxwellian [empty]
-- BiMaxwellian [empty]
-- 1D Kappa [complete]
-- 1D BiKappa [complete]
-- Projected1D Kappa [complete]
-- Projected1D BiKappa [empty]
-
-#### 1D Kappa with 10% variation
-![1D Kappa with 10% variation](1D/Kappa/Figs/EigWVSSPfit_Dispersion_BiMax_10_128_2.svg)
-
-#### Projected 1D Kappa with 10% variation
-![Projected 1D Kappa with 10% variation](Projected1D/Kappa/Figs/EigWVSSPfit_Dispersion_Kappa_10_128_2.svg)
+- 1D BiMaxwellian
+- 1D Kappa $\left[\pi\theta^2\left(\kappa-\frac{1}{2}\right)\right]^{-\frac{1}{2}}\frac{\Gamma(\kappa+1)}{\Gamma(\kappa+1/2)}\left[1+\frac{1}{\kappa-\frac{1}{2}}\frac{({u}-{u}_b)^2}{\theta^2}\right]^{-\kappa-1}$
+- 1D BiKappa
+- SummersThorne/1D (1D kappa distribution in Summers & Thorne 1991 paper)
