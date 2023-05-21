@@ -1,6 +1,6 @@
 # README
 
-As of 5/20/23, only level curves for the BiKappa distribution have been uploaded.
+As of 5/20/23, only level curves for the Kappa distribution have been uploaded.
 
 ## Sub-Folders:
 - 1D Kappa $f_{\kappa}(v) = \frac{1}{\sqrt{\pi\theta^2\left(\kappa-\frac{1}{2}\right)}}\frac{\Gamma(\kappa+1)}{\Gamma(\kappa+1/2)}\left[1+\frac{1}{\kappa-\frac{1}{2}}\frac{({v}-{\mu})^2}{\theta^2}\right]^{-\kappa-1}$
