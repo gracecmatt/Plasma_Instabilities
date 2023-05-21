@@ -1,5 +1,5 @@
 function gamma = dielectric_kappa(k, theta1, theta2, mu1, mu2, beta, kappa, init_guess)
-%%%%%%%%%%%%%%%%%%%%%%%% UPDATED TO PROJECTED 1D %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%% UPDATED TO SUMMERS & THORNE 1D %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 if(kappa == 1)
 
