@@ -6,4 +6,4 @@
 - 1D BiKappa $f_{B\kappa}(v) = \frac{\beta}{\sqrt{\pi\theta_1^2\left(\kappa-\frac{1}{2}\right)}} \frac{\Gamma(\kappa+1)}{\Gamma(\kappa+1/2)}\left[1+\frac{1}{\kappa-\frac{1}{2}}\frac{({v}-{\mu_1})^2}{\theta_1^2}\right]^{-\kappa-1} + \frac{1-\beta}{\sqrt{\pi\theta_2^2\left(\kappa-\frac{1}{2}\right)}}   \frac{\Gamma(\kappa+1)}{\Gamma(\kappa+1/2)}\left[1+\frac{1}{\kappa-\frac{1}{2}}\frac{({v}-{\mu_2})^2}{\theta_2^2}\right]^{-\kappa-1}$
 - SummersThorne/1D $f_{\kappa ST}(v)=\frac{1}{\sqrt{\pi\theta^2\kappa^3}}\frac{\Gamma(\kappa+1)}{\Gamma(\kappa-1/2)}\left[1+\frac{v^2}{\kappa\theta^2}\right]^{-\kappa}$
 
-See sufficient summary plots for the kappa bump-on-tail here: [link](https://github.com/gracecmatt/Plasma_Instabilities/blob/main/Active_Subspaces/1D/BiKappa/README.md)
+See sufficient summary plots for the kappa bump-on-tail [here.](https://github.com/gracecmatt/Plasma_Instabilities/blob/main/Active_Subspaces/1D/BiKappa/README.md)
