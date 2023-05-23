@@ -53,7 +53,7 @@ ylabel('Growth Rate','Interpreter','latex','FontSize',14)
 set(get(gca,'Title'),'Units','Normalized','Position',[.45,1.04])
 %xlim([-2,2])
 maxgrowth = max(growth); mingrowth = min(growth);
-ylim([0.9*mingrowth, 1.1*maxgrowth])
+% ylim([0.9*mingrowth, 1.1*maxgrowth])
 %ylim([1.1*mingrowth, 0.9*maxgrowth])
 %ylim([1.1*mingrowth, 0.25])
 axis square;
@@ -89,7 +89,7 @@ ylabel('Growth Rate','Interpreter','latex','FontSize',14)
 set(get(gca,'Title'),'Units','Normalized','Position',[.45,1.04])
 xlim([-2,2])
 maxgrowth = max(growth); mingrowth = min(growth);
-ylim([0.9*mingrowth, 1.1*maxgrowth])
+% ylim([0.9*mingrowth, 1.1*maxgrowth])
 %ylim([1.1*mingrowth, 0.9*maxgrowth])
 %ylim([1.1*mingrowth, 0.25])
 axis square;
@@ -150,17 +150,17 @@ ylabel('Growth Rate','Interpreter','latex','FontSize',14)
 set(get(gca,'Title'),'Units','Normalized','Position',[.45,1.0])
 %xlim([-2,2])
 maxgrowth = max(growth); mingrowth = min(growth);
-ylim([0.9*mingrowth, 1.1*maxgrowth])
+% ylim([0.9*mingrowth, 1.1*maxgrowth])
 %ylim([1.1*mingrowth, 1.1*maxgrowth])
 %ylim([1.1*mingrowth, 0.25])
 %axis square;
 grid on;
 
 set(fig6,'PaperUnits','inches','PaperSize',[11 8])
-hgexport(fig6, ['EigWVSSPfit_Dispersion_KappaBump_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
-hgexport(fig6, ['EigWVSSPfit_Dispersion_KappaBump_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.svg'], hgexport('factorystyle'), 'Format', 'svg');
+% hgexport(fig6, ['EigWVSSPfit_Dispersion_KappaBump_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
+hgexport(fig6, ['Figs/kappa',int2str(kappa),'/EigWVSSPfit_Dispersion_KappaBump_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.svg'], hgexport('factorystyle'), 'Format', 'svg');
 %hgexport(fig6, ['EigWVSSPfit_Dispersion_BiMax_global_' int2str(N) '_' int2str(deg) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
-hgexport(fig6, ['EigWVSSPfit_Dispersion_KappaBump_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
+hgexport(fig6, ['Figs/kappa',int2str(kappa),'/EigWVSSPfit_Dispersion_KappaBump_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
 %hgexport(fig6, ['EigWVSSPfit_Dispersion_BiMax_global_' int2str(N) '_' int2str(deg) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
 
 %hgexport(fig6, ['EigWVSSPfit_Dispersion_BiMax_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.eps'], hgexport('factorystyle'), 'Format', 'eps');

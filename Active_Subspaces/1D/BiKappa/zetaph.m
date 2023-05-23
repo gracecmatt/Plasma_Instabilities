@@ -14,7 +14,6 @@ function [Zp,Z]=zetaph(z,Fn,F,N)
 %     plot(z,real(Z),z,imag(Z));
 %  3. [x,y]=meshgrid(-1:0.1:1,-1:0.1:1); z=x+1i*y; [Zp,Z]=zetaph(z,1); 
 %     subplot(121);surf(x,y,real(Zp)); subplot(122);surf(x,y,imag(Zp));
-    % disp("inside zetaph");
     if nargin<4, N = 128/4; end
 
     % Default for usual Plasma Dispersion Function
@@ -141,7 +140,6 @@ function Z=hilb(z,F,N,del,L)
     idx1=find(imag(z) ~= 0);
     % 2.1 real line
     for id=idx
-        disp("inside Weideman Algorithm Loop 1");
         n  = [-N:N-1]';                   % Compute the collocation points
         v  = L*tan(pi*(n+1/2)/(2*N));
         FF = eval(F);             % sample the function
@@ -159,20 +157,19 @@ function Z=hilb(z,F,N,del,L)
     end
     % 2.2. upper and lower half plane
     for id=idx1
-        % disp("inside Weideman Algorithm Loop 2");
         M = 2*N;  M2 = 2*M;
-        k = [-M+1:1:M-1]';                  % M2 = no. of sampling points
+        k = [-M+1:1:M-1]';% M2 = no. of sampling points
         theta = k*pi/M; v = L*tan(theta/2);     % define theta & v
-        FF = eval(F);                       % sample the function
+        FF = eval(F);             % sample the function
         FF(isnan(FF))=0;
         Fz = eval(['@(v)',F]);    % define F(z), for analytic continuation
         
         % Weideman94 method to calculate upper half plane Hilbert transform
-        W = (L^2+v.^2);                       % default weight function
+        W = (L^2+v.^2);                         % default weight function
         FF = FF.*W; FF = [0; FF];             % function to be transformed
         a = (fft(fftshift(FF)))/M2;           % coefficients of transform
         a0 = a(1); a = flipud(a(2:N+1));            % reorder coefficients
-        z1 = (imag(z(id))>0).*z(id)+(imag(z(id))<0).*conj(z(id)); %pole??????? (GM)
+        z1 = (imag(z(id))>0).*z(id)+(imag(z(id))<0).*conj(z(id));
         t = (L+1i*z1)./(L-1i*z1); p = polyval(a,t); % polynomial evaluation
         h = 1i*(2*p./(L-1i*z1).^2+(a0/L)./(L-1i*z1));  % Evaluate h(f(v))
         % convert upper half-plane results to lower half-plane if necesary
