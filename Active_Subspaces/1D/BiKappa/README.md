@@ -1,9 +1,5 @@
 # README
 
-## Things to Do
-1. Make sub-folders for specific parameter combinations when plotting, and auto-save figures into correct folders
-
-
 ## Summary of Files
 1. `Global_Sens_Plots_from_Data_Instability.m` Plots the 1D sufficient summary plots with some variation from a given base parameter set. 
 2. `Global_Sensitivity_PIC_VP_Kappa_dispersion_rate_p6.m` Code to run active subspaces.
@@ -17,42 +13,42 @@
 ## Sufficient Summary Plots
 ### Kappa = 1
 #### Bi-Kappa $(\kappa=1)$ with 1% Variation
-![1% Variation](1D/BiKappa/Figs/kappa1/EigWVSSPfit_Dispersion_KappaBump_1_512_2.svg)
+![1% Variation](Figs/kappa1/EigWVSSPfit_Dispersion_KappaBump_1_512_2.svg)
 #### Bi-Kappa $(\kappa=1)$ with 5% Variation
-![5% Variation](1D/BiKappa/Figs/kappa1/EigWVSSPfit_Dispersion_KappaBump_5_512_2.svg)
+![5% Variation](Figs/kappa1/EigWVSSPfit_Dispersion_KappaBump_5_512_2.svg)
 #### Bi-Kappa $(\kappa=1)$ with 10% Variation
-![10% Variation](1D/BiKappa/Figs/kappa1/EigWVSSPfit_Dispersion_KappaBump_10_512_2.svg)
+![10% Variation](Figs/kappa1/EigWVSSPfit_Dispersion_KappaBump_10_512_2.svg)
 #### Bi-Kappa $(\kappa=1)$ with 15% Variation
-![15% Variation](1D/BiKappa/Figs/kappa1/EigWVSSPfit_Dispersion_KappaBump_15_512_2.svg)
+![15% Variation](Figs/kappa1/EigWVSSPfit_Dispersion_KappaBump_15_512_2.svg)
 #### Bi-Kappa $(\kappa=1)$ with 25% Variation
-![25% Variation](1D/BiKappa/Figs/kappa1/EigWVSSPfit_Dispersion_KappaBump_25_512_2.svg)
+![25% Variation](Figs/kappa1/EigWVSSPfit_Dispersion_KappaBump_25_512_2.svg)
 #### Bi-Kappa $(\kappa=1)$ with 50% Variation
-![50% Variation](1D/BiKappa/Figs/kappa1/EigWVSSPfit_Dispersion_KappaBump_50_512_2.svg)
+![50% Variation](Figs/kappa1/EigWVSSPfit_Dispersion_KappaBump_50_512_2.svg)
 
 ### Kappa = 2
 #### Bi-Kappa $(\kappa=2)$ with 1% Variation
-![1% Variation](1D/BiKappa/Figs/kappa2/EigWVSSPfit_Dispersion_KappaBump_1_512_2.svg)
+![1% Variation](Figs/kappa2/EigWVSSPfit_Dispersion_KappaBump_1_512_2.svg)
 #### Bi-Kappa $(\kappa=2)$ with 5% Variation
-![5% Variation](1D/BiKappa/Figs/kappa2/EigWVSSPfit_Dispersion_KappaBump_5_512_2.svg)
+![5% Variation](Figs/kappa2/EigWVSSPfit_Dispersion_KappaBump_5_512_2.svg)
 #### Bi-Kappa $(\kappa=2)$ with 10% Variation
-![10% Variation](1D/BiKappa/Figs/kappa2/EigWVSSPfit_Dispersion_KappaBump_10_512_2.svg)
+![10% Variation](Figs/kappa2/EigWVSSPfit_Dispersion_KappaBump_10_512_2.svg)
 #### Bi-Kappa $(\kappa=2)$ with 15% Variation
-![15% Variation](1D/BiKappa/Figs/kappa2/EigWVSSPfit_Dispersion_KappaBump_15_512_2.svg)
+![15% Variation](Figs/kappa2/EigWVSSPfit_Dispersion_KappaBump_15_512_2.svg)
 #### Bi-Kappa $(\kappa=2)$ with 25% Variation
-![25% Variation](1D/BiKappa/Figs/kappa2/EigWVSSPfit_Dispersion_KappaBump_25_512_2.svg)
+![25% Variation](Figs/kappa2/EigWVSSPfit_Dispersion_KappaBump_25_512_2.svg)
 #### Bi-Kappa $(\kappa=2)$ with 50% Variation
-![50% Variation](1D/BiKappa/Figs/kappa2/EigWVSSPfit_Dispersion_KappaBump_50_512_2.svg)
+![50% Variation](Figs/kappa2/EigWVSSPfit_Dispersion_KappaBump_50_512_2.svg)
 
 ### Kappa = 6
 #### Bi-Kappa $(\kappa=6)$ with 1% Variation
-![1% Variation](1D/BiKappa/Figs/kappa6/EigWVSSPfit_Dispersion_KappaBump_1_512_2.svg)
+![1% Variation](Figs/kappa6/EigWVSSPfit_Dispersion_KappaBump_1_512_2.svg)
 #### Bi-Kappa $(\kappa=6)$ with 5% Variation
-![5% Variation](1D/BiKappa/Figs/kappa6/EigWVSSPfit_Dispersion_KappaBump_5_512_2.svg)
+![5% Variation](Figs/kappa6/EigWVSSPfit_Dispersion_KappaBump_5_512_2.svg)
 #### Bi-Kappa $(\kappa=6)$ with 10% Variation
-![10% Variation](1D/BiKappa/Figs/kappa6/EigWVSSPfit_Dispersion_KappaBump_10_512_2.svg)
+![10% Variation](Figs/kappa6/EigWVSSPfit_Dispersion_KappaBump_10_512_2.svg)
 #### Bi-Kappa $(\kappa=6)$ with 15% Variation
-![15% Variation](1D/BiKappa/Figs/kappa6/EigWVSSPfit_Dispersion_KappaBump_15_512_2.svg)
+![15% Variation](Figs/kappa6/EigWVSSPfit_Dispersion_KappaBump_15_512_2.svg)
 #### Bi-Kappa $(\kappa=6)$ with 25% Variation
-![25% Variation](1D/BiKappa/Figs/kappa6/EigWVSSPfit_Dispersion_KappaBump_25_512_2.svg)
+![25% Variation](Figs/kappa6/EigWVSSPfit_Dispersion_KappaBump_25_512_2.svg)
 #### Bi-Kappa $(\kappa=6)$ with 50% Variation
-![50% Variation](1D/BiKappa/Figs/kappa6/EigWVSSPfit_Dispersion_KappaBump_50_512_2.svg)
+![50% Variation](Figs/kappa6/EigWVSSPfit_Dispersion_KappaBump_50_512_2.svg)
