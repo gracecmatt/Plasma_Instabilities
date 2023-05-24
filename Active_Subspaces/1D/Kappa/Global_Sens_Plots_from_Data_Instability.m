@@ -9,7 +9,7 @@ semilogy(1:Nparams,evalues,'.-b','MarkerSize',30)
 title(['Eigenvalues of C (N = ' int2str(N) ')'],'Interpreter','latex','Fontsize',16,'FontWeight','bold','Position',[12.5 180 0])
 xlim([0,Nparams+1])
 xticks(1:Nparams)
-set(get(gca,'Title'),'Units','Normalized','Position',[.45,1.04])
+set(get(gca,'Title'),'Units','Normalized','Position',[.4,1.04])
 set(fig,'PaperUnits','inches','PaperSize',[10 8])
 %hgexport(fig, ['Evalues_Dispersion_' num2str(xu(2)) '_' int2str(N) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
 %hgexport(fig, ['Evalues_Dispersion_' num2str(xu(2)) '_' int2str(N) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
@@ -23,7 +23,7 @@ ylim([-1,1])
 title(['Weight Vector (N = ' int2str(N) ')'],'Interpreter','latex','Fontsize',16,'FontWeight','bold','Position',[12.5 1.05 0])
 xlabel('Parameters','Interpreter','latex','Fontsize',14)
 ylabel('Parameter Weights','Interpreter','latex','Fontsize',14)
-set(get(gca,'Title'),'Units','Normalized','Position',[.45,1.04])
+set(get(gca,'Title'),'Units','Normalized','Position',[.4,1.04])
 set(gca,'TickLabelInterpreter','latex');
 xticks(1:Nparams)
 % Include Latex Parameter Ticks - uses alpha, k, mu, sigma
@@ -50,7 +50,7 @@ plot(Xs*w,growth,'ko');
 title(['Sufficient Summary Plot (N = ' int2str(N) ')'],'Interpreter','latex','Fontsize',16,'FontWeight','bold','Position',[-.15 1130 0])
 xlabel('$w^T p_j$','Interpreter','latex','FontSize',14)
 ylabel('Growth Rate','Interpreter','latex','FontSize',14)
-set(get(gca,'Title'),'Units','Normalized','Position',[.45,1.04])
+set(get(gca,'Title'),'Units','Normalized','Position',[.4,1.04])
 %xlim([-2,2])
 maxgrowth = max(growth); mingrowth = min(growth);
 %ylim([0.9*mingrowth, 1.1*maxgrowth])
@@ -86,7 +86,7 @@ plot(Xs*w,growth,'ko');
 title(['Sufficient Summary Plot (N = ' int2str(N) ')'],'Interpreter','latex','Fontsize',16,'FontWeight','bold','Position',[-.15 1130 0])
 xlabel('$w^T p_j$','Interpreter','latex','FontSize',14)
 ylabel('Growth Rate','Interpreter','latex','FontSize',14)
-set(get(gca,'Title'),'Units','Normalized','Position',[.45,1.04])
+set(get(gca,'Title'),'Units','Normalized','Position',[.4,1.04])
 xlim([-2,2])
 maxgrowth = max(growth); mingrowth = min(growth);
 %ylim([0.9*mingrowth, 1.1*maxgrowth])
@@ -104,7 +104,7 @@ plot(Xs*w,error,'ob')
 title(['Polynomial Appx Error (degree = ',num2str(deg), ')'],'Interpreter','latex','FontSize',14)
 xlabel('$w^T p_j$','Interpreter','latex','FontSize',14)
 ylabel('Error','Interpreter','latex','FontSize',14)
-set(get(gca,'Title'),'Units','Normalized','Position',[.45,1.04])
+set(get(gca,'Title'),'Units','Normalized','Position',[.4,1.04])
 axis square;
 grid on;
 %set(fig5,'PaperUnits','inches','PaperSize',[10 8])
@@ -146,7 +146,7 @@ plot(Xs*w,growth,'ko');
 title('Sufficient Summary Plot','Interpreter','latex','Fontsize',16,'FontWeight','bold','Position',[-.15 1130 0])
 xlabel('$w^T p_j$','Interpreter','latex','FontSize',14)
 ylabel('Growth Rate','Interpreter','latex','FontSize',14)
-set(get(gca,'Title'),'Units','Normalized','Position',[.4,1.04])
+set(get(gca,'Title'),'Units','Normalized','Position',[.5,1.04])
 %xlim([-2,2])
 maxgrowth = max(growth); mingrowth = min(growth);
 %ylim([0.9*mingrowth, 1.1*maxgrowth])
@@ -156,10 +156,10 @@ maxgrowth = max(growth); mingrowth = min(growth);
 grid on;
 
 set(fig6,'PaperUnits','inches','PaperSize',[11 8])
-hgexport(fig6, ['Figs/EigWVSSPfit_Dispersion_BiMax_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
-hgexport(fig6, ['Figs/EigWVSSPfit_Dispersion_BiMax_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.svg'], hgexport('factorystyle'), 'Format', 'svg');
+hgexport(fig6, ['Figs/kappa',int2str(kappa),'/EigWVSSPfit_Dispersion_Kappa_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
+hgexport(fig6, ['Figs/kappa',int2str(kappa),'/EigWVSSPfit_Dispersion_Kappa_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.svg'], hgexport('factorystyle'), 'Format', 'svg');
 %hgexport(fig6, ['EigWVSSPfit_Dispersion_BiMax_global_' int2str(N) '_' int2str(deg) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
-hgexport(fig6, ['Figs/EigWVSSPfit_Dispersion_BiMax_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
+hgexport(fig6, ['Figs/kappa',int2str(kappa),'/EigWVSSPfit_Dispersion_Kappa_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
 %hgexport(fig6, ['EigWVSSPfit_Dispersion_BiMax_global_' int2str(N) '_' int2str(deg) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
 
 %hgexport(fig6, ['EigWVSSPfit_Dispersion_BiMax_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
