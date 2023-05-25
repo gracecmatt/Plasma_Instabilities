@@ -1,7 +1,5 @@
 # README
 
-Both sub-folders are complete with code to run the active subspace algorithm. Currently the Xie code is not producing the predicted results, but the `dielectric_kappa()` function works and is generalized to the BiKappa. Setting the 6th entry in the function to 1 removes the bump.
-
 ## Sub-Folders:
 - 1D BiMaxwellian $f_{BM}(v) = \frac{\beta}{\sqrt{\pi\sigma_1^2}}\text{exp}\left[-\frac{|v-\mu_1|^2}{\sigma_1^2}\right] + \frac{1-\beta}{\sqrt{\pi\sigma_2^2}}\text{exp}\left[-\frac{|v-\mu_2|^2}{\sigma_2^2}\right]$
 - 1D Kappa $f_{\kappa}(v) = \frac{1}{\sqrt{\pi\theta^2\left(\kappa-\frac{1}{2}\right)}}\frac{\Gamma(\kappa+1)}{\Gamma(\kappa+1/2)}\left[1+\frac{1}{\kappa-\frac{1}{2}}\frac{({v}-{\mu})^2}{\theta^2}\right]^{-\kappa-1}$
