@@ -12,8 +12,9 @@ if(kappa == 1)
     +(sqrt(-1)*8).*2.^(1/2).*k.^3.*omega.*(theta2.^2).^(3/2));
 
     options = optimoptions('fsolve','Display','off');
+    % solve for complex roots
     omega = fsolve(D, init_guess, options);
-    gamma = imag(omega); %imaginary component of angular frequency for GSA
+    gamma = imag(omega); 
 
 
 elseif(kappa == 2)
@@ -35,8 +36,9 @@ elseif(kappa == 2)
     *144).*6.^(1/2).*mu2.*theta2.^4.*(theta2.^2).^(1/2)));
 
     options = optimoptions('fsolve','Display','off');
+    % solve for complex roots
     omega = fsolve(D, init_guess, options);
-    gamma = imag(omega); %imaginary component of angular frequency for GSA
+    gamma = imag(omega); 
 
 elseif(kappa == 6)
 
@@ -86,8 +88,9 @@ elseif(kappa == 6)
     329832448).*22.^(1/2).*mu2.*theta2.^12.*(theta2.^2).^(1/2)));
 
     options = optimoptions('fsolve','Display','off');
+    % solve for complex roots
     omega = fsolve(D, init_guess, options);
-    gamma = imag(omega); %imaginary component of angular frequency for GSA
+    gamma = imag(omega); 
 
 else
     disp('Error: kappa is not equal to 1, 2, or 6');
