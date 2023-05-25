@@ -29,4 +29,4 @@ module load apps/matlab/2021b
 
 # run the code and direct all matlab (i.e., command window) output to outfilep6.txt
 
-matlab -nodisplay -nosplash -r Global_Sensitivity_PIC_VP_Kappa_dispersion_rate_p6  > outfilep6.txt
+matlab -nodisplay -nosplash -r Global_Sensitivity_PIC_VP_Kappa_dispersion_rate_p3
