@@ -158,9 +158,9 @@ function Z=hilb(z,F,N,del,L)
     % 2.2. upper and lower half plane
     for id=idx1
         M = 2*N;  M2 = 2*M;
-        k = [-M+1:1:M-1]';% M2 = no. of sampling points
+        k = [-M+1:1:M-1]';          % M2 = no. of sampling points
         theta = k*pi/M; v = L*tan(theta/2);     % define theta & v
-        FF = eval(F);             % sample the function
+        FF = eval(F);               % sample the function
         FF(isnan(FF))=0;
         Fz = eval(['@(v)',F]);    % define F(z), for analytic continuation
         
@@ -168,7 +168,7 @@ function Z=hilb(z,F,N,del,L)
         W = (L^2+v.^2);                         % default weight function
         FF = FF.*W; FF = [0; FF];             % function to be transformed
         a = (fft(fftshift(FF)))/M2;           % coefficients of transform
-        a0 = a(1); a = flipud(a(2:N+1));            % reorder coefficients
+        a0 = a(1); a = flipud(a(2:N+1));            % reorder coefficients ------- why are they flipping order of the coefficients here -polyval!
         z1 = (imag(z(id))>0).*z(id)+(imag(z(id))<0).*conj(z(id));
         t = (L+1i*z1)./(L-1i*z1); p = polyval(a,t); % polynomial evaluation
         h = 1i*(2*p./(L-1i*z1).^2+(a0/L)./(L-1i*z1));  % Evaluate h(f(v))
@@ -177,10 +177,10 @@ function Z=hilb(z,F,N,del,L)
         Z(id) = h.*(imag(z(id))>0)+(conj(h)+...
             del*2i.*Fz(z(id))).*(imag(z(id))<0);
 
-        % --- code to plot Fourier coefficients (5/18/23) ---
-        plot(1:N,abs(a),'linewidth',2); 
+        % --- code to plot Fourier coefficients (gm 5/18/23) ---
+        plot(1:N,abs(flipud(a)),'linewidth',2); grid on;
         xlabel('term number in Fourier series');
-        ylabel('magnitude of coefficient');
+        ylabel('magnitude of coefficient');ylim([0,15]);
         title('complex magnitude of Fourier coefficients')
     end
     Z=Z.*pi;

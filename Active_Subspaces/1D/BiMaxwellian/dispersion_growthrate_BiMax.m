@@ -14,8 +14,8 @@ function gamma = dispersion_growthrate_BiMax(p)
 
 k = p(1);
 
-mu_1 =  p(2); mu_2  = p(3) ;
-sigma_1 = p(4) ; sigma_2 = p(5) ;
+sigma_1 = p(2) ; sigma_2 = p(3) ;
+mu_1 =  p(4); mu_2  = p(5) ;
 beta_1 = p(6) ; beta_2 =  1-beta_1;
 
 guess_real = 1;%1; %p(8)
@@ -30,7 +30,7 @@ F = @(z) [real(1+(beta_1/(sigma_1*k^2))*(1+A1(z(1),z(2))*zetaf(A1(z(1),z(2))))+(
 
 options = optimset('Display','off');
 z_r1 = fsolve(F, [guess_real, guess_imag], options);
-%gamma = k*(z_r1(1) +1i*z_r1(2)); % complex-valued angular frequency
+% gamma = k*(z_r1(1) +1i*z_r1(2)); % complex-valued angular frequency
 gamma = k*z_r1(2); %imaginary component of angular frequency for GSA
 
        
