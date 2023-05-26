@@ -20,9 +20,9 @@ Xs = zeros(N,Nparams);                      %To save the normalized parameters
 %I = eye(Nparams);                     
 
 % vals = [k, sigma1, sigma2, mu1, mu2, beta]
-setvals = [0.5; 0.25; 0.25; 0; 4; 0.9];
+setvals = [0.5; 0.5; 0.5; 0; 4; 0.8];
 
-var = 0.25; % x 100% variation considered 
+var = 0.50; % x 100% variation considered 
 xl = (1-var)*setvals;
 xu = (1+var)*setvals;
 
@@ -41,10 +41,10 @@ parfor jj = 1:N
     params = 1/2*(diag(xu - xl)*Xs(jj,:)' + (xu + xl));
 
     % Numerically solve 1D Vlasov-Poisson with baseline parameters
-    % init_guess = dispersion_growthrate_BiMax(params);
+    init_guess = Vlasov_1D_linearized_Steve_v4(params(1), params(2), params(3), params(4), params(5), params(6))
     % growth(jj) = BiMaxwellian_Disp_Using_Xie(params(1), params(2), params(3), params(4), params(5), params(6), init_guess);
-    omega = Vlasov_1D_linearized_Steve_v4(params(1), params(2), params(3), params(4), params(5), params(6))
-    growth(jj) = imag(omega);
+    growth(jj) = dispersion_growthrate_BiMax(params, init_guess);
+    
     %while growth(jj) < 0 || growth(jj) > 2 
     % while (growth(jj) > 5  || growth(jj) < 1e-10)
     %     Xs(jj,:) = 2*rand(1,Nparams) - 1;
@@ -61,11 +61,11 @@ parfor jj = 1:N
         xplus = randparams + h*I(:,kk);
         paramsplus = 1/2*(diag(xu - xl)*xplus + (xu + xl));
 
-        % init_guess = dispersion_growthrate_BiMax(paramsplus);
+        init_guess_plus = Vlasov_1D_linearized_Steve_v4(paramsplus(1),paramsplus(2),paramsplus(3),paramsplus(4),paramsplus(5),paramsplus(6));
         % growth_plus(jj, kk) = BiMaxwellian_Disp_Using_Xie(paramsplus(1),paramsplus(2),paramsplus(3),paramsplus(4),paramsplus(5),paramsplus(6),init_guess);
-        %%growth_plus(jj, kk) = dispersion_growthrate_BiMax(paramsplus);
-        omega = Vlasov_1D_linearized_Steve_v4(paramsplus(1),paramsplus(2),paramsplus(3),paramsplus(4),paramsplus(5),paramsplus(6));
-        growth_plus(jj, kk) = imag(omega);
+        growth_plus(jj, kk) = dispersion_growthrate_BiMax(paramsplus,init_guess_plus);
+ 
+
         %while growth_plus(jj,kk) <0 || growth_plus(jj,kk) >2 % set to 2 for 10%, set to 1 for 25% runs
         % while (growth_plus(jj,kk) > 5 || growth_plus(jj,kk) < 1e-10)
         %     xplus = randparams + h*I(:,kk);

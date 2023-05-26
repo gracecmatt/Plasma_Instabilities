@@ -137,7 +137,7 @@ xticks(1:Nparams)
 %set(gca,'XTickLabel',{'$k$','$\mu$','$\sigma^2$'})
 %set(gca,'XTickLabel',{'$\alpha$','$k$','$\mu$','$\sigma^2$','$\beta$'})
 %set(gca,'XTickLabel',{'$\beta_1$' '$\sigma^2_1$' '$\mu_1$' '$\beta_2$' '$\sigma^2_2$' '$\mu_2$' '$k$'})
-set(gca,'XTickLabel',{'$k$' '$\mu_1$' '$\mu_2$' '$\sigma^2_1$' '$\sigma^2_2$' '$\beta$'})
+set(gca,'XTickLabel',{'$k$' '$\sigma_1$' '$\sigma_2$' '$\mu_1$' '$\mu_2$' '$\beta$'})
 
 subplot(1,3,3), plot(A(:,1), A(:,2), 'r');
 hold on
@@ -146,7 +146,7 @@ plot(Xs*w,growth,'ko');
 title('Sufficient Summary Plot','Interpreter','latex','Fontsize',16,'FontWeight','bold','Position',[-.15 1130 0])
 xlabel('$w^T p_j$','Interpreter','latex','FontSize',14)
 ylabel('Growth Rate','Interpreter','latex','FontSize',14)
-set(get(gca,'Title'),'Units','Normalized','Position',[.45,1.0])
+set(get(gca,'Title'),'Units','Normalized','Position',[.55,1.0])
 %xlim([-2,2])
 maxgrowth = max(growth); mingrowth = min(growth);
 % ylim([0.9*mingrowth, 1.1*maxgrowth])

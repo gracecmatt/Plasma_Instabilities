@@ -1,25 +1,19 @@
-function gamma = dispersion_growthrate_BiMax(p)
+function gamma = dispersion_growthrate_BiMax(p,init_guess)
 % Calculating growth rate (imaginary component of angular frequency) using
 % explicit root finding method for dispersion relation.
 % ---Requires "zetaf.m" - representation of Z function
 % ---Input p is an 8-parameter array in the form p=[alpha k mu sigma]
 
 % BiMaxwellian/Bump-on-Tail
-% %
-% beta_1 = p(1) ; beta_2 =  1-beta_1;
-% sigma_1 = p(2) ; sigma_2 = p(4) ;
-% mu_1 =  p(3); mu_2  = p(5) ;
-% 
-% k = p(6);
 
 k = p(1);
 
-sigma_1 = p(2) ; sigma_2 = p(3) ;
-mu_1 =  p(4); mu_2  = p(5) ;
-beta_1 = p(6) ; beta_2 =  1-beta_1;
+sigma_1 = (p(2))^2 ;    sigma_2 = (p(3))^2 ;
+mu_1 =  p(4);           mu_2  = p(5) ;
+beta_1 = p(6) ;         beta_2 =  1-beta_1;
 
-guess_real = 1;%1; %p(8)
-guess_imag = 0.5;%0.5; %p(9)
+guess_real = real(init_guess); 
+guess_imag = imag(init_guess); 
 
 
 A1 = @(zr, zi) (1/(sqrt(2*sigma_1)))*(zr + 1i*zi- mu_1);
