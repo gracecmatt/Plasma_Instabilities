@@ -1,6 +1,9 @@
 # Plasma Instabilities Research
 
 ## Updates:
+#### 7/10/2023 GM
+Organized and added notes to [folder](Notes).
+
 #### 5/11/2023 GM
 Started moving files to re-organize everything. The three folders to be used are `Level_Curves`, `Active_Subspaces`, and `Dielectric_Functions`. 
 
