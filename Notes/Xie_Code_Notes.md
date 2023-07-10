@@ -1,4 +1,4 @@
-## zetaph.m
+## Notes on zetaph.m
 **Objective:** Given a distribution,   
 **Inputs:** `z`= discretized complex independent variable, `Fn` = choice of function to model, `F` = distribution?, `N` = number of points  
 **Outputs:** `Z` = approximation to $\int_{-\infty}^\infty\frac{F(z)}{z-\xi} dz$, `Zp` = approximation to $\int_{-\infty}^\infty\frac{F'(z)}{z-\xi}dz$.   
