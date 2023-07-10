@@ -2,7 +2,7 @@
 
 ## Updates:
 #### 7/10/2023 GM
-Organized and added notes to [folder](Notes). Added half-integer $\kappa$ dielectric functions to [folder](Dielectric_Functions).
+Organized and added notes to [folder](Notes). Added half-integer $\kappa$ dielectric functions to [folder](Dielectric_Functions/Kappa1D).
 
 #### 5/11/2023 GM
 Started moving files to re-organize everything. The three folders to be used are `Level_Curves`, `Active_Subspaces`, and `Dielectric_Functions`. 
