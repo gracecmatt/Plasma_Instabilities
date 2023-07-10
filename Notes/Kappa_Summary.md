@@ -1,4 +1,4 @@
-# Summary of Kappa for Stability Analysis via Linearized Dispersion Relation
+# Summary of Kappa Equilibrium Distribution for Stability Analysis via Linearized Dispersion Relation
 **Grace Mattingly**  
 **July 10, 2023**
 
@@ -37,14 +37,14 @@ v_1&=\omega/k && \text{principle root}\\
 v_{2,3}&=\mu\pm i\theta\sqrt{\kappa-1/2} && \text{multiplicity $(\kappa+2)$}
 \end{align}$$
 
-We can use Mathematica's `Residue[]` function to evaluate the integrand at the pole. I think the function takes the appropriate derivatives before evaluating.
+We can use Mathematica's `Residue[]` function to evaluate the integrand at the poles above the Landau contour in $\mathbb{C}$. These will always be $r_1$ and $r_2$ regardless of the value of $\text{Im}(\omega)$.
 
 ### Half-Integer Values, $\kappa=\frac{\nu}{2}; \nu\in\mathbb{N}$
-In the case above, the `Integrate[]` function from Mathematica works to compute $F_\kappa(\omega,k)$ as well. This has been verified analytically in Mathematica by subtracting the two results. 
+In the case above, the `Integrate[]` function from Mathematica works to compute $F_\kappa(\omega,k)$ as well. This has been verified analytically in Mathematica by subtracting the two results and simplifying.
 
 It seems that `Integrate[]` can also handle half-integer values, but I cannot verify the accuracy of the result the same way as before. The script takes a much longer time to run, and for $\kappa=3/2$, the solution has an equality condition to be satisfied. 
 
-I want to investigate how `Integrate[]` is solving this complex integral.
+I want to investigate how `Integrate[]` is solving this complex integral. Half-integer values should require integrating through a branch cut (I think).
 
 ### Current Simulations
 So far I can solve the integral $F_\kappa(\omega,k)$ for $\kappa$ values of:
