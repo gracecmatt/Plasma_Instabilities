@@ -20,7 +20,7 @@ The dispersion relation depends heavily on the derivative of the equilibrium dis
 
 $$\displaystyle f_\kappa'(v;\mu,\theta)=\frac{-2(v-\mu)(\kappa+1)}{\sqrt{\pi}\theta^3(\kappa-\frac{1}{2})^{3/2}}\frac{\Gamma(\kappa+1)}{\Gamma(\kappa+\frac{1}{2})}\left[1+\frac{|v-\mu|^2}{\theta^2(\kappa-\frac{1}{2})}\right]^{-(\kappa+2)}$$
 
-We require $\kappa>1/2$ and if $\kappa\in\mathbb{N}=\{1,2,3,\dots \}$, then this integral can be solved with the Residue Theorem. Focusing on just the integral, we have:
+We require $\kappa>1/2$ and if $\kappa\in\mathbb{N}={1,2,3,\dots}$, then this integral can be solved with the Residue Theorem. Focusing on just the integral, we have:
 
 $$\begin{align}
 \displaystyle F_\kappa(\omega,k;\mu,\theta)&=\int_{-\infty}^{\infty}\frac{-2(v-\mu)(\kappa+1)}{\sqrt{\pi}\theta^3(\kappa-\frac{1}{2})^{3/2}}\frac{\Gamma(\kappa+1)}{\Gamma(\kappa+\frac{1}{2})}\left[1+\frac{|v-\mu|^2}{\theta^2(\kappa-\frac{1}{2})}\right]^{-(\kappa+2)}\frac{dv}{v-\omega/k}\\
