@@ -31,6 +31,7 @@ where the proportionality constant is $A(\kappa,\theta)=\frac{-2(\kappa+1)}{\sqr
 
 ### Integer Values, $\kappa\in\mathbb{N}$
 Using the Residue Theorem requires knowing the poles of the integrand. These are:
+
 $$\begin{align}
 v_1&=\omega/k && \text{principle root}\\
 v_{2,3}&=\mu\pm i\theta\sqrt{\kappa-1/2} && \text{multiplicity $(\kappa+2)$}
