@@ -47,7 +47,7 @@ $$\begin{equation}
 
 ***
 ## Modified Dispersion Relation, Summers and Thorne (1991)
-<img src="SummersThorne_LandauContour.png" width="261x" height="600x" align="right">
+<img src="Figures/SummersThorne_LandauContour.png" width="261x" height="600x" align="right">
 
 Summers and Thorne perform the same computation as Landau for the Lorentizian and Kappa distribution function in 3D (see equation below). Given the principle root $\xi=\frac{\omega_R+i\gamma}{k\theta}$, they define the *modified plasma dispersion function* for $\kappa\in\mathbb{Z}^+$ by 
 
