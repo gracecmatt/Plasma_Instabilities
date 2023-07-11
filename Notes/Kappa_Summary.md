@@ -63,7 +63,7 @@ So far I can solve the integral ${F}_\kappa(\omega,k)$ for $\kappa$ values of:
 - $[1,2,3,...]$
 - $[3/2,5/2,7/2,9/2]$
 
-See [this folder](Dielectric_Functions/Kappa1D) for the Mathematica-generated \textsc{Matlab} dielectric function files.
+See [this folder](Plasma_Instabilities/Dielectric_Functions/Kappa1D) for the Mathematica-generate Matlab dielectric function files.
 
 The following values of $\kappa$ did **not** result in a solution:
 
