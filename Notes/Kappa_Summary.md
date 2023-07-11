@@ -11,11 +11,9 @@ f_\kappa(v;\mu,\theta)=\frac{1}{\sqrt{\pi\theta^2(\kappa-\frac{1}{2})}}\frac{\Ga
 
 This distribution was chosen following the convention of this paper:
 [Livadiotis and McComas (2013)](https://github.com/gracecmatt/Plasma_Instabilities/blob/main/Notes/Summaries_of_Papers.md#understanding-kappa-distributions-a-toolbox-for-space-science-and-astrophysics-livadiotis-and-mccomas-2013)
-![[Summaries_of_Papers#understanding-kappa-distributions-a-toolbox-for-space-science-and-astrophysics-livadiotis-and-mccomas-2013]]
 
-This one was chosen following the advise of this editorial:
+It was chosen following the advice of this editorial:
 [Fichtner and Lazar (2021)](https://github.com/gracecmatt/Plasma_Instabilities/blob/main/Notes/Summaries_of_Papers.md#kappa-distributions-from-observational-evidences-via-controvesial-predictions-to-a-consistent-theory-of-nonequilibrium-plasmas-fichtner-and-lazar-2021)
-![[Summaries_of_Papers#kappa-distributions-from-observational-evidences-via-controvesial-predictions-to-a-consistent-theory-of-nonequilibrium-plasmas-fichtner-and-lazar-2021]]
 
 > Talk about which $\kappa$ values are important and why - from experimental data
 
@@ -27,10 +25,7 @@ D(\omega,k)=1-\frac{1}{k^2}\int_{-\infty}^{\infty} \frac{f_{eq}'(v)}{v-\omega/k}
 
 where $\omega=\Omega+i\gamma$ and $\Omega,\gamma\in\mathbb{R}$. The integral over the real line, $F_{eq}(\omega,k)=\int_{-\infty}^{\infty} \frac{{f_{eq}}'(v)}{v-\omega/k} dv$, must be solved by analytically continuing the integrand into the complex plane. This is done following the method of Landau. Long story short, the result will be equivalent to assuming $\text{Im}(\omega)=\gamma>0$.
 
-Find out more in this paper by Landau (1946). To equate the equations, let $\omega=is$.
-[Lev Landau (1946)](https://github.com/gracecmatt/Plasma_Instabilities/blob/main/Notes/Summaries_of_Papers.md#on-the-vibrations-of-the-electrostatic-plasma-lev-landau-1946)
-![[Summaries_of_Papers#on-the-vibrations-of-the-electrostatic-plasma-lev-landau-1946]]
-
+Find out more in this paper by [Lev Landau (1946)](https://github.com/gracecmatt/Plasma_Instabilities/blob/main/Notes/Summaries_of_Papers.md#on-the-vibrations-of-the-electrostatic-plasma-lev-landau-1946). To equate the equations, let $\omega=is$.
 
 The dispersion relation depends heavily on the derivative of the equilibrium distribution function of interest. Differentiating $f_\kappa(v)$ above gives:
 
