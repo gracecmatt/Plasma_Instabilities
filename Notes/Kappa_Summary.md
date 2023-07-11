@@ -57,13 +57,13 @@ The `Integrate[]` function from Mathematica works to compute ${F}_\kappa(\omega,
 ## Half-Integer Values, $\kappa=\frac{\nu}{2}; \nu\in\mathbb{N}$
 It seems that `Integrate[]` can also handle half-integer values, but I cannot verify the accuracy of the result the same way as before. The script takes a much longer time to run, and for $\kappa=3/2$, the solution has an equality condition to be satisfied. 
 
-I want to investigate how `Integrate[]` is solving this complex integral. Half-integer values should require integrating through a branch cut (I think).
-
 ## Current Simulations
 So far I can solve the integral ${F}_\kappa(\omega,k)$ for $\kappa$ values of:
 
 - $[1,2,3,...]$
 - $[3/2,5/2,7/2,9/2]$
+
+See [this folder](Dielectric_Functions/Kappa1D) for the Mathematica-generated \textsc{Matlab} dielectric function files.
 
 The following values of $\kappa$ did **not** result in a solution:
 
