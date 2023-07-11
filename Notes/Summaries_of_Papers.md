@@ -1,4 +1,6 @@
 # Summaries of Papers
+**Grace Mattingly**  
+**July 11, 2023**
 
 ## On the Vibrations of the Electrostatic Plasma, Lev Landau (1946)
 Governing equations are Vlasov-Poisson for an electron plasma with neutralizing ionic background projected along the $x$ direction. He takes the Fourier transform in $x$ and Laplace transform in $t$ of both the kinetic equation and potential integral, resulting in the following solution in the form of an inverse Laplace transform:
