@@ -58,12 +58,12 @@ The `Integrate[]` function from Mathematica works to compute ${F}_\kappa(\omega,
 It seems that `Integrate[]` can also handle half-integer values, but I cannot verify the accuracy of the result the same way as before. The script takes a much longer time to run, and for $\kappa=3/2$, the solution has an equality condition to be satisfied. 
 
 ## Current Simulations
-So far I can solve the integral ${F}_\kappa(\omega,k)$ for $\kappa$ values of:
+So far I can solve the integral $F_\kappa(\omega,k)$ for $\kappa$ values of:
 
 - $[1,2,3,...]$
 - $[3/2,5/2,7/2,9/2]$
 
-See [this folder](Plasma_Instabilities/Dielectric_Functions/Kappa1D) for the Mathematica-generate Matlab dielectric function files.
+See [this folder](https://github.com/gracecmatt/Plasma_Instabilities/tree/2bceb031a948358c7603dd08ba5d2846229c07ee/Dielectric_Functions/Kappa1D) for the Mathematica-generated Matlab files of the corresponding dielectric functions.
 
 The following values of $\kappa$ did **not** result in a solution:
 
