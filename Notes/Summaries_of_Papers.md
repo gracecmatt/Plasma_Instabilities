@@ -25,7 +25,7 @@ This relationship was supposedly (need to do more reading) estabilished in their
 Livadiotis and McComas define the $1$-Particle Kappa Distribution of Velocities as a $d$-dimensional distribution, meaning it applies to the $d$-dimensional space of velocities, as:
 
 $$\begin{equation}
-    P(\bm{u};\bm{u}_b;\theta,\kappa_0) = (\pi\kappa_0\theta^2)^{-\frac{d}{2}}\frac{\Gamma(\kappa_0+1+\frac{d}{2})}{\Gamma(\kappa_0+1)}\left[1+\frac{1}{\kappa_0}\frac{(\bm{u}-\bm{u}_b)^2}{\theta^2}\right]^{-\kappa_0-1-\frac{d}{2}}
+    P(\mathbf{u};\mathbf{u}_b;\theta,\kappa_0) = (\pi\kappa_0\theta^2)^{-\frac{d}{2}}\frac{\Gamma(\kappa_0+1+\frac{d}{2})}{\Gamma(\kappa_0+1)}\left[1+\frac{1}{\kappa_0}\frac{(\mathbf{u}-\mathbf{u}_b)^2}{\theta^2}\right]^{-\kappa_0-1-\frac{d}{2}}
 \end{equation}$$
 
 where $\theta=\sqrt{\frac{2k_B T}{m}}$ (see pg. 187).
@@ -33,8 +33,8 @@ where $\theta=\sqrt{\frac{2k_B T}{m}}$ (see pg. 187).
 In 3D with $f=1\cdot d = 3$ and $\kappa=\kappa_0+\frac{3}{2}$, this becomes:
 
 $$\begin{align}
-    P(\bm{u};\bm{u}_b;\theta,\kappa) &= \left[\pi\theta^2\left(\kappa-\frac{3}{2}\right)\right]^{-\frac{3}{2}}\frac{\Gamma(\kappa+1)}{\Gamma(\kappa-1/2)}\left[1+\frac{1}{\kappa-\frac{3}{2}}\frac{(\bm{u}-\bm{u}_b)^2}{\theta^2}\right]^{-\kappa-1}\\
-    &=\frac{1}{\sqrt{\pi^3(\kappa-3/2)^3}\theta^3}\frac{\Gamma(\kappa+1)}{\Gamma(\kappa-1/2)}\left[1+\frac{1}{\kappa-\frac{3}{2}}\frac{(\bm{u}-\bm{u}_b)^2}{\theta^2}\right]^{-\kappa-1}
+    P(\mathbf{u};\mathbf{u}_b;\theta,\kappa) &= \left[\pi\theta^2\left(\kappa-\frac{3}{2}\right)\right]^{-\frac{3}{2}}\frac{\Gamma(\kappa+1)}{\Gamma(\kappa-1/2)}\left[1+\frac{1}{\kappa-\frac{3}{2}}\frac{(\mathbf{u}-\mathbf{u}_b)^2}{\theta^2}\right]^{-\kappa-1}\\
+    &=\frac{1}{\sqrt{\pi^3(\kappa-3/2)^3}\theta^3}\frac{\Gamma(\kappa+1)}{\Gamma(\kappa-1/2)}\left[1+\frac{1}{\kappa-\frac{3}{2}}\frac{(\mathbf{u}-\mathbf{u}_b)^2}{\theta^2}\right]^{-\kappa-1}
 \end{align}$$
 
 In 1D with $f=1\cdot d = 1$ and $\kappa=\kappa_0+\frac{1}{2}$, this becomes: **(this is the one we have been using)**
@@ -74,15 +74,15 @@ where $\mathcal{P}$ is the Cauchy principle value of the integral. They also wri
 for integer values of $\kappa\in [1,6]$.
 
 $$\begin{align} \displaystyle
-Z_{1}^*(\xi)&=-(\xi/2+i)/(\xi+i)^2 \\
-Z_{2}^*(\xi)&=-(3\xi^2/4+9\sqrt{2}i\xi/4-4)/(\xi+\sqrt{2}i)^3
+Z_{1}^{\*}(\xi)&=-(\xi/2+i)/(\xi+i)^2 \\
+Z_{2}^{\*}(\xi)&=-(3\xi^2/4+9\sqrt{2}i\xi/4-4)/(\xi+\sqrt{2}i)^3
 \end{align}$$
 
 They also give general results for $\xi=0$, $\xi\rightarrow 0$, and $|\xi|\rightarrow \infty$ by power series (convergent for $|\xi|<\sqrt{\kappa}$ and $|\xi|>\sqrt{\kappa}$). Additionally, they provide a recursion relation between $Z_{\kappa+1}^*(\xi)$ 
 and $Z_\kappa^*(\xi)$ using the derivative with respect to $\xi$. 
 
 Finally, applying this to Vlasov-Poisson, they give the following as the dispersion relation for the kappa distribution function:
-$$1+\frac{2\omega_p^2}{k^2\theta^2}\left[1-\frac{1}{2\kappa}+\frac{\omega}{k\theta}Z_\kappa^*\left(\frac{\omega}{k\theta}\right)\right]=0$$
+$$1+\frac{2\omega_p^2}{k^2\theta^2}\left[1-\frac{1}{2\kappa}+\frac{\omega}{k\theta}Z_\kappa^{\*}\left(\frac{\omega}{k\theta}\right)\right]=0$$
 where $\theta=[(2\kappa-3)/\kappa]^{1/2}(T/m)^{1/2}$ is the electron thermal speed, $\omega=\omega_R+i\gamma$ is the wave frequency, and $\omega_p=(4\pi i e^2/m)^{1/2}$ is the electron plasma frequency. They published an accompanying paper with more details for this. 
 
 Note the relationships between the plasma dispersion function $Z(\xi)$, the Fadeeva function $w(\xi)$, and the complex error function $\text{erf}(i\xi)$.
@@ -97,7 +97,7 @@ Z(\xi)&=i\sqrt{\pi}e^{-\xi^2}\left[1+\text{erf}(i\xi)\right]
 The distributions which Summers and Thorne (1991) say are the 3D and 1D 1-particle distribution fucntions are:
 
 $$\begin{align}
-    f_{\kappa} (\bm{v};\theta,\kappa)&= \frac{1}{\sqrt{\pi^3\kappa^3}\theta^3}\frac{\Gamma(\kappa+1)}{\Gamma(\kappa-1/2)}\left[1+\frac{\bm{v}^2}{\kappa\theta^2}\right]^{-(\kappa+1)} \\
+    f_{\kappa} (\mathbf{v};\theta,\kappa)&= \frac{1}{\sqrt{\pi^3\kappa^3}\theta^3}\frac{\Gamma(\kappa+1)}{\Gamma(\kappa-1/2)}\left[1+\frac{\mathbf{v}^2}{\kappa\theta^2}\right]^{-(\kappa+1)} \\
     f_{\kappa}(v;\theta,\kappa) &= \frac{1}{\sqrt{\pi\kappa^3}\theta}\frac{\Gamma(\kappa+1)}{\Gamma(\kappa-1/2)}\left[1+\frac{v^2}{\kappa\theta^2}\right]^{-\kappa}
 \end{align}$$
 
@@ -131,10 +131,8 @@ $$\begin{equation}
 A distribution complementary to the Olbertian was defined later with $\kappa$-independent temperatures, $T_{\|}$ and $T_\perp$. This distribution is known as the *modified Kappa* and is defined here as:
 
 $$\begin{align}
-    \boxed{f_{\kappa}(v;T_{\|},T_\perp)={\left(\frac{m}{\pi k_B (2\kappa-3)}\right)}^{3/2}\!\!\!\frac{1}{T_\perp\sqrt{T_{\|}}} \frac{\Gamma[\kappa+1]}{\Gamma[\kappa-1/2]}  {\left[1+\frac{m}{k_B(2\kappa-3)}\left(\frac{v_{\|}^2}{T_{\|}}+\frac{v_{\perp}^2}{T_\perp}\right)\right]}^{-(\kappa+1)} }
+    \boxed{f_{\kappa}(v;T_{\|},T_\perp)={\left(\frac{m}{\pi k_B (2\kappa-3)}\right)}^{3/2}\frac{1}{T_\perp\sqrt{T_{\|}}} \frac{\Gamma[\kappa+1]}{\Gamma[\kappa-1/2]}  {\left[1+\frac{m}{k_B(2\kappa-3)}\left(\frac{v_{\|}^2}{T_{\|}}+\frac{v_{\perp}^2}{T_\perp}\right)\right]}^{-(\kappa+1)} }
 \end{align}$$
-
-There is a difference between these [which I will talk about later].
 
 According to Fichtner and Lazar, The Summers and Thorne (1991) paper quotes the formulae for the Olbertian, but plot the modified Kappa. Additionally, they say Livadiotis (2015) argues that the modified Kappa is the physically correct one in all cases, but they dispute that claim in Lazar et al. (2015,2016), conjugating that the modified Kappa can lead to inconsistent results in the context of linear dispersion theory and that the Olbertian should be used in those cases. 
 
@@ -149,9 +147,12 @@ w(\xi)&=\frac{i}{\pi}\int_{-\infty}^\infty \frac{e^{-v^2}}{\xi-v}dv, \text{Im}(\
 \end{align}$$
 
 This paper builds an algorithm to compute $w(\xi)$ based on the integral representation. Weideman starts by assuming the existence of an expansion
+
 $$[W(v)]^{-1}e^{-v^2}=\sum_{n=-\infty}^\infty a_n \psi_n(v), v\in\mathbb{R}$$
+
 where $\{\psi_n(v)\}$ is an orthogonal basis set in $L_2(\mathbb{R};W(v))$ with appropriate weight function $W(v)$.
 From this we can rearrange for the integrand of $w(\xi)$:
+
 $$\begin{align}\displaystyle
 \frac{e^{-v^2}}{\xi-v}=\sum_{n=-\infty}^\infty a_n \left[W(v) \frac{\psi_n(v)}{\xi-v}\right].
 \end{align}$$
@@ -234,11 +235,6 @@ where $k$ is the wave vector, $\omega=\omega_r+i\gamma$ is the frequency, and $\
 To apply the Weideman algorithm for the Lorentzian or Kappa distributions, we need to assume that Fourier expansions of the following functions exist:
 
 $$\begin{align}
-F_{L}(v)&=(L^2+v^2)\frac{v}{(v^2+1)^2} \\
-F_{\kappa}(v)&=(L^2+v^2)\frac{v}{(v^2+\kappa)^{\kappa+2}}
-\end{align}$$
-
-***
 F_{L}(v)&=(L^2+v^2)\frac{v}{(v^2+1)^2} \\
 F_{\kappa}(v)&=(L^2+v^2)\frac{v}{(v^2+\kappa)^{\kappa+2}}
 \end{align}$$
