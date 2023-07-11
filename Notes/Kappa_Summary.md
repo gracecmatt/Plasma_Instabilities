@@ -10,9 +10,11 @@ f_\kappa(v;\mu,\theta)=\frac{1}{\sqrt{\pi\theta^2(\kappa-\frac{1}{2})}}\frac{\Ga
 \end{align}$$
 
 This distribution was chosen following the convention of this paper:
+
 ![[Summaries_of_Papers#understanding-kappa-distributions-a-toolbox-for-space-science-and-astrophysics-livadiotis-and-mccomas-2013]]
 
 This one was chosen following the advise of this editorial:
+
 ![[Summaries_of_Papers#kappa-distributions-from-observational-evidences-via-controvesial-predictions-to-a-consistent-theory-of-nonequilibrium-plasmas-fichtner-and-lazar-2021]]
 
 > Talk about which $\kappa$ values are important and why - from experimental data
@@ -23,9 +25,10 @@ $$\begin{align}\displaystyle
 D(\omega,k)=1-\frac{1}{k^2}\int_{-\infty}^{\infty} \frac{f_{eq}'(v)}{v-\omega/k} dv=0
 \end{align}$$
 
-where $\omega=\Omega+i\gamma$ and $\Omega,\gamma\in\mathbb{R}$. The integral over the real line, ${F}_{eq}(\omega,k)=\int_{-\infty}^{\infty} \frac{f_{eq}'(v)}{v-\omega/k} dv$, must be solved by analytically continuing the integrand into the complex plane. This is done following the method of Landau. Long story short, the result will be equivalent to assuming $\text{Im}(\omega)=\gamma>0$.
+where $\omega=\Omega+i\gamma$ and $\Omega,\gamma\in\mathbb{R}$. The integral over the real line, $F_{eq}(\omega,k)=\int_{-\infty}^{\infty} \frac{{f_{eq}}'(v)}{v-\omega/k} dv$, must be solved by analytically continuing the integrand into the complex plane. This is done following the method of Landau. Long story short, the result will be equivalent to assuming $\text{Im}(\omega)=\gamma>0$.
 
 Find out more in this paper by Landau (1946). To equate the equations, let $\omega=is$.
+
 ![[Summaries_of_Papers#on-the-vibrations-of-the-electrostatic-plasma-lev-landau-1946]]
 
 
