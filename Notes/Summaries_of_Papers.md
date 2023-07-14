@@ -47,7 +47,7 @@ $$\begin{equation}
 
 ***
 ## Modified Dispersion Relation, Summers and Thorne (1991)
-<img src="Figures/SummersThorne_LandauContour.png" width="261x" height="600x" align="right">
+<img src="figures/SummersThorne_LandauContour.png" width="261x" height="600x" align="right">
 
 Summers and Thorne perform the same computation as Landau for the Lorentizian and Kappa distribution function in 3D (see equation below). Given the principle root $\xi=\frac{\omega_R+i\gamma}{k\theta}$, they define the *modified plasma dispersion function* for $\kappa\in\mathbb{Z}^+$ by 
 
@@ -138,6 +138,16 @@ $$\begin{align}
 
 According to Fichtner and Lazar, The Summers and Thorne (1991) paper quotes the formulae for the Olbertian, but plot the modified Kappa. Additionally, they say Livadiotis (2015) argues that the modified Kappa is the physically correct one in all cases, but they dispute that claim in Lazar et al. (2015,2016), conjugating that the modified Kappa can lead to inconsistent results in the context of linear dispersion theory and that the Olbertian should be used in those cases. 
 
+***
+## Bump-on-tail Instability in Space Plasmas, S. Sarkar, S. Paul, R. Denra (2015)
+
+The kappa equilibrium distribution used is:
+
+$$\begin{align}
+f_{e0}(v_x,v_y,v_z) = n_e(\pi \theta^2\kappa)^{-3/2}\frac{\Gamma(\kappa+1)}{\Gamma(\kappa-1/2)}\left[1+\frac{v_x^2+v_y^2+v_z^2}{\kappa\theta^2}\right]^{-(\kappa+1)}
+\end{align}$$
+
+with $\theta=\sqrt{\frac{(2\kappa+3)k_B T}{\kappa m_e}}$ for $2<\kappa<6$.
 
 ***
 ## Computation of the Complex Error Function, J.A.C. Weideman (1994)
@@ -237,6 +247,29 @@ where $k$ is the wave vector, $\omega=\omega_r+i\gamma$ is the frequency, and $\
 To apply the Weideman algorithm for the Lorentzian or Kappa distributions, we need to assume that Fourier expansions of the following functions exist:
 
 $$\begin{align}
+F_{L}(v)&=(L^2+v^2)\frac{v}{(v^2+1)^2} \\
+F_{\kappa}(v)&=(L^2+v^2)\frac{v}{(v^2+\kappa)^{\kappa+2}}
+\end{align}$$
+
+***
+## Kinetic Theory of Small-Amplitude Fluctuations, Kolberg and Schlickeiser (2018)
+
+<u>Defn:</u> A **fluctuation** occurs when a state variable such as density or electric/magnetic field is subject to a disturbance or deviation from the spatial, temporal, or ensemble average. A **wave** refers to a weakly damped fluctuation, and an **instability** is an amplified fluctuation.
+
+When we use normal mode analysis and describe the spatio-temporal behavior as $\propto e^{i(\bm{k}\cdot\bm{r}-\omega t)}$ with $\omega=\Omega+i\gamma\in\mathbb{C}$, we can descibe the types of fluctuations as follows:
+1. $|\gamma|\ll|\Omega| \:\Rightarrow$ weakly damped/amplified waves
+1. $|\gamma|\gtrsim |\Omega| \:\Rightarrow$ minor deviations from weakly damped/amplified waves (Buneman instability)
+1. $|\gamma|\gg |\Omega| \:\Rightarrow$ strong amplitude modulation
+1. $\Omega=0 \:\Rightarrow$ aperiodic fluctuations that do not propagate
+
+<u>Claim:</u> Landau formula is only valid for weakly damped/amplified modes. (See Yoon (2010) for generalization of weak turbulence theory for unmagnetized Coulomb plasmas.) Which formula is this?  
+
+The proper generalization seems to involve inverting the Laplace transform - which has an inherent pole in the complex plane. Method for analytic continuation has been carried out for collisionless and ... :
+- Unmagnetized plasmas: Schlickeiser and Yoon (2012); Felten et al. (2013); Lazar et al. (2012); Felten and Schlickeiser (2013a,b,c)
+- Magnetized plasmas: Schlickeiser and Yoon (2015); Schlickeiser et al. (2015); Vafin et al (2016a,b).
+
+**stable branch of the Weibel instability?**
+
 F_{L}(v)&=(L^2+v^2)\frac{v}{(v^2+1)^2} \\
 F_{\kappa}(v)&=(L^2+v^2)\frac{v}{(v^2+\kappa)^{\kappa+2}}
 \end{align}$$
