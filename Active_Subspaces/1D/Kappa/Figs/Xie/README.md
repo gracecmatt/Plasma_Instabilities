@@ -14,6 +14,6 @@
 
 ### Changing L $(\kappa=3)$
 
-![kappa = 2, changing L, 100 terms](ChangingL_Nf100_kappa3.svg)
+![kappa = 3, changing L, 100 terms](ChangingL_Nf100_kappa3.svg)
 
-![kappa = 2, changing L, 100 terms](ChangingL_Nf40_kappa3.svg)
+![kappa = 3, changing L, 100 terms](ChangingL_Nf40_kappa3.svg)
