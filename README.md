@@ -1,6 +1,9 @@
 # Plasma Instabilities Research
 
 ## Updates:
+#### 7/18/2023 GM
+Communication with Xie code was fixed last Friday (July 14th) and plots were created to showcase stability of the algorithm. Plots from Xie/Weideman algorithm were added to this [folder](Active_Subspaces/1D/Kappa/Xie_README.md). "Best" $L$ parameter was estimated using these [plots](Active_Subspaces/1D/Kappa/Figs/Xie/README.md).
+
 #### 7/10/2023 GM
 Organized and added notes to [folder](Notes).
 
