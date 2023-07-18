@@ -34,7 +34,13 @@ $$\begin{align}
 f_{\kappa}(v_x,v_y,v_z) = (\pi \theta^2\kappa)^{-3/2}\frac{\Gamma(\kappa+1)}{\Gamma(\kappa-1/2)}\left[1+\frac{v_x^2+v_y^2+v_z^2}{\kappa\theta^2}\right]^{-(\kappa+1)}
 \end{align}$$
 
-with $\theta=\sqrt{\frac{(2\kappa-3)k_B T}{\kappa m}}$ for $2<\kappa<6$.
+with $\theta=\sqrt{\frac{(2\kappa-3)k_B T}{\kappa m}}$ for $2<\kappa<6$. Additionally, here is their 1D distribution used in the paper:
+
+$$\begin{align}
+f_{\kappa}(v_z) = \frac{1}{\sqrt{\pi\kappa\theta^2}}\frac{\Gamma(\kappa)}{\Gamma(\kappa-1/2)}\left[1+\frac{v_z^2}{\kappa\theta^2}\right]^{-\kappa}
+\end{align}$$
+
+Using $\Gamma(a+1)=a\Gamma(a)$, it can be seen how this is the same as the Summers and Thorne 1D distribution.
 
 ### 1D Plot with $\kappa=1$:
 ![Kappa_Comparisons_2](Figures/Kappa_Comparisons_2.png)
