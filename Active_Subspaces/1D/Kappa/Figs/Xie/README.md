@@ -17,3 +17,9 @@
 ![kappa = 3, changing L, 100 terms](ChangingL_Nf100_kappa3.svg)
 
 ![kappa = 3, changing L, 100 terms](ChangingL_Nf40_kappa3.svg)
+
+### Changing L $(\kappa=6)$
+
+![kappa = 6, changing L, 100 terms](ChangingL_Nf100_kappa6.svg)
+
+![kappa = 6, changing L, 100 terms](ChangingL_Nf40_kappa6.svg)
