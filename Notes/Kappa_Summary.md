@@ -1,19 +1,22 @@
 # Summary of Kappa Equilibrium Distribution for Stability Analysis via Linearized Dispersion Relation
 
 **Grace Mattingly**  
-**July 11, 2023**
+**August 1, 2023**
 
-The 1D single-species kappa equilibrium velocity distribution function is given by:
+A 3D single-species kappa equilibrium velocity distribution function is given by:
 
 $$\begin{align}\displaystyle 
-f_\kappa(v;\mu,\theta)=\frac{1}{\sqrt{\pi\theta^2(\kappa-\frac{1}{2})}}\frac{\Gamma(\kappa+1)}{\Gamma(\kappa+\frac{1}{2})}\left[1+\frac{|v-\mu|^2}{\theta^2(\kappa-\frac{1}{2})}\right]^{-(\kappa+1)}
+    f_\kappa(\bm{v};\bm{\mu},\sigma) &= (\pi\sigma^2)^{-3/2} A_\kappa \left[1+\frac{|\bm{v}-\bm{\mu}|^2}{\sigma^2(\kappa-\frac{3}{2})}\right]^{-(\kappa+1)} \\
+    A_\kappa &= \left(\kappa-\frac{3}{2}\right)^{-3/2} \frac{\Gamma(\kappa+1)}{\Gamma(\kappa-\frac{1}{2})}
 \end{align}$$
 
-This distribution was chosen following the convention of this paper:
-[Livadiotis and McComas (2013)](https://github.com/gracecmatt/Plasma_Instabilities/blob/main/Notes/Summaries_of_Papers.md#understanding-kappa-distributions-a-toolbox-for-space-science-and-astrophysics-livadiotis-and-mccomas-2013)
+where $\bm{v}$ is the particle velocity, $\bm{v}_0$ is the mean/bulk velocity, $\sigma=\sqrt{2k_B T/m}$ is the thermal velocity, $T$ is the temperature and second velocity moment, $k_B$ is the Boltzmann constant, $m$ is the particle mass, and $\kappa\in(3/2,\infty)$ is the index of the distribution.
 
-It was chosen following the advice of this editorial:
-[Fichtner and Lazar (2021)](https://github.com/gracecmatt/Plasma_Instabilities/blob/main/Notes/Summaries_of_Papers.md#kappa-distributions-from-observational-evidences-via-controvesial-predictions-to-a-consistent-theory-of-nonequilibrium-plasmas-fichtner-and-lazar-2021)
+Integrating out two of the dimensions, leaving $v=v_1$ and assuming $\bm{\mu}=\mu \hat{v}_1$ for simplicity.
+
+$$\begin{align}\displaystyle 
+    f_\kappa(v;\mu,\sigma)&=\frac{1}{\sqrt{\pi(\kappa-\frac{3}{2})\sigma^2}}\frac{\Gamma(\kappa)}{\Gamma(\kappa-\frac{1}{2})}\left[1+\frac{|v-\mu|^2}{(\kappa-\frac{3}{2})\sigma^2}\right]^{-\kappa} 
+\end{align}$$
 
 > Talk about which $\kappa$ values are important and why - from experimental data
 
@@ -54,13 +57,7 @@ We can use Mathematica's `Residue[]` function to evaluate the integrand at the p
 
 The `Integrate[]` function from Mathematica works to compute ${F}_\kappa(\omega,k)$ as well. This has been verified analytically in Mathematica by subtracting the two results and simplifying.
 
-## Current Simulations
-So far I can solve the integral $F_\kappa(\omega,k)$ for $\kappa$ values of:
-
-- $[1,2,3,...]$
-
-See [this folder](https://github.com/gracecmatt/Plasma_Instabilities/tree/2bceb031a948358c7603dd08ba5d2846229c07ee/Dielectric_Functions/Kappa1D) for the Mathematica-generated Matlab files of the corresponding dielectric functions.
-
+## Xie/Weideman Algorithm
 The following values of $\kappa$ did **not** result in a solution:
 
 - $1.75$
