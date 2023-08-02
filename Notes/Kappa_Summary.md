@@ -36,7 +36,7 @@ $$\begin{align}\displaystyle
 {f_\kappa}'(v;\mu,\theta)=\frac{-2(v-\mu)(\kappa+1)}{\sqrt{\pi}\theta^3(\kappa-\frac{1}{2})^{3/2}}\frac{\Gamma(\kappa+1)}{\Gamma(\kappa+\frac{1}{2})}\left[1+\frac{|v-\mu|^2}{\theta^2(\kappa-\frac{1}{2})}\right]^{-(\kappa+2)}
 \end{align}$$
 
-We require $\kappa>1/2$ and if $\kappa\in\mathbb{N}=\{1,2,3,\dots \}$, then this integral can be solved with the Residue Theorem. Focusing on just the integral, we have:
+We require $\kappa>3/2$ and if $\kappa\in\mathbb{N}=\{1,2,3,\dots \}$, then this integral can be solved with the Residue Theorem. Focusing on just the integral, we have:
 
 $$\begin{align}\displaystyle 
 F_\kappa(\omega,k;\mu,\theta)&=\int_{-\infty}^{\infty}\frac{-2(v-\mu)(\kappa+1)}{\sqrt{\pi}\theta^3(\kappa-\frac{1}{2})^{3/2}}\frac{\Gamma(\kappa+1)}{\Gamma(\kappa+\frac{1}{2})}\left[1+\frac{|v-\mu|^2}{\theta^2(\kappa-\frac{1}{2})}\right]^{-(\kappa+2)}\frac{dv}{v-\omega/k}\\
@@ -58,3 +58,61 @@ We can use Mathematica's `Residue[]` function to evaluate the integrand at the p
 The `Integrate[]` function from Mathematica works to compute ${F}_\kappa(\omega,k)$ as well. This has been verified analytically in Mathematica by subtracting the two results and simplifying.
 
 ## Xie/Weideman Algorithm
+
+This "one-solve-all approach" seeks to find a numerical approximation for integrals of the form
+
+$$\begin{align*}
+    \int_{-\infty}^\infty \frac{F(z)}{z-\xi}dz, && \text{Im}(\xi)>0 
+\end{align*}$$
+
+Where $F(z)$ is an entire function for $z\in ?$. The integral is extended to the lower half plane by deforming the contour of integration around the pole and picking up a half or full circle as:
+
+$$\begin{align*}
+    &PV \int_{-\infty}^\infty \frac{F(z)}{z-\xi}dz + i F(z), && \text{Im}(\xi)=0 \\
+    &\int_{-\infty}^\infty \frac{F(z)}{z-\xi}dz +2i F(z), && \text{Im}(\xi)<0
+\end{align*}$$
+
+Since $F(z)$ is [analytic?], we can assume an expansion 
+
+$$\begin{align*}
+   [W(z)]^{-1}F(z) = \sum_{n=-\infty}^\infty a_n \rho_n(z), && z\in\mathbb{R}
+\end{align*}$$
+
+for an orthogonal basis set $\{\rho_n(z)\}$ with corresponding weight function $W(z)$ which satisfies $\int_{-\infty}^\infty W(z)\rho_n(z)\rho_m^*(z) dz = A \delta_{n,m}$.
+
+The coefficients are given by 
+
+$$\begin{align*}
+    a_n = \frac{1}{A} \int_{-\infty}^\infty F(z)\rho_n^*(z) dz
+\end{align*}$$
+
+and the integrand above can be expressed as 
+
+$$\begin{align*}
+   \frac{F(z)}{z-\xi} = \sum_{n=-\infty}^\infty a_n \left[ W(z) \frac{\rho_n(z)}{z-\xi} \right]
+\end{align*}$$
+
+Choosing the following basis function set and weight function:
+
+$$\begin{align*}
+   \rho_n(z)=\frac{(L+iz)^n}{(L-iz)^n}, && W(z)=\frac{1}{L^2+z^2}
+\end{align*}$$
+
+and given the transformation $z=L \tan(\theta/2)$, the coefficients can be computed with a standard FFT as $(L+iz)/(L-iz)=e^{i \theta}$. 
+
+Then, since the coefficients are independent of $z$, the integral can be computed inside the sum using the Residue Theorem,
+
+$$\begin{align*} \displaystyle
+   \int_{-\infty}^\infty\frac{F(z)}{z-\xi} dz &=  \sum_{n=-\infty}^\infty a_n \int_{-\infty}^\infty \left[\frac{1}{L^2+z^2} \frac{1}{z-\xi} \frac{(L+iz)^n}{(L-iz)^n}\right] dz\\
+    &=  \sum_{n=-\infty}^\infty a_n \begin{cases} \displaystyle
+        \frac{i\pi}{L}\frac{1}{L-iz}, && n=0\\ \displaystyle
+        \frac{2i\pi}{L^2 + z^2}\frac{(L+iz)^n}{(L-iz)^n}, &&n>0\\
+        0, && n<0
+        \end{cases}.
+\end{align*}$$
+
+Thus, 
+
+$$\begin{align*}
+   \int_{-\infty}^\infty\frac{F(z)}{z-\xi} dz = \frac{i\pi a_0}{L(L-iz)} +\frac{2i\pi}{L^2 + z^2} \sum_{n=1}^\infty a_n \left(\frac{L+iz}{L-iz}\right)^n, && \text{Im}(\xi)>0
+\end{align*}$$
