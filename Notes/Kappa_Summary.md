@@ -83,7 +83,7 @@ for an orthogonal basis set $\{\rho_n(z)\}$ with corresponding weight function $
 The coefficients are given by 
 
 $$\begin{align*}
-    a_n = \frac{1}{A} \int_{-\infty}^\infty F(z)\rho_n^*(z) dz
+    a_n = \frac{1}{A} \int_{-\infty}^\infty F(z){\rho_n}^{\*}(z) dz
 \end{align*}$$
 
 and the integrand above can be expressed as 
@@ -104,8 +104,8 @@ Then, since the coefficients are independent of $z$, the integral can be compute
 
 $$\begin{align*} \displaystyle
    \int_{-\infty}^\infty\frac{F(z)}{z-\xi} dz &=  \sum_{n=-\infty}^\infty a_n \int_{-\infty}^\infty \left[\frac{1}{L^2+z^2} \frac{1}{z-\xi} \frac{(L+iz)^n}{(L-iz)^n}\right] dz\\
-    &=  \sum_{n=-\infty}^\infty a_n \begin{cases} \displaystyle
-        \frac{i\pi}{L}\frac{1}{L-iz}, && n=0\\ \displaystyle
+    &=  \sum_{n=-\infty}^\infty a_n \begin{cases}
+        \frac{i\pi}{L}\frac{1}{L-iz}, && n=0\\ 
         \frac{2i\pi}{L^2 + z^2}\frac{(L+iz)^n}{(L-iz)^n}, &&n>0\\
         0, && n<0
         \end{cases}.
