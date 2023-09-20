@@ -1,4 +1,4 @@
-clear; clc; close all
+clear; clc;
 kplot = 0.5:0.01:1.5;
 count = 1;
 initial_guesses = zeros(1,length(kplot));
@@ -7,7 +7,7 @@ omega_xie = zeros(1,length(kplot));
 sigma = 1;
 mu = 0;
 nu = -1;
-M = 1;
+M = 100;
 % vplot = -2.5:0.005:2.5;
 % f0 = (atan(M*(vplot-nu))/pi+1/2).*exp(-(vplot-mu).^2/sigma^2)/sqrt(pi*sigma^2);
 % plot(vplot,f0)

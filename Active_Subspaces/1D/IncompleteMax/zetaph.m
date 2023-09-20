@@ -1,4 +1,4 @@
-function [Zp,aN]=zetaph(z,Fn,F,N)
+function [Zp,aN]=zetaph(z,Fn,F,N,mu,sigma,nu)
 % Hua-sheng XIE, huashengxie@gmail.com, IFTS-ZJU, 2013-05-26 23:37
 % Calculate GPDF, Generalized Plasma Dispersion Function, see [Xie2013]
 % 
@@ -57,12 +57,11 @@ function [Zp,aN]=zetaph(z,Fn,F,N)
        Z=calZ(z,F,N);
        Zp=calZ(z,Fp,N);
     elseif(Fn==5) % incomplete Maxwellian distribution
-       nu=-0.1;
-       F=['heaviside(v+',num2str(nu),').*exp(-v.^2)/sqrt(pi)'];
+       F=['heaviside(v-',num2str(nu),').*exp(-(v-',num2str(mu),').^2/',num2str(sigma),'^2)/sqrt(pi*',num2str(sigma),'^2)'];
        [Fp,F]=calFp(F);
        Z=calZ(z,F,N);
        Zp=calZ(z,Fp,N);
-       Zp=Zp-exp(-nu.^2)/sqrt(pi)./(z-nu); % with correction ???????????????????????????
+       Zp=Zp-exp(-(nu-mu).^2)/sqrt(pi*sigma^2)./(z-nu); % with correction ???????????????????????????
     elseif(Fn==6) % slowing down
        % using heaviside() instead of abs() to support complex v in F(v) 
        vt=1.0; vc=4;

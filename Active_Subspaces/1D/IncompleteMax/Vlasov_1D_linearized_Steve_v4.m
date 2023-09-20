@@ -68,8 +68,16 @@ nplot = 10000;                    % plot solution every nplot time steps
 % f0_v = ... %dirac(v-nu).*exp(-(v-mu).^2/sigma^2)./sqrt(pi*sigma^2) ...
 %     - heaviside(v-nu)./sqrt(pi*sigma^2).*exp(-(v-mu).^2/sigma^2).*2.*(v-mu)/sigma^2;
 
-f0 = (atan(Mstep*(v-nu))/pi+1/2).*exp(-(v-mu).^2/sigma^2)/sqrt(pi*sigma^2);
-f0_v = Mstep/sqrt(pi^3*sigma^2)*exp(-(v-mu).^2/sigma^2)./(Mstep^2*(v-nu).^2+1) - 2/sigma^2*(v-mu).*f0;
+% Old Incomplete Maxwellian with arctan to approximate step function
+% f0 = (atan(Mstep*(v-nu))/pi+1/2).*exp(-(v-mu).^2/sigma^2)/sqrt(pi*sigma^2);
+% f0_v = Mstep/sqrt(pi^3*sigma^2)*exp(-(v-mu).^2/sigma^2)./(Mstep^2*(v-nu).^2+1) - 2/sigma^2*(v-mu).*f0;
+
+% New Incomplete Maxwellian (with erf)
+f0 = (1+erf(Mstep*(v-nu))).*exp(-(v-mu).^2/sigma^2)/(sqrt(pi*sigma^2)*(1+erf(Mstep*(mu-nu)/sqrt(1+Mstep^2*sigma^2))));
+f0_v = (2*exp(-(v-mu).^2/sigma^2))/(sqrt(pi*sigma^2)+erf(Mstep*(mu-nu)/sqrt(1+Mstep^2*sigma^2))) .* ...
+    (Mstep*exp(-Mstep^2*(nu-v).^2)/sqrt(pi) - (v-mu).*(1+erf(Mstep*(v-nu)))/sigma^2) + ...
+    (2*Mstep*exp(-Mstep^2*(v-nu).^2-((v-mu).^2/sigma^2)))/(sqrt(pi)*(sqrt(pi*sigma^2)*(1+erf(Mstep*(mu-nu)/sqrt(1+Mstep^2*sigma^2))))) - ...
+    2*(v-mu).*(1+erf(Mstep*(v-nu))).*exp(-(v-mu).^2/sigma^2)/(sigma^2*(sqrt(pi*sigma^2)*(1+erf(Mstep*(mu-nu)/sqrt(1+Mstep^2*sigma^2)))));
 
 % Two-stream Distribution, v^2*gauss(v)
 % mu=0;
@@ -219,18 +227,17 @@ for n = 1:nsteps
             w_RE=(E_PHASE(id_max_finish_w)-E_PHASE(id_max_start_w))/((id_max_finish_w-id_max_start_w)*dt);
 
             w=abs(w_RE)+gamma*1i;
-            
-%             figure(5);
-%             semilogy(dt*((0:n-1)+1/2),E_A(1:n),[id_max_finish-1/2 id_max_start-1/2]*dt,[max_finish max_start],'r*'); %.*exp([id_max_finish-1 id_max_start-1]*dt*gamma_true)
-%             title(sprintf('E(t=%g)  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))
-%  
-%             figure(6); % compensated for gamma decay/growth - has to be close to horizontal line
-%             semilogy(dt*((0:n-1)+1/2),E_A(1:n).*exp(-dt*((0:n-1)+1/2)*gamma),[id_max_finish-1/2 id_max_start-1/2]*dt,[max_finish max_start].*exp(-[id_max_finish-1/2 id_max_start-1/2]*dt*gamma),'r*',[id_max_finish_w-1/2 id_max_start_w-1/2]*dt,[max_finish_w max_start_w].*exp(-[id_max_finish_w-1/2 id_max_start_w-1/2]*dt*gamma_add),'m*');
-%             title(sprintf('E(t=%g)*exp(-gamma*t)  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))
-% 
-%             figure(55);
-%             plot(dt*((0:n-1)+1/2),E_PHASE);
-%             title(sprintf('PHASE(E(t=%g))  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))
+              % figure(5);
+              % semilogy(dt*((0:n-1)+1/2),E_A(1:n),[id_max_finish-1/2 id_max_start-1/2]*dt,[max_finish max_start],'r*'); %.*exp([id_max_finish-1 id_max_start-1]*dt*gamma_true)
+              % title(sprintf('E(t=%g)  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))
+              % 
+              % figure(6); % compensated for gamma decay/growth - has to be close to horizontal line
+              % semilogy(dt*((0:n-1)+1/2),E_A(1:n).*exp(-dt*((0:n-1)+1/2)*gamma),[id_max_finish-1/2 id_max_start-1/2]*dt,[max_finish max_start].*exp(-[id_max_finish-1/2 id_max_start-1/2]*dt*gamma),'r*',[id_max_finish_w-1/2 id_max_start_w-1/2]*dt,[max_finish_w max_start_w].*exp(-[id_max_finish_w-1/2 id_max_start_w-1/2]*dt*gamma_add),'m*');
+              % title(sprintf('E(t=%g)*exp(-gamma*t)  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))
+              % 
+              % figure(55);
+              % plot(dt*((0:n-1)+1/2),E_PHASE);
+              % title(sprintf('PHASE(E(t=%g))  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))
         end
         pause(0.01)
     end
