@@ -57,7 +57,7 @@ function [Zp]=zetaph(z,Fn,F,N,mu,sigma,nu)
        Z=calZ(z,F,N);
        Zp=calZ(z,Fp,N);
     elseif(Fn==5) % incomplete Maxwellian distribution
-       F=['heaviside(v-',num2str(nu),').*exp(-(v-',num2str(mu),').^2/',num2str(sigma),'^2)/sqrt(pi*',num2str(sigma),'^2)'];
+       F=['heaviside(v-',num2str(nu,16),').*exp(-(v-',num2str(mu,16),').^2/',num2str(sigma,16),'^2)/sqrt(pi*',num2str(sigma,16),'^2)'];
        [Fp,F]=calFp(F);
        Z=calZ(z,F,N);
        Zp=calZ(z,Fp,N);

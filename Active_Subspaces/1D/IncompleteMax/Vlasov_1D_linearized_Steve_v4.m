@@ -29,15 +29,11 @@
 
 function w = Vlasov_1D_linearized_Steve_v4(k, sigma, mu, nu, Mstep)
 
-% theta is a vector with two entries - theta_1 and theta_2
-% mu is a vector with two entries - mu_1 and mu_2
-% beta is between 0 and 1
-
 %close all                  
 Vmax = 50;%8  % choose Vmax so that f0(Vmax) < 1e-16           
 L=2*pi/abs(k); % size of the system in x-direction
 N=1;           % 2N is a number of grid points in x-direction, Linearized code has N=1
-M=1024;   % 2M is a number of grid points in v-direction 
+M=1024;        % 2M is a number of grid points in v-direction 
 dv=Vmax/M;
 v=(-M:M-1)*dv;
 
@@ -110,7 +106,7 @@ f0_v = (2*exp(-(v-mu).^2/sigma^2))/(sqrt(pi*sigma^2)+erf(Mstep*(mu-nu)/sqrt(1+Ms
 sigma_IC=1;%Vmax/10;
 df=f_gauss(v/sigma_IC)/sigma_IC; % gives best accuracy compared to the other options
 
-omega_guess = 1+1i;
+omega_guess = 1+0.5i;
 df=f0_v./(omega_guess-k*v);
 
 % Random Complex Gauss Field 
@@ -125,8 +121,6 @@ df=f0_v./(omega_guess-k*v);
 %MAX_efunction=max(abs(f_efunction));
 %df=f_efunction;
 
-
-
 %Plot Background distribution f0(v) and I.C. df(v,t=0)
 % figure(1);
 % plot(v,f0);
@@ -137,8 +131,6 @@ df=f0_v./(omega_guess-k*v);
 % title(sprintf('df(v,t=%g)  after %4i time steps with %ix%i grid points', 0,0,N,2*M))
 % legend('Re[df]','Im[df]','Abs[df]')
 % pause(1)
-
-
 
 % Fourier Matrix for Advection Solve and Velocity cut off
 FM_half_lin=exp(-1i*k*v*dt/2);
@@ -246,7 +238,6 @@ for n = 1:nsteps
     end
 end      
 
-         
 %--------------------------------------------------------
 function out = f_gauss(v)
     out = exp(-v.^2/2)/sqrt(2*pi);

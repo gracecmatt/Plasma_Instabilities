@@ -1,5 +1,5 @@
 clear; clc;
-k0 = 0.5; kf = 1.5;
+k0 = 0.25; kf = 1;
 kplot = k0:(kf-k0)/99:kf;
 count = 1;
 initial_guesses = zeros(1,length(kplot));
@@ -19,6 +19,7 @@ for k=kplot
     omega_xie(count) = IncompleteMax_Disp_Using_Xie(k, sigma, 0, nu, M, init_guess) + mu*k;
     count = count+1;
 end
+%% Figures
 
 figure
 plot(kplot, imag(initial_guesses)); hold on
@@ -26,7 +27,7 @@ plot(kplot, imag(omega_xie));
 xlabel('$k$','Interpreter','latex','FontSize',16)
 ylabel('$\gamma(k)$','Interpreter','latex','FontSize',16)
 title('Kappa with Bump - $k$ vs. $\gamma$','Interpreter','latex','FontSize',16)
-legend('Spectral Method', 'Xie Root Finding')
+legend('Spectral Method', 'Xie Root Finding','location','Best')
 
 figure
 plot(kplot, real(initial_guesses)); hold on
@@ -34,4 +35,4 @@ plot(kplot, real(omega_xie));
 title('Kappa with Bump - $k$ vs. $\Omega$','Interpreter','latex','FontSize',16)
 xlabel('$k$','Interpreter','latex','FontSize',16)
 ylabel('$\Omega(k)$','Interpreter','latex','FontSize',16)
-legend('Spectral Method', 'Xie Root Finding')
+legend('Spectral Method', 'Xie Root Finding','Location','Best')
