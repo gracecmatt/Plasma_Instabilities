@@ -1,4 +1,4 @@
-function [gamma] = IncompleteMax_Disp_Using_Xie(k, sigma, mu, nu, M, init_guess)
+function omega = IncompleteMax_Disp_Using_Xie(k, sigma, mu, nu, M, init_guess)
 
     % =================== options for root finding ========================
     options = optimoptions('fsolve','Display','off');%,'Algorithm','trust-region','FiniteDifferenceType','central');

@@ -37,7 +37,7 @@ function w = Vlasov_1D_linearized_Steve_v4(k, sigma, mu, nu, Mstep)
 Vmax = 50;%8  % choose Vmax so that f0(Vmax) < 1e-16           
 L=2*pi/abs(k); % size of the system in x-direction
 N=1;           % 2N is a number of grid points in x-direction, Linearized code has N=1
-M=512/2*2*2;   % 2M is a number of grid points in v-direction 
+M=1024;   % 2M is a number of grid points in v-direction 
 dv=Vmax/M;
 v=(-M:M-1)*dv;
 
@@ -109,6 +109,9 @@ f0_v = (2*exp(-(v-mu).^2/sigma^2))/(sqrt(pi*sigma^2)+erf(Mstep*(mu-nu)/sqrt(1+Ms
 % Gauss
 sigma_IC=1;%Vmax/10;
 df=f_gauss(v/sigma_IC)/sigma_IC; % gives best accuracy compared to the other options
+
+omega_guess = 1+1i;
+df=f0_v./(omega_guess-k*v);
 
 % Random Complex Gauss Field 
 %R1=rand(1,2*M)-0.5+1i*(rand(1,2*M)-0.5); % Random vectors R1

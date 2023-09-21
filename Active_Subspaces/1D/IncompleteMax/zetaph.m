@@ -1,4 +1,4 @@
-function [Zp,aN]=zetaph(z,Fn,F,N,mu,sigma,nu)
+function [Zp]=zetaph(z,Fn,F,N,mu,sigma,nu)
 % Hua-sheng XIE, huashengxie@gmail.com, IFTS-ZJU, 2013-05-26 23:37
 % Calculate GPDF, Generalized Plasma Dispersion Function, see [Xie2013]
 % 
@@ -85,7 +85,7 @@ function [Zp,aN]=zetaph(z,Fn,F,N,mu,sigma,nu)
     elseif(Fn==0) % for arbitrary analytical input function F ***********************************
        [Fp,F]=calFp(F);
        Z=calZ(z,F,N);
-       [Zp,aN]=calZ(z,Fp,N);
+       Zp=calZ(z,Fp,N);
     else % default Maxwellian
        F = 'exp(-v.^2)/sqrt(pi)';
        [Fp,F]=calFp(F);
@@ -111,15 +111,15 @@ function [Zp,Z]=zdelta(z,zd)
     Zp=1./(z-zd).^2;
 end
 
-function [Z,aN]=calZ(z,F,N,del)
+function [Z]=calZ(z,F,N,del)
    if nargin<4, del = 1; end
-   [Z,aN]=hilb(z,F,N,del);
+   Z=hilb(z,F,N,del);
    ind1=find(isnan(Z));
    z1=z(ind1)+1e-10;             % avoid NaN of higher order singular point 
-   [Z(ind1),aN(ind1)]=hilb(z1,F,N,del);% e.g., z=ia for Lorentzian F = '1./(a^2+v.^2)'
+   Z(ind1)=hilb(z1,F,N,del);% e.g., z=ia for Lorentzian F = '1./(a^2+v.^2)'
 end
 
-function [Z,aN]=hilb(z,F,N,del,L)
+function Z=hilb(z,F,N,del,L)
 % note: 1. in fact, a_n need calcualte only once for a fixed F, so you can
 %   rewrite the code to speed up.
 %       2. f(z) in analytic continuation can also be replaced by 
@@ -128,13 +128,12 @@ function [Z,aN]=hilb(z,F,N,del,L)
 %   it seems we should set del=0 for correct analytic continuation
 
     if nargin<5 % optimal choice of L = sqrt(N/sqrt(2))
-        L = 3;
+        L = 1;
     end
     if nargin<4, del = 1; end
     
     % 1. Define initial parameters
     g = zeros(size(z)); % initialize output
-    aN = ones(size(z));
 
     % 2. Calculate
     idx=find(imag(z) == 0);
@@ -169,11 +168,6 @@ function [Z,aN]=hilb(z,F,N,del,L)
         W = (L^2+v.^2);                           % default weight function
         FF = FF.*W; FF = [0; FF];              % function to be transformed
         a = (fft(fftshift(FF)))/M2;             % coefficients of transform
-        % --- added by gm 8/10/23 to determine convergence of Fourier coefficients
-        % thresh = max(1e-15, min( abs(a(1:N+1)) )*1.1); % if a_n never gets below 1e-15, choose the smallest value of a in (1:N+1)
-        % aBelowThresh = a(abs(a(1:N+1)) < thresh); % coefficients below threshhold
-        % aN(id) = mean(abs(aBelowThresh));
-        % -----------------------------------------------------------------
         a0 = a(1); a = flipud(a(2:N+1));             % reorder coefficients
         z1 = (imag(z(id))>0).*z(id)+(imag(z(id))<0).*conj(z(id));
         t = (L+1i*z1)./(L-1i*z1); p = polyval(a,t); % polynomial evaluation
@@ -190,6 +184,5 @@ function [Z,aN]=hilb(z,F,N,del,L)
         % ylabel('magnitude of coefficient');ylim([0,15]);
         % title('complex magnitude of Fourier coefficients')
     end
-    % aN = max(abs(aN));
     Z=g.*pi;
 end
