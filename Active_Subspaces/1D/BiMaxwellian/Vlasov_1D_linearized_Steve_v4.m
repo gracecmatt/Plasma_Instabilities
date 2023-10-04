@@ -28,16 +28,11 @@
 % Output of this function is w = Re[w]+1i*Im[w]. Note: the linearized code doesn't show a shift in Re[w] by mu*k if mu=!0
 
 function w = Vlasov_1D_linearized_Steve_v4(k, sigma1, sigma2, mu1, mu2, beta)
-
-% theta is a vector with two entries - theta_1 and theta_2
-% mu is a vector with two entries - mu_1 and mu_2
-% beta is between 0 and 1
-
-%close all                  
+          
 Vmax = 50;%8  % choose Vmax so that f0(Vmax) < 1e-16           
 L=2*pi/abs(k); % size of the system in x-direction
 N=1;           % 2N is a number of grid points in x-direction, Linearized code has N=1
-M=512/2*2*2;   % 2M is a number of grid points in v-direction 
+M=1024*4;        % 2M is a number of grid points in v-direction 
 dv=Vmax/M;
 v=(-M:M-1)*dv;
 
@@ -59,13 +54,9 @@ nplot = 10000;                    % plot solution every nplot time steps
 % f0_v=f_gauss((v-mu)/sigma).*(-(v-mu)/sigma^3);
 
 % Bi-Maxwellian Distribution
-% weight1=0.8;      weight2=1-weight1;
-%mu1=-0.2*0.15;     mu2=4*(1+0.8*0.15);
-% mu1 = 0;          mu2 = 4;
-% sigma1=0.5;       sigma2=0.5;
 weight1 = beta;     weight2 = 1-beta;
-f0  =weight1*f_gauss((v-mu1)/sigma1)/sigma1 + weight2*f_gauss((v-mu2)/sigma1)/sigma1;
-f0_v=weight1*f_gauss((v-mu1)/sigma1).*(-(v-mu1)/sigma1^2)/sigma1 + weight2*f_gauss((v-mu2)/sigma2).*(-(v-mu2)/sigma2^2)/sigma2;
+f0  =weight1*f_gauss((v-mu1)/sigma1)/sigma1 + weight2*f_gauss((v-mu2)/sigma2)/sigma2;
+f0_v=weight1*f_gauss((v-mu1)/sigma1).*(-2*(v-mu1)/sigma1^2)/sigma1 + weight2*f_gauss((v-mu2)/sigma2).*(-2*(v-mu2)/sigma2^2)/sigma2;
 
 % Two-stream Distribution, v^2*gauss(v)
 % mu=0;
@@ -216,19 +207,19 @@ for n = 1:nsteps
 
             w=abs(w_RE)+gamma*1i;
             
-%             figure(5);
-%             semilogy(dt*((0:n-1)+1/2),E_A(1:n),[id_max_finish-1/2 id_max_start-1/2]*dt,[max_finish max_start],'r*'); %.*exp([id_max_finish-1 id_max_start-1]*dt*gamma_true)
-%             title(sprintf('E(t=%g)  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))
-%  
-%             figure(6); % compensated for gamma decay/growth - has to be close to horizontal line
-%             semilogy(dt*((0:n-1)+1/2),E_A(1:n).*exp(-dt*((0:n-1)+1/2)*gamma),[id_max_finish-1/2 id_max_start-1/2]*dt,[max_finish max_start].*exp(-[id_max_finish-1/2 id_max_start-1/2]*dt*gamma),'r*',[id_max_finish_w-1/2 id_max_start_w-1/2]*dt,[max_finish_w max_start_w].*exp(-[id_max_finish_w-1/2 id_max_start_w-1/2]*dt*gamma_add),'m*');
-%             title(sprintf('E(t=%g)*exp(-gamma*t)  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))
-% 
-%             figure(55);
-%             plot(dt*((0:n-1)+1/2),E_PHASE);
-%             title(sprintf('PHASE(E(t=%g))  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))
+            % figure(5);
+            % semilogy(dt*((0:n-1)+1/2),E_A(1:n),[id_max_finish-1/2 id_max_start-1/2]*dt,[max_finish max_start],'r*'); %.*exp([id_max_finish-1 id_max_start-1]*dt*gamma_true)
+            % title(sprintf('E(t=%g)  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))
+            % % 
+            % % figure(6); % compensated for gamma decay/growth - has to be close to horizontal line
+            % % semilogy(dt*((0:n-1)+1/2),E_A(1:n).*exp(-dt*((0:n-1)+1/2)*gamma),[id_max_finish-1/2 id_max_start-1/2]*dt,[max_finish max_start].*exp(-[id_max_finish-1/2 id_max_start-1/2]*dt*gamma),'r*',[id_max_finish_w-1/2 id_max_start_w-1/2]*dt,[max_finish_w max_start_w].*exp(-[id_max_finish_w-1/2 id_max_start_w-1/2]*dt*gamma_add),'m*');
+            % % title(sprintf('E(t=%g)*exp(-gamma*t)  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))
+            % 
+            % figure(55);
+            % plot(dt*((0:n-1)+1/2),E_PHASE);
+            % title(sprintf('PHASE(E(t=%g))  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))
         end
-        pause(0.01)
+        % pause(0.01)
     end
 end      
 
@@ -238,7 +229,7 @@ end
          
 %--------------------------------------------------------
 function out = f_gauss(v)
-out = exp(-v.^2/2)/sqrt(2*pi);
+out = exp(-v.^2)/sqrt(pi);
 return
 
 %--------------------------------------------------------
