@@ -11,7 +11,7 @@ function omega = analyticAPPROX(k,sigma1,sigma2,mu1,mu2,beta)
     C2 = 3*integral(@(v) v.^2.*f0(v),-Inf,Inf);
     syms x 
     Omega = double(solve(x^4-x^2+C1*k*x-C2*k^2==0,x,'Real',true));
-    Omega = max(Omega);
+    Omega = min(Omega);
 
     % IMAGINARY PART (gamma)
     gamma = Omega.*(-pi/2)*(1/k^2)*f0p(Omega/k);
