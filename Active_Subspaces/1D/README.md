@@ -7,6 +7,11 @@
 Inconsistencies:
 - use sigma for all thermal velcoties
 - `num2str()` precision of 16
+- add condition number calculation after eigs:
+```m
+% Compute the condition number
+cond = evalues(1)/sum(evalues);
+  ```
 - initial guess for spectral code, use:
 ```m
 % Initial Condition for pertubation df(v)
