@@ -6,6 +6,7 @@
 
 Inconsistencies:
 - use sigma for all thermal velcoties
+- `num2str()` precision of 16
 - initial guess for spectral code, use:
 ```m
 % Initial Condition for pertubation df(v)
@@ -20,4 +21,4 @@ df=f0_v./(omega_guess-v*k);
 - 1D BiMaxwellian $f_{BM}(v) = \frac{\beta}{\sqrt{\pi\sigma_1^2}}\text{exp}\left[-\frac{(v-\mu_1)^2}{\sigma_1^2}\right] + \frac{1-\beta}{\sqrt{\pi\sigma_2^2}}\text{exp}\left[-\frac{(v-\mu_2)^2}{\sigma_2^2}\right]$
 - 1D Kappa $f_{\kappa}(v) = \frac{1}{\sqrt{\pi\sigma^2\left(\kappa-\frac{3}{2}\right)}}\frac{\Gamma(\kappa)}{\Gamma(\kappa-1/2)}\left[1+\frac{1}{\kappa-\frac{3}{2}}\frac{({v}-{\mu})^2}{\sigma^2}\right]^{-\kappa}$
 - 1D BiKappa $f_{B\kappa}(v) = \frac{\beta}{\sqrt{\pi\sigma_1^2\left(\kappa-\frac{3}{2}\right)}}\frac{\Gamma(\kappa)}{\Gamma(\kappa-1/2)}\left[1+\frac{1}{\kappa-\frac{3}{2}}\frac{({v}-{\mu_1})^2}{\sigma_1^2}\right]^{-\kappa} + \frac{1-\beta}{\sqrt{\pi\sigma_2^2\left(\kappa-\frac{3}{2}\right)}}\frac{\Gamma(\kappa)}{\Gamma(\kappa-1/2)}\left[1+\frac{1}{\kappa-\frac{3}{2}}\frac{({v}-{\mu_2})^2}{\sigma_2^2}\right]^{-\kappa}$
-- 1D Lorentzian $f_{L}(v)=1/pi*sigma./((v-mu).^2+sigma^2)$
+- 1D Lorentzian $f_{L}(v)=\frac{\sigma}{\pi}\frac{1}{(v-\mu)^2+\sigma^2}$
