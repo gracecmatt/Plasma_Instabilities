@@ -27,7 +27,7 @@
 
 % Output of this function is w = Re[w]+1i*Im[w]. Note: the linearized code doesn't show a shift in Re[w] by mu*k if mu=!0
 
-function w = Vlasov_1D_linearized_Steve_v4_Kappa(k, theta, mu, kappa)
+function w = Vlasov_1D_linearized_Steve_v4_Kappa(k, sigma, mu, kappa)
 
 % theta is a vector with two entries - theta_1 and theta_2
 % mu is a vector with two entries - mu_1 and mu_2
@@ -80,9 +80,9 @@ nplot = 10000;                    % plot solution every nplot time steps
 
 % % Kappa Distribution (slow decay f0(v) ~ 1/v^(2*(kappa+1))
 % Changed on 12/13/22
-C=(pi*theta^2*(kappa-0.5))^(-1/2)*exp(gammaln(kappa+1)-gammaln(kappa+0.5));
-f0=C*(1+(v-mu).^2/(kappa-0.5)*theta^2).^(-kappa-1); 
-f0_v=C*2*(v-mu)*(-kappa-1)/(kappa-0.5)*theta^2.*(1+(v-mu).^2/(kappa-0.5)*theta^2).^(-kappa-2);
+C1 = (pi*sigma^2*(kappa-1.5))^(-1/2)*exp(gammaln(kappa)-gammaln(kappa-0.5));
+f0 = C1*(1+(v-mu).^2/((kappa-1.5)*sigma^2)).^(-kappa);
+f0_v = C1*2*(v-mu)*(-kappa)/((kappa-1.5)*sigma^2).*(1+(v-mu).^2/((kappa-1.5)*sigma^2)).^(-kappa-1);
 
 % Kappa with bump
 %C1=(pi*theta1^2*(kappa-0.5))^(-1/2)*exp(gammaln(kappa+1)-gammaln(kappa+0.5));
