@@ -1,8 +1,8 @@
 clear; clc;
 rng('shuffle');
-parpool(6); %was 32
+parpool(4); %was 32
 % Initialize algorithm parameters
-N = 240;                              %Number of samples for each parameter
+N = 512;                              %Number of samples for each parameter
 h = 1e-6;                                      %Finite difference step size
 
 % Pre-allocate memory
@@ -18,9 +18,9 @@ Xs = zeros(N,Nparams);                   %To save the normalized parameters
 %I = eye(Nparams);                     
 
 % vals = [k, sigma1, sigma2, mu1, mu2, beta]
-setvals = [0.5; 1; 1; 0; 2.5; 0.9];
+setvals = [0.5; 1; 1; 0; 4; 0.9];
 
-var = 0.15; % x 100% variation considered
+var = 0.25; % x 100% variation considered
 xl = (1-var)*setvals;
 xu = (1+var)*setvals;
 
@@ -55,12 +55,10 @@ parfor jj = 1:N
 
     % Numerically solve 1D Vlasov-Poisson with baseline parameters
     init_guess = Vlasov_1D_linearized_Steve_v4(k,sigma1,sigma2,0,mu2-mu1,beta); %tilde{Omega}+igamma
-    xi_guess = (init_guess)/(k);
+    xi_guess = (init_guess)/(sigma1*k);
     % omega = BiMaxwellian_Disp_Using_Xie(k, sigma1, sigma2, mu1, mu2, beta, xi_guess)*k; %omega=xi*k
     omega = BiMaxwellian_Disp_Using_Xie(k*sigma1,1,sigma2/sigma1,0,(mu2-mu1)/sigma1,beta,xi_guess)*k*sigma1 + k*mu1; %omega=xi*k*sigma1+mu1*k
-    growthZetaf =  imag(dispersion_growthrate_BiMax(params,(init_guess+k*mu1)/k))*k;
     growth(jj) = imag(omega);
-    error(jj) = abs(growthZetaf-imag(omega));
 
     % % init_guess = Vlasov_1D_linearized_Steve_v4(params(1), params(2), 0);
     % % xi_guess = init_guess/(params(1)*params(2));
@@ -106,10 +104,9 @@ parfor jj = 1:N
 
         % Numerically solve 1D Vlasov-Poisson with baseline parameters
         init_guess_plus = Vlasov_1D_linearized_Steve_v4(k,sigma1,sigma2,0,mu2-mu1,beta); %tilde{Omega}+igamma
-        xi_guess_plus = (init_guess_plus)/(k);
+        xi_guess_plus = (init_guess_plus)/(sigma1*k);
         % omega_plus = BiMaxwellian_Disp_Using_Xie(k, sigma1, sigma2, mu1, mu2, beta, xi_guess_plus)*k; %omega=xi*k
-        omega_plus = BiMaxwellian_Disp_Using_Xie(k*sigma1,1,sigma2/sigma1,0,(mu2-mu1)/sigma1,beta,xi_guess_plus)*k*sigma1 + k*mu1; %omega=xi*k*sigma1+mu1*k
-        % growthZetaf =  imag(dispersion_growthrate_BiMax(paramsplus,(init_guess_plus+mu1*k)/k))*k;
+        omega_plus = BiMaxwellian_Disp_Using_Xie_pm(k*sigma1,1,sigma2/sigma1,0,(mu2-mu1)/sigma1,beta,xi_guess_plus)*k*sigma1 + k*mu1; %omega=xi*k*sigma1+mu1*k
         growth_plus(jj, kk) = imag(omega_plus);
         
         %while growth_plus(jj,kk) <0 || growth_plus(jj,kk) >2 % set to 2 for 10%, set to 1 for 25% runs
@@ -123,7 +120,6 @@ end
 parfor jj = 1:N
     % Calculate the appx gradients using finite differences
     grad_growth(:,jj) = (growth_plus(jj, :) - growth(jj))/h;
-
 end
 toc
 
@@ -135,11 +131,16 @@ w2 = U(:,2);
 %Compute the eigenvalues of C
 evalues = diag(S.^2);
 
+% Compute the condition number
+cond = evalues(1)/sum(evalues);
+
 % Find the difference of max and min grad_growth to check for errors
 diff_growth = max(max(grad_growth)) - min(min(grad_growth));
 
 %Save the trial data
-% save(['Data\Dispersion_Rate_BiMax_P' int2str(Nparams) '_N' int2str(N) '_' num2str(var) 'data_par.mat'])
+save(['Data\Dispersion_Rate_BiMax_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var) '_mudif' num2str(setvals(5)-setvals(4)) '_beta' num2str(setvals(6)) '_data.mat'])
 
 % exit
 delete(gcp('nocreate'))
+% sound(sin(1:3000));
+load train, sound(y,Fs)

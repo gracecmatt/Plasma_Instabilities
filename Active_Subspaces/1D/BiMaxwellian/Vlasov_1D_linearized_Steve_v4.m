@@ -86,8 +86,10 @@ f0_v=weight1*f_gauss((v-mu1)/sigma1).*(-2*(v-mu1)/sigma1^2)/sigma1 + weight2*f_g
 
 % Initial Condition for pertubation df(v)
 % Gauss
-sigma_IC=1;%Vmax/10;
-df=f_gauss(v/sigma_IC)/sigma_IC; % gives best accuracy compared to the other options
+% sigma_IC=1;%Vmax/10;
+% df=f_gauss(v/sigma_IC)/sigma_IC; % gives best accuracy compared to the other options
+omega_guess=1-1i;
+df=f0_v./(omega_guess-v*k);
 
 % Random Complex Gauss Field 
 %R1=rand(1,2*M)-0.5+1i*(rand(1,2*M)-0.5); % Random vectors R1
@@ -101,8 +103,6 @@ df=f_gauss(v/sigma_IC)/sigma_IC; % gives best accuracy compared to the other opt
 %MAX_efunction=max(abs(f_efunction));
 %df=f_efunction;
 
-
-
 %Plot Background distribution f0(v) and I.C. df(v,t=0)
 % figure(1);
 % plot(v,f0);
@@ -113,8 +113,6 @@ df=f_gauss(v/sigma_IC)/sigma_IC; % gives best accuracy compared to the other opt
 % title(sprintf('df(v,t=%g)  after %4i time steps with %ix%i grid points', 0,0,N,2*M))
 % legend('Re[df]','Im[df]','Abs[df]')
 % pause(1)
-
-
 
 % Fourier Matrix for Advection Solve and Velocity cut off
 FM_half_lin=exp(-1i*k*v*dt/2);
@@ -128,13 +126,11 @@ Dvvvv=0;
 DvvvvFM=exp(-(ifftshift(-M:M-1)*2*pi/(2*Vmax)).^4*Dvvvv*dt); 
 
 
-
 % Array Preallocation
 t = 0;
 id_max_start=0;
 E_A=zeros(1,nsteps);
 EE=zeros(1,nsteps);
-
 
 
 % main time-stepping loop:
@@ -205,6 +201,7 @@ for n = 1:nsteps
             E_PHASE=unwrap(angle(EE(1:n)));
             w_RE=(E_PHASE(id_max_finish_w)-E_PHASE(id_max_start_w))/((id_max_finish_w-id_max_start_w)*dt);
 
+            % w=sign(gamma)*abs(w_RE)+gamma*1i;
             w=abs(w_RE)+gamma*1i;
             
             % figure(5);
@@ -223,9 +220,7 @@ for n = 1:nsteps
     end
 end      
 
-        
-
-
+    
          
 %--------------------------------------------------------
 function out = f_gauss(v)
