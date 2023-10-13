@@ -7,6 +7,7 @@
 Inconsistencies:
 - use sigma for all thermal velcoties
 - `num2str()` precision of 16
+- input of $\mu$ (or $\mu_1$) into spectral code should always be zero
 - add condition number calculation after eigs:
 ```m
 % Compute the condition number
