@@ -12,6 +12,7 @@ Inconsistencies:
 % Compute the condition number
 cond = evalues(1)/sum(evalues);
   ```
+- make sure dispersion relation is using correct version of kappa
 - initial guess for spectral code, use:
 ```m
 % Initial Condition for pertubation df(v)
