@@ -21,6 +21,7 @@ cond = evalues(1)/sum(evalues);
 omega_guess=1-1i;
 df=f0_v./(omega_guess-v*k);
 ```
+- noise to let you know your code finished lol `load train, sound(y,Fs)`
 
 ## Sub-Folders:
 - 1D BiMaxwellian $f_{BM}(v) = \frac{\beta}{\sqrt{\pi\sigma_1^2}}\text{exp}\left[-\frac{(v-\mu_1)^2}{\sigma_1^2}\right] + \frac{1-\beta}{\sqrt{\pi\sigma_2^2}}\text{exp}\left[-\frac{(v-\mu_2)^2}{\sigma_2^2}\right]$
