@@ -28,3 +28,5 @@ df=f0_v./(omega_guess-v*k);
 - 1D Kappa $f_{\kappa}(v) = \frac{1}{\sqrt{\pi\sigma^2\left(\kappa-\frac{3}{2}\right)}}\frac{\Gamma(\kappa)}{\Gamma(\kappa-1/2)}\left[1+\frac{1}{\kappa-\frac{3}{2}}\frac{({v}-{\mu})^2}{\sigma^2}\right]^{-\kappa}$
 - 1D BiKappa $f_{B\kappa}(v) = \frac{\beta}{\sqrt{\pi\sigma_1^2\left(\kappa-\frac{3}{2}\right)}}\frac{\Gamma(\kappa)}{\Gamma(\kappa-1/2)}\left[1+\frac{1}{\kappa-\frac{3}{2}}\frac{({v}-{\mu_1})^2}{\sigma_1^2}\right]^{-\kappa} + \frac{1-\beta}{\sqrt{\pi\sigma_2^2\left(\kappa-\frac{3}{2}\right)}}\frac{\Gamma(\kappa)}{\Gamma(\kappa-1/2)}\left[1+\frac{1}{\kappa-\frac{3}{2}}\frac{({v}-{\mu_2})^2}{\sigma_2^2}\right]^{-\kappa}$
 - 1D Lorentzian $f_{L}(v)=\frac{\sigma}{\pi}\frac{1}{(v-\mu)^2+\sigma^2}$
+- 1D BiLorentzian $f_{BL}(v)=\beta\frac{\sigma_1}{\pi}\frac{1}{(v-\mu_1)^2+\sigma_1^2}+(1-\beta)\frac{\sigma_2}{\pi}\frac{1}{(v-\mu_2)^2+\sigma_2^2}$
+- 1D Incomplete Maxwellian $f_{IM}(v) = \frac{1}{\sqrt{\pi\sigma^2}} H(v-\nu) \text{exp}\left[-\frac{(v-\mu)^2}{\sigma^2}\right] $
