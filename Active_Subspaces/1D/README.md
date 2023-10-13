@@ -1,5 +1,10 @@
 # README
 
+## To Do: Friday, 10/13/23
+- Update/add equations for each subfolder (kappa is wrong)
+- add rescaled level curves to kappa, kappa var, incomplete maxwellian
+
+
 ## Sub-Folders:
 - 1D BiMaxwellian $f_{BM}(v) = \frac{\beta}{\sqrt{\pi\sigma_1^2}}\text{exp}\left[-\frac{|v-\mu_1|^2}{\sigma_1^2}\right] + \frac{1-\beta}{\sqrt{\pi\sigma_2^2}}\text{exp}\left[-\frac{|v-\mu_2|^2}{\sigma_2^2}\right]$
     - See sufficient summary plots with $k=0.5, \sigma_1=\sigma_2=0.5, \mu_1=0, \mu_2=4, \beta=0.8$ [HERE.](https://github.com/gracecmatt/Plasma_Instabilities/tree/main/Active_Subspaces/1D/BiMaxwellian/README.md)
