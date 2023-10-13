@@ -6,22 +6,21 @@ omega = zeros(1,length(kplot));
 omega_rescaled = zeros(1,length(kplot));
 omega_dielectric = zeros(1,length(kplot));
 
-kappa = 2;
+kappa = 2; % kappa = 2 or 6
 sigma = 1;
-mu = 10;
+mu = 0;
 
 % eyeball-check the distribution
 v=linspace(mu-10,mu+10,1000);
 C1=(pi*sigma^2*(kappa-1.5))^(-1/2)*exp(gammaln(kappa)-gammaln(kappa-0.5));
 f0 = @(v) C1*(1+(v-mu).^2/((kappa-1.5)*sigma^2)).^(-kappa);
-figure; plot(v,f0(v),'linewidth',2); title('Plot of Velocity Distribution $f_0(v)$','Interpreter','latex','FontSize',16)
+figure; plot(v,f0(v),'linewidth',2); title('Plot of Velocity Distribution $f_\kappa(v)$','Interpreter','latex','FontSize',16)
 % check normalization
-integral(f0,-Inf,Inf)
+integral(f0,-Inf,Inf); pause(0.1);
 
 tic;
 for k=kplot
-
-    init_guess = Vlasov_1D_linearized_Steve_v4_Kappa(k, sigma, mu, kappa); %tilde{omega}=tilde{Omega}+igamma
+    init_guess = Vlasov_1D_linearized_Steve_v4_Kappa(k, sigma, 0, kappa); %tilde{omega}=tilde{Omega}+igamma
     
     omega_guess = init_guess+mu*k; %omega=Omega+igamma
     xi_guess = (init_guess+mu*k)/k; %xi=omega/k
@@ -29,8 +28,8 @@ for k=kplot
 
     spectral_guess(count) = init_guess + mu*k; %omega=Omega+igamma
     omega(count) = Kappa_Disp_Using_Xie(k,sigma,mu,kappa,xi_guess)*k; %omega=xi*k
-    omega_rescaled(count) = Kappa_Disp_Using_Xie(k*sigma,1,0,kappa,xi_guess_rescaled)*sigma*k + mu*k; %omega=xi*sigma1*k+mu1*k
-    omega_dielectric(count) = dielectric_kappa(k,sigma,0.5,mu,0,1,kappa,omega_guess); % This is not the correct function
+    omega_rescaled(count) = Kappa_Disp_Using_Xie(k*sigma,1,0,kappa,xi_guess_rescaled)*sigma*k + mu*k; %omega=xi*sigma*k+mu*k
+    omega_dielectric(count) = Kappa_dielectric(k,sigma,mu,kappa,omega_guess); 
 
     count = count+1;
 end
@@ -46,17 +45,14 @@ close all;
 %    (1-beta)*C2*(1+(v-mu2).^2/((kappa-1.5)*sigma2^2)).^(-kappa);
 % figure; plot(v,f0(v),'linewidth',2); title('Plot of Velocity Distribution $f_0(v)$','Interpreter','latex','FontSize',16)
 
-txt1 = ['$\mu_1$ = ',num2str(mu)];
-txt2 = ['$\sigma_1$ = ',num2str(sigma)];
-txt3 = ['$\kappa$ = ',num2str(kappa)];
-txt = {txt1,txt2,txt3};
+txt = ['$\mu$ = ',num2str(mu),', $\sigma$ = ',num2str(sigma)];
 
 figure
 plot(kplot, imag(spectral_guess),'.-'); hold on
 plot(kplot, imag(omega),'.-');
 plot(kplot, imag(omega_rescaled),'.-');
-% plot(kplot, imag(omega_dielectric),'o-');
-    titletxt = ['BiKappa $\gamma(k)$, $\kappa=$',num2str(kappa)];
+plot(kplot, imag(omega_dielectric),'o-');
+    titletxt = ['Kappa $\gamma(k)$, $\kappa=$',num2str(kappa)];
     title(titletxt,'Interpreter','latex','FontSize',16)
     xlabel('$k$','Interpreter','latex','FontSize',16)
     ylabel('$\gamma(k)$','Interpreter','latex','FontSize',16)
@@ -69,7 +65,7 @@ plot(kplot, real(spectral_guess),'.-'); hold on
 plot(kplot, real(omega),'.-');
 plot(kplot, real(omega_rescaled),'.-');
 plot(kplot, real(omega_dielectric),'o-');
-    titletxt = ['BiKappa $\Omega(k)$, $\kappa=$',num2str(kappa)];
+    titletxt = ['Kappa $\Omega(k)$, $\kappa=$',num2str(kappa)];
     title(titletxt,'Interpreter','latex','FontSize',16)
     xlabel('$k$','Interpreter','latex','FontSize',16)
     ylabel('$\Omega(k)$','Interpreter','latex','FontSize',16)

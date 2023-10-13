@@ -34,7 +34,7 @@ function w = Vlasov_1D_linearized_Steve_v4_Kappa(k, sigma, mu, kappa)
 % beta is between 0 and 1
 
 %close all                  
-Vmax = 50;%8  % choose Vmax so that f0(Vmax) < 1e-16           
+Vmax = 200;%8  % choose Vmax so that f0(Vmax) < 1e-16 (gm 10/13/23 use 50 for sigma=1, and 150 for sigma=5)      
 L=2*pi/abs(k); % size of the system in x-direction
 N=1;           % 2N is a number of grid points in x-direction, Linearized code has N=1
 M=512/2*2*2;   % 2M is a number of grid points in v-direction 
@@ -94,8 +94,10 @@ f0_v = C1*2*(v-mu)*(-kappa)/((kappa-1.5)*sigma^2).*(1+(v-mu).^2/((kappa-1.5)*sig
 
 % Initial Condition for pertubation df(v)
 % Gauss
-sigma_IC=1;%Vmax/10;
-df=f_gauss(v/sigma_IC)/sigma_IC; % gives best accuracy compared to the other options
+% sigma_IC=1;%Vmax/10;
+% df=f_gauss(v/sigma_IC)/sigma_IC; % gives best accuracy compared to the other options
+omega_guess=1-1i/k;
+df=f0_v./(omega_guess-v*k);
 
 % Random Complex Gauss Field 
 %R1=rand(1,2*M)-0.5+1i*(rand(1,2*M)-0.5); % Random vectors R1
@@ -110,7 +112,6 @@ df=f_gauss(v/sigma_IC)/sigma_IC; % gives best accuracy compared to the other opt
 %df=f_efunction;
 
 
-
 %Plot Background distribution f0(v) and I.C. df(v,t=0)
 % figure(1);
 % plot(v,f0);
@@ -121,8 +122,6 @@ df=f_gauss(v/sigma_IC)/sigma_IC; % gives best accuracy compared to the other opt
 % title(sprintf('df(v,t=%g)  after %4i time steps with %ix%i grid points', 0,0,N,2*M))
 % legend('Re[df]','Im[df]','Abs[df]')
 % pause(1)
-
-
 
 % Fourier Matrix for Advection Solve and Velocity cut off
 FM_half_lin=exp(-1i*k*v*dt/2);
@@ -215,19 +214,19 @@ for n = 1:nsteps
 
             w=abs(w_RE)+gamma*1i;
             
-%             figure(5);
-%             semilogy(dt*((0:n-1)+1/2),E_A(1:n),[id_max_finish-1/2 id_max_start-1/2]*dt,[max_finish max_start],'r*'); %.*exp([id_max_finish-1 id_max_start-1]*dt*gamma_true)
-%             title(sprintf('E(t=%g)  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))
-%  
-%             figure(6); % compensated for gamma decay/growth - has to be close to horizontal line
-%             semilogy(dt*((0:n-1)+1/2),E_A(1:n).*exp(-dt*((0:n-1)+1/2)*gamma),[id_max_finish-1/2 id_max_start-1/2]*dt,[max_finish max_start].*exp(-[id_max_finish-1/2 id_max_start-1/2]*dt*gamma),'r*',[id_max_finish_w-1/2 id_max_start_w-1/2]*dt,[max_finish_w max_start_w].*exp(-[id_max_finish_w-1/2 id_max_start_w-1/2]*dt*gamma_add),'m*');
-%             title(sprintf('E(t=%g)*exp(-gamma*t)  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))
-% 
-%             figure(55);
-%             plot(dt*((0:n-1)+1/2),E_PHASE);
-%             title(sprintf('PHASE(E(t=%g))  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))
+            % figure(5);
+            % semilogy(dt*((0:n-1)+1/2),E_A(1:n),[id_max_finish-1/2 id_max_start-1/2]*dt,[max_finish max_start],'r*'); %.*exp([id_max_finish-1 id_max_start-1]*dt*gamma_true)
+            % title(sprintf('E(t=%g)  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))
+            % 
+            % % figure(6); % compensated for gamma decay/growth - has to be close to horizontal line
+            % % semilogy(dt*((0:n-1)+1/2),E_A(1:n).*exp(-dt*((0:n-1)+1/2)*gamma),[id_max_finish-1/2 id_max_start-1/2]*dt,[max_finish max_start].*exp(-[id_max_finish-1/2 id_max_start-1/2]*dt*gamma),'r*',[id_max_finish_w-1/2 id_max_start_w-1/2]*dt,[max_finish_w max_start_w].*exp(-[id_max_finish_w-1/2 id_max_start_w-1/2]*dt*gamma_add),'m*');
+            % % title(sprintf('E(t=%g)*exp(-gamma*t)  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))
+            % 
+            % figure(55);
+            % plot(dt*((0:n-1)+1/2),E_PHASE);
+            % title(sprintf('PHASE(E(t=%g))  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))
         end
-        pause(0.01)
+        % pause(0.01)
     end
 end      
 
@@ -237,7 +236,7 @@ end
          
 %--------------------------------------------------------
 function out = f_gauss(v)
-out = exp(-v.^2/2)/sqrt(2*pi);
+out = exp(-v.^2)/sqrt(pi);
 return
 
 %--------------------------------------------------------
