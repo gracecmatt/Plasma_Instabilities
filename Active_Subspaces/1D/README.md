@@ -7,11 +7,13 @@
 Inconsistencies:
 - use sigma for all thermal velcoties
 - `num2str()` precision of 16
+- input of $\mu$ (or $\mu_1$) into spectral code should always be zero
 - add condition number calculation after eigs:
 ```m
 % Compute the condition number
 cond = evalues(1)/sum(evalues);
   ```
+- make sure dispersion relation is using correct version of kappa
 - initial guess for spectral code, use:
 ```m
 % Initial Condition for pertubation df(v)
