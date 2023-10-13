@@ -79,18 +79,20 @@ nplot = 10000;                    % plot solution every nplot time steps
 % f0_v=-1/pi*2*sigma*(v-mu)./((v-mu).^2+sigma^2).^2;
 
 % % Kappa Distribution (slow decay f0(v) ~ 1/v^(2*(kappa+1))
-% Changed on 12/13/22
-% C=(pi*theta^2*(kappa-0.5))^(-1/2)*exp(gammaln(kappa+1)-gammaln(kappa+0.5));
-% f0=C*(1+(v-mu).^2/(kappa-0.5)/theta^2).^(-kappa-1); 
-% f0_v=C*2*(v-mu)*(-kappa-1)/(kappa-0.5)/theta^2.*(1+(v-mu).^2/(kappa-0.5)/theta^2).^(-kappa-2);
+% Changed on 8/16/23
+% C=(pi*theta^2*(kappa-1.5))^(-1/2)*exp(gammaln(kappa)-gammaln(kappa-0.5));
+% f0=C*(1+(v-mu).^2/((kappa-1.5)*theta^2)).^(-kappa);
+% f0_v=C.*2.*(v-mu).*(-kappa)./((kappa-1.5)*theta^2).*(1+(v-mu).^2./((kappa-1.5)*theta^2)).^(-kappa-1);
+
 
 % Kappa with bump
-C1=(pi*theta1^2*(kappa-0.5))^(-1/2)*exp(gammaln(kappa+1)-gammaln(kappa+0.5));
-C2=(pi*theta2^2*(kappa-0.5))^(-1/2)*exp(gammaln(kappa+1)-gammaln(kappa+0.5));
-f0=beta*C1*(1+(v-mu1).^2/(kappa-0.5)/theta1^2).^(-kappa-1) + ...
-(1-beta)*C2*(1+(v-mu2).^2/(kappa-0.5)/theta2^2).^(-kappa-1);
-f0_v=beta*C1*2*(v-mu1)*(-kappa-1)/(kappa-0.5)/theta1^2.*(1+(v-mu1).^2/(kappa-0.5)/theta1^2).^(-kappa-2) + ...
-(1-beta)*C2*2*(v-mu2)*(-kappa-1)/(kappa-0.5)/theta2^2.*(1+(v-mu2).^2/(kappa-0.5)/theta2^2).^(-kappa-2);
+% Changed on 8/7/23
+C1=(pi*theta1^2*(kappa-1.5))^(-1/2)*exp(gammaln(kappa)-gammaln(kappa-0.5));
+C2=(pi*theta2^2*(kappa-1.5))^(-1/2)*exp(gammaln(kappa)-gammaln(kappa-0.5));
+f0=beta*C1*(1+(v-mu1).^2/((kappa-1.5)*theta1^2)).^(-kappa) + ...
+   (1-beta)*C2*(1+(v-mu2).^2/((kappa-1.5)*theta2^2)).^(-kappa);
+f0_v=beta*C1*2*(v-mu1)*(-kappa)/((kappa-1.5)*theta1^2).*(1+(v-mu1).^2/((kappa-1.5)*theta1^2)).^(-kappa-1) + ...
+  (1-beta)*C2*2*(v-mu2)*(-kappa)/((kappa-1.5)*theta2^2).*(1+(v-mu2).^2/((kappa-1.5)*theta2^2)).^(-kappa-1);
 
 % Initial Condition for pertubation df(v)
 % Gauss
