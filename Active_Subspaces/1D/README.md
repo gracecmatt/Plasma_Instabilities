@@ -3,6 +3,7 @@
 ## To Do: Friday, 10/13/23
 - Update/add equations for each subfolder (kappa is wrong)
 - add rescaled level curves to kappa, kappa var, incomplete maxwellian
+- save level curves in Figs folder
 
 
 ## Sub-Folders:
