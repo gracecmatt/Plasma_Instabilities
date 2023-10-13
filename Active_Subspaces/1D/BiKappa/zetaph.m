@@ -1,4 +1,4 @@
-function [Zp,Z]=zetaph(z,Fn,F,N)
+function [Zp,aN]=zetaph(z,Fn,F,N)
 % Hua-sheng XIE, huashengxie@gmail.com, IFTS-ZJU, 2013-05-26 23:37
 % Calculate GPDF, Generalized Plasma Dispersion Function, see [Xie2013]
 % 
@@ -62,7 +62,7 @@ function [Zp,Z]=zetaph(z,Fn,F,N)
        [Fp,F]=calFp(F);
        Z=calZ(z,F,N);
        Zp=calZ(z,Fp,N);
-       Zp=Zp-exp(-nu.^2)/sqrt(pi)./(z-nu); % with correction
+       Zp=Zp-exp(-nu.^2)/sqrt(pi)./(z-nu); % with correction ???????????????????????????
     elseif(Fn==6) % slowing down
        % using heaviside() instead of abs() to support complex v in F(v) 
        vt=1.0; vc=4;
@@ -83,10 +83,10 @@ function [Zp,Z]=zetaph(z,Fn,F,N)
        Zp=calZ(z,Fp,N);
        Zp=Zp+3*sqrt(3)*vt^2/(4*pi)/(vc^3+vt^3).*(1./(z-vc)-...
            1./(z+vc)); % with correction
-    elseif(Fn==0) % for arbitrary analytical input function F
+    elseif(Fn==0) % for arbitrary analytical input function F ***********************************
        [Fp,F]=calFp(F);
        Z=calZ(z,F,N);
-       Zp=calZ(z,Fp,N);
+       [Zp,aN]=calZ(z,Fp,N);
     else % default Maxwellian
        F = 'exp(-v.^2)/sqrt(pi)';
        [Fp,F]=calFp(F);
@@ -112,15 +112,15 @@ function [Zp,Z]=zdelta(z,zd)
     Zp=1./(z-zd).^2;
 end
 
-function Z=calZ(z,F,N,del)
+function [Z,aN]=calZ(z,F,N,del)
    if nargin<4, del = 1; end
-   Z=hilb(z,F,N,del);
+   [Z,aN]=hilb(z,F,N,del);
    ind1=find(isnan(Z));
-   z1=z(ind1)+1e-10;         % avoid NaN of higher order singular point 
-   Z(ind1)=hilb(z1,F,N,del);% e.g., z=ia for Lorentzian F = '1./(a^2+v.^2)'
+   z1=z(ind1)+1e-10;             % avoid NaN of higher order singular point 
+   [Z(ind1),aN(ind1)]=hilb(z1,F,N,del);% e.g., z=ia for Lorentzian F = '1./(a^2+v.^2)'
 end
 
-function Z=hilb(z,F,N,del,L)
+function [Z,aN]=hilb(z,F,N,del,L)
 % note: 1. in fact, a_n need calcualte only once for a fixed F, so you can
 %   rewrite the code to speed up.
 %       2. f(z) in analytic continuation can also be replaced by 
@@ -128,12 +128,14 @@ function Z=hilb(z,F,N,del,L)
 %       3. usually, del=1, but for flat-top and triangular distributions,
 %   it seems we should set del=0 for correct analytic continuation
 
-    if nargin<5, L = sqrt(N/sqrt(2)); end  % optimal choice of L
-%     L=10;
+    if nargin<5 % optimal choice of L = sqrt(N/sqrt(2))
+        L = 3;
+    end
     if nargin<4, del = 1; end
     
     % 1. Define initial parameters
-    Z = zeros(size(z)); % initialize output
+    g = zeros(size(z)); % initialize output
+    aN = ones(size(z));
 
     % 2. Calculate
     idx=find(imag(z) == 0);
@@ -153,7 +155,7 @@ function Z=hilb(z,F,N,del,L)
         t  = (L+1i*z(id))./(L-1i*z(id)); % The evaluation of the transform
         h  = polyval(a,t)./(t.^N.*(L-1i*z(id)));   % reduces to polynomial
                                             % evaluation in the variable t
-        Z(id) = h + 1i.*Fz(z(id));
+        g(id) = h + 1i.*Fz(z(id));
     end
     % 2.2. upper and lower half plane
     for id=idx1
@@ -165,17 +167,30 @@ function Z=hilb(z,F,N,del,L)
         Fz = eval(['@(v)',F]);    % define F(z), for analytic continuation
         
         % Weideman94 method to calculate upper half plane Hilbert transform
-        W = (L^2+v.^2);                         % default weight function
-        FF = FF.*W; FF = [0; FF];             % function to be transformed
-        a = (fft(fftshift(FF)))/M2;           % coefficients of transform
-        a0 = a(1); a = flipud(a(2:N+1));            % reorder coefficients
+        W = (L^2+v.^2);                           % default weight function
+        FF = FF.*W; FF = [0; FF];              % function to be transformed
+        a = (fft(fftshift(FF)))/M2;             % coefficients of transform
+        % --- added by gm 8/10/23 to determine convergence of Fourier coefficients
+        % thresh = max(1e-15, min( abs(a(1:N+1)) )*1.1); % if a_n never gets below 1e-15, choose the smallest value of a in (1:N+1)
+        % aBelowThresh = a(abs(a(1:N+1)) < thresh); % coefficients below threshhold
+        % aN(id) = mean(abs(aBelowThresh));
+        % -----------------------------------------------------------------
+        a0 = a(1); a = flipud(a(2:N+1));             % reorder coefficients
         z1 = (imag(z(id))>0).*z(id)+(imag(z(id))<0).*conj(z(id));
         t = (L+1i*z1)./(L-1i*z1); p = polyval(a,t); % polynomial evaluation
-        h = 1i*(2*p./(L-1i*z1).^2+(a0/L)./(L-1i*z1));  % Evaluate h(f(v))
+        h = 1i*(2*p./(L-1i*z1).^2+(a0/L)./(L-1i*z1));    % Evaluate h(f(v))
+        
         % convert upper half-plane results to lower half-plane if necesary
 %         Z(id) = h.*(imag(z(id))>0)+conj(h-2i.*Fz(z1)).*(imag(z(id))<0);
-        Z(id) = h.*(imag(z(id))>0)+(conj(h)+...
-            del*2i.*Fz(z(id))).*(imag(z(id))<0);
+        g(id) = h.*(imag(z(id))>0)+(conj(h)+del*2i.*Fz(z(id))).*(imag(z(id))<0);
+
+        % % --- code to plot Fourier coefficients (gm 5/18/23) ---
+        % figure
+        % semilogy(1:N,abs(flipud(a)),'linewidth',2); grid on;
+        % xlabel('term number in Fourier series');
+        % ylabel('magnitude of coefficient');ylim([0,15]);
+        % title('complex magnitude of Fourier coefficients')
     end
-    Z=Z.*pi;
+    % aN = max(abs(aN));
+    Z=g.*pi;
 end

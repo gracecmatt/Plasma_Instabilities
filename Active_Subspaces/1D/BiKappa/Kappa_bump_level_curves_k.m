@@ -6,11 +6,11 @@ omega = zeros(1,length(kplot));
 omega_rescaled = zeros(1,length(kplot));
 omega_dielectric = zeros(1,length(kplot));
 
-kappa = 2;
+kappa = 2; % kappa = 2 or 6
 sigma1 = 1;
 sigma2 = 1;
-mu1 = 10;
-mu2 = mu1+6;
+mu1 = 0;
+mu2 = mu1+2;
 beta = 0.9;
 
 % eyeball-check the distribution
@@ -18,9 +18,9 @@ v=linspace(mu1-10,mu1+10,1000);
 C1=(pi*sigma1^2*(kappa-1.5))^(-1/2)*exp(gammaln(kappa)-gammaln(kappa-0.5));
 C2=(pi*sigma2^2*(kappa-1.5))^(-1/2)*exp(gammaln(kappa)-gammaln(kappa-0.5));
 f0= @(v) beta*C1*(1+(v-mu1).^2/((kappa-1.5)*sigma1^2)).^(-kappa) + (1-beta)*C2*(1+(v-mu2).^2/((kappa-1.5)*sigma2^2)).^(-kappa);
-figure; plot(v,f0(v),'linewidth',2); title('Plot of Velocity Distribution $f_0(v)$','Interpreter','latex','FontSize',16)
+figure; plot(v,f0(v),'linewidth',2); title('Plot of Velocity Distribution $f_{B\kappa}(v)$','Interpreter','latex','FontSize',16)
 % check normalization
-integral(f0,-Inf,Inf)
+integral(f0,-Inf,Inf); pause(0.1)
 
 tic;
 for k=kplot
@@ -33,7 +33,7 @@ for k=kplot
     spectral_guess(count) = init_guess + mu1*k; %omega=Omega+igamma
     omega(count) = Kappa_Bump_Disp_Using_Xie(k,sigma1,sigma2,mu1,mu2,beta,kappa,xi_guess)*k; %omega=xi*k
     omega_rescaled(count) = Kappa_Bump_Disp_Using_Xie(k*sigma1,1,sigma2/sigma1,0,(mu2-mu1)/sigma1,beta,kappa,xi_guess_rescaled)*sigma1*k + mu1*k; %omega=xi*sigma1*k+mu1*k
-    omega_dielectric(count) = dielectricBOT_newkappa2(k,sigma1,sigma2,mu1,mu2,beta,kappa,omega_guess);
+    omega_dielectric(count) = BiKappa_dielectric(k,sigma1,sigma2,mu1,mu2,beta,kappa,omega_guess);
 
     count = count+1;
 end

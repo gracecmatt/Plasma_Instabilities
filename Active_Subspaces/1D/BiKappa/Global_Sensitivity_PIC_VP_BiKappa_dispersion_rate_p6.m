@@ -7,7 +7,7 @@ h = 1e-6;     %Finite difference step size
 
 kappa = 2; % kappa values allowed: kappa > 3/2
 beta = 0.9;
-mu1 = 818000;
+mu1 = 10;
 
 % Pre-allocate memory
 growth = zeros(N,1);                        %Output of interest (growth rate)
@@ -17,7 +17,7 @@ grad_growth = zeros(Nparams,N);             %Gradient of output of interest
 Xs = zeros(N,Nparams);                      %To save the normalized parameters                
 
 % [k; theta1; theta2; mu1; mu2; beta; kappa];
-setvals = [0.5; 1; 1; mu1; mu1+2; beta];
+setvals = [0.5; 1; 1; mu1; mu1+6; beta];
 
 % % plot the distribution
 % theta1 = setvals(2);    mu1 = setvals(4);    
