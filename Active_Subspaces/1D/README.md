@@ -34,4 +34,5 @@ df=f0_v./(omega_guess-v*k);
 - 1D Incomplete Maxwellian $f_{IM}(v) = \frac{1}{\sqrt{\pi\sigma^2}} H(v-\nu) \text{exp}\left[-\frac{(v-\mu)^2}{\sigma^2}\right] $
 
 ## Rescaled Distributions:
-- 1D BiMaxwellian $f_{BM}(v) = \frac{\beta}{\sqrt{\pi}}\text{exp}\left[-v^2\right] + \frac{1-\beta}{\sqrt{\pi(\sigma_2/\sigma_1)^2}}\text{exp}\left[-\frac{(v-(\mu_2-\mu_1)/\sigma_1)^2}{(\sigma_2/\sigma_1)^2}\right]$
+- 1D Maxwellian $f_{M}(v) = \frac{1}{\sqrt{\pi}}\text{exp}\left[-v^2\right]$, $\tilde{k}=k\sigma, \tilde{\Omega}=\Omega-\mu k$
+- 1D BiMaxwellian $f_{BM}(v) = \frac{\beta}{\sqrt{\pi}}\text{exp}\left[-v^2\right] + \frac{1-\beta}{\sqrt{\pi(\sigma_2/\sigma_1)^2}}\text{exp}\left[-\frac{(v-(\mu_2-\mu_1)/\sigma_1)^2}{(\sigma_2/\sigma_1)^2}\right]$, $\tilde{k}=k\sigma_1, \tilde{\Omega}=\Omega-\mu_1 k$
