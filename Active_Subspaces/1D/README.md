@@ -32,3 +32,6 @@ df=f0_v./(omega_guess-v*k);
 - 1D Lorentzian $f_{L}(v)=\frac{\sigma}{\pi}\frac{1}{(v-\mu)^2+\sigma^2}$
 - 1D BiLorentzian $f_{BL}(v)=\beta\frac{\sigma_1}{\pi}\frac{1}{(v-\mu_1)^2+\sigma_1^2}+(1-\beta)\frac{\sigma_2}{\pi}\frac{1}{(v-\mu_2)^2+\sigma_2^2}$
 - 1D Incomplete Maxwellian $f_{IM}(v) = \frac{1}{\sqrt{\pi\sigma^2}} H(v-\nu) \text{exp}\left[-\frac{(v-\mu)^2}{\sigma^2}\right] $
+
+## Rescaled Distributions:
+- 1D BiMaxwellian $f_{BM}(v) = \frac{\beta}{\sqrt{\pi}}\text{exp}\left[-v^2\right] + \frac{1-\beta}{\sqrt{\pi(\sigma_2/\sigma_1)^2}}\text{exp}\left[-\frac{(v-(\mu_2-\mu_1)/\sigma_1)^2}{(\sigma_2/\sigma_1)^2}\right]$
