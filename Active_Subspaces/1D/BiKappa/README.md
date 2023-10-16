@@ -10,45 +10,6 @@
 7. `slurm_GS_PIC_BiKap_p6.slurm` Use to run script on Mio.
 8. `zetaph.m` Code to produce Fourier series approximation as in Xie/Weideman algorithm.
 
-## Sufficient Summary Plots
-### Kappa = 1
-#### Bi-Kappa $(\kappa=1)$ with 1% Variation
-![1% Variation](Figs/kappa1/EigWVSSPfit_Dispersion_KappaBump_1_512_2.svg)
-#### Bi-Kappa $(\kappa=1)$ with 5% Variation
-![5% Variation](Figs/kappa1/EigWVSSPfit_Dispersion_KappaBump_5_512_2.svg)
-#### Bi-Kappa $(\kappa=1)$ with 10% Variation
-![10% Variation](Figs/kappa1/EigWVSSPfit_Dispersion_KappaBump_10_512_2.svg)
-#### Bi-Kappa $(\kappa=1)$ with 15% Variation
-![15% Variation](Figs/kappa1/EigWVSSPfit_Dispersion_KappaBump_15_512_2.svg)
-#### Bi-Kappa $(\kappa=1)$ with 25% Variation
-![25% Variation](Figs/kappa1/EigWVSSPfit_Dispersion_KappaBump_25_512_2.svg)
-#### Bi-Kappa $(\kappa=1)$ with 50% Variation
-![50% Variation](Figs/kappa1/EigWVSSPfit_Dispersion_KappaBump_50_512_2.svg)
-
-### Kappa = 2
-#### Bi-Kappa $(\kappa=2)$ with 1% Variation
-![1% Variation](Figs/kappa2/EigWVSSPfit_Dispersion_KappaBump_1_512_2.svg)
-#### Bi-Kappa $(\kappa=2)$ with 5% Variation
-![5% Variation](Figs/kappa2/EigWVSSPfit_Dispersion_KappaBump_5_512_2.svg)
-#### Bi-Kappa $(\kappa=2)$ with 10% Variation
-![10% Variation](Figs/kappa2/EigWVSSPfit_Dispersion_KappaBump_10_512_2.svg)
-#### Bi-Kappa $(\kappa=2)$ with 15% Variation
-![15% Variation](Figs/kappa2/EigWVSSPfit_Dispersion_KappaBump_15_512_2.svg)
-#### Bi-Kappa $(\kappa=2)$ with 25% Variation
-![25% Variation](Figs/kappa2/EigWVSSPfit_Dispersion_KappaBump_25_512_2.svg)
-#### Bi-Kappa $(\kappa=2)$ with 50% Variation
-![50% Variation](Figs/kappa2/EigWVSSPfit_Dispersion_KappaBump_50_512_2.svg)
-
-### Kappa = 6
-#### Bi-Kappa $(\kappa=6)$ with 1% Variation
-![1% Variation](Figs/kappa6/EigWVSSPfit_Dispersion_KappaBump_1_512_2.svg)
-#### Bi-Kappa $(\kappa=6)$ with 5% Variation
-![5% Variation](Figs/kappa6/EigWVSSPfit_Dispersion_KappaBump_5_512_2.svg)
-#### Bi-Kappa $(\kappa=6)$ with 10% Variation
-![10% Variation](Figs/kappa6/EigWVSSPfit_Dispersion_KappaBump_10_512_2.svg)
-#### Bi-Kappa $(\kappa=6)$ with 15% Variation
-![15% Variation](Figs/kappa6/EigWVSSPfit_Dispersion_KappaBump_15_512_2.svg)
-#### Bi-Kappa $(\kappa=6)$ with 25% Variation
-![25% Variation](Figs/kappa6/EigWVSSPfit_Dispersion_KappaBump_25_512_2.svg)
-#### Bi-Kappa $(\kappa=6)$ with 50% Variation
-![50% Variation](Figs/kappa6/EigWVSSPfit_Dispersion_KappaBump_50_512_2.svg)
+## Level Curves
+BiKappa
+![BiKappa](Active_Subspaces/1D/BiKappa/Figs/LevelCurves/gammak_kappa2_100_102_5_1_09.svg)
