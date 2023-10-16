@@ -12,4 +12,4 @@
 
 ## Level Curves
 BiKappa
-![BiKappa](BiKappa/Figs/LevelCurves/gammak_kappa2_100_102_5_1_09.svg)
+![BiKappa](Figs/LevelCurves/gammak_kappa2_100_102_5_1_09.svg)
