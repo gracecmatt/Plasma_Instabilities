@@ -1,68 +1,70 @@
 %% Lorentzian
 clear; clc; 
-k0 = 0.5; kf = 1.5;
-kplot = k0:(kf-k0)/499:kf;
+kplot = linspace(0.25,0.75);
 count = 1;
-initial_guesses = zeros(1,length(kplot));
-omega_xie = zeros(1,length(kplot));
-% omega_xie_rescaled = zeros(1,length(kplot));
+spectral_guess = zeros(1,length(kplot));
+omega = zeros(1,length(kplot));
+omega_rescaled = zeros(1,length(kplot));
 
 sigma = 1;
-mu = 900;
-exactReal = mu*kplot+1; % other solution: mu*kplot-1
-exactImag = -sigma*kplot;
+mu = 100;
 
 for k=kplot
     init_guess = Vlasov_1D_linearized_Steve_v4(k, sigma, 0); %tilde{Omega}+igamma
-    initial_guesses(count) = init_guess+mu*k; %Omega+igamma
+    
+    xi_guess = (init_guess+mu*k)/k; %xi=omega/k
+    xi_guess_rescaled = init_guess/(sigma*k);
 
-    xi = (init_guess+mu*k)/k; 
-    % xi_rescaled = init_guess/(sigma*k);
-
-    omega_xie(count) = Lorentzian_Disp_Using_Xie(k, sigma, mu, xi)*k; %omega=xi*k
-    % omega_xie_rescaled(count) = Lorentzian_Disp_Using_Xie(k*sigma, 1, 0, xi_rescaled)*sigma*k + mu*k; %omega=xi*sigma*k+mu*k
+    spectral_guess(count) = init_guess+mu*k; %Omega+igamma
+    omega(count) = Lorentzian_Disp_Using_Xie(k, sigma, mu, xi_guess)*k; %omega=xi*k
+    omega_rescaled(count) = Lorentzian_Disp_Using_Xie(k*sigma, 1, 0, xi_guess_rescaled)*sigma*k + mu*k; %omega=xi*sigma*k+mu*k
+    
     count = count+1;
 end
+
+% exact solution
+omega_exact = mu*kplot+1 + 1i.*(-sigma*kplot);
 
 %% Figures
 close all
 txt = ['$\mu$ = ',num2str(mu),', $\sigma$ = ', num2str(sigma)];
 
 figure
-plot(kplot, imag(initial_guesses),'.-'); hold on
-plot(kplot, imag(omega_xie),'.-');
-plot(kplot, imag(omega_xie_rescaled),'.-');
-plot(kplot, exactImag,'k');
-title('Lorentzian - $k$ vs. $\gamma$','Interpreter','latex','FontSize',16)
+plot(kplot, imag(spectral_guess),'.-'); hold on
+plot(kplot, imag(omega),'.-');
+plot(kplot, imag(omega_rescaled),'.-');
+plot(kplot, imag(omega_exact),'k');
+title('Lorentzian $\gamma(k)$','Interpreter','latex','FontSize',16)
 xlabel('$k$','Interpreter','latex','FontSize',16)
 ylabel('$\gamma(k)$','Interpreter','latex','FontSize',16)
-legend('Spectral Method', 'Xie Root Finding','Rescaled Xie','Exact Solution','location','Best')
+legend('Spectral Method', 'Xie Root Finding','Rescaled Xie','Exact Solution','location','East')
 xL=xlim; yL=ylim;
-text(xL(1)+(kplot(2)-kplot(1)),yL(2),txt,'HorizontalAlignment','left','VerticalAlignment','top','Interpreter','latex','FontSize',12)
+text(median(kplot),yL(2),txt,'HorizontalAlignment','left','VerticalAlignment','top','Interpreter','latex','FontSize',12)
 
 figure
-plot(kplot, real(initial_guesses),'.-'); hold on
-plot(kplot, real(omega_xie),'.-');
-plot(kplot, real(omega_xie_rescaled),'.-');
-plot(kplot, exactReal, 'k')
-title('Lorentzian - $k$ vs. $\Omega$','Interpreter','latex','FontSize',16)
+plot(kplot, real(spectral_guess),'.-'); hold on
+plot(kplot, real(omega),'.-');
+plot(kplot, real(omega_rescaled),'.-');
+plot(kplot, real(omega_exact), 'k')
+title('Lorentzian $\Omega(k)$','Interpreter','latex','FontSize',16)
 xlabel('$k$','Interpreter','latex','FontSize',16)
 ylabel('$\Omega(k)$','Interpreter','latex','FontSize',16)
-legend('Spectral Method', 'Xie Root Finding','Rescaled Xie','Exact Solution','Location','Best')
+legend('Spectral Method', 'Xie Root Finding','Rescaled Xie','Exact Solution','Location','South')
 xL=xlim; yL=ylim;
 text(xL(1)+(kplot(2)-kplot(1)),yL(2),txt,'HorizontalAlignment','left','VerticalAlignment','top','Interpreter','latex','FontSize',12)
 
 %% Error Analysis
-% L2 error = sum( (y_exact - y_sample).^2 )
+% L2 error = sqrt( sum( (y_exact - y_sample).^2 ) )
+% results are given as two component vectors of [real l2 error, imag l2 error]
 
-% real part: Omega = mu*k+1
-L2err.spectral(1) = sum( (exactReal-(real(initial_guesses))).^2 );
-L2err.xie(1) = sum( (exactReal-(real(omega_xie))).^2 );
-L2err.xie_rescaled(1) = sum( (exactReal-(real(omega_xie_rescaled))).^2 );
+% real part
+L2err.spectral(1) = sqrt(sum( ( abs(real(omega_exact))-abs(real(spectral_guess)) ).^2 ));
+L2err.xie(1) = sqrt(sum( ( abs(real(omega_exact))-abs(real(omega)) ).^2 ));
+L2err.xie_rescaled(1) = sqrt(sum( ( abs(real(omega_exact))-abs(real(omega_rescaled)) ).^2 ));
 
-% imaginary part: gamma = -sigma*k
-L2err.spectral(2) = sum( (exactImag-(imag(initial_guesses))).^2 );
-L2err.xie(2) = sum( (exactImag-(imag(omega_xie))).^2 );
-L2err.xie_rescaled(2) = sum( (exactImag-(imag(omega_xie_rescaled))).^2 );
+% imaginary part
+L2err.spectral(2) = sqrt(sum( (imag(omega_exact)-(imag(spectral_guess))).^2 ));
+L2err.xie(2) = sqrt(sum( (imag(omega_exact)-(imag(omega))).^2 ));
+L2err.xie_rescaled(2) = sqrt(sum( (imag(omega_exact)-(imag(omega_rescaled))).^2 ));
 
 Error = struct2table(L2err)
