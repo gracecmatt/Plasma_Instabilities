@@ -2,9 +2,13 @@ function omega = analyticAPPROX(k,sigma1,sigma2,mu1,mu2,beta)
 % approximation works for small k
 % note: 
 
-    f0 = @(z) beta*exp(-(z-mu1).^2/sigma1^2)/sqrt(pi*sigma1^2)+(1-beta)*exp(-(z-mu2).^2/sigma2^2)/sqrt(pi*sigma2^2);
-    f0p = @(z) beta*exp(-(z-mu1).^2/sigma1^2)/sqrt(pi*sigma1^2).*(2*(z-mu1)/sigma1^2)+...
-           (1-beta)*exp(-(z-mu2).^2/sigma2^2)/sqrt(pi*sigma2^2).*(2*(z-mu2)/sigma2^2);
+    % f0 = @(z) beta*exp(-(z-mu1).^2/sigma1^2)/sqrt(pi*sigma1^2)+(1-beta)*exp(-(z-mu2).^2/sigma2^2)/sqrt(pi*sigma2^2);
+    % f0p = @(z) beta*exp(-(z-mu1).^2/sigma1^2)/sqrt(pi*sigma1^2).*(2*(z-mu1)/sigma1^2)+...
+    %        (1-beta)*exp(-(z-mu2).^2/sigma2^2)/sqrt(pi*sigma2^2).*(2*(z-mu2)/sigma2^2);
+
+    f0 = @(z) beta/pi*sigma1./((z-mu1).^2+sigma1^2) + (1-beta)/pi*sigma2./((z-mu2).^2+sigma2^2);
+    f0p = @(z) beta/pi*sigma1*(-2*(z-mu1))./((z-mu1).^2+sigma1^2).^2 +...
+           (1-beta)/pi*sigma2*(-2*(z-mu2))./((z-mu2).^2+sigma2^2).^2;
 
     % REAL PART (Omega)
     C1 = -2*integral(@(v) v.*f0(v),-Inf,Inf);

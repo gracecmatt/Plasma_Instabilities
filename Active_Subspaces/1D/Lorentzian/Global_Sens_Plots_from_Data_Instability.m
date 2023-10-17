@@ -149,8 +149,8 @@ grid on;
 
 set(fig6,'PaperUnits','inches','PaperSize',[11 8])
 % txt = ['Maxwellian using Plasma Z-Function, ',int2str(var*100),'\% variation'];
-txt = ['Maxwellian using Fourier approx., ',int2str(var*100),'\% variation'];
+txt = ['Lorentzian, ',int2str(var*100),'\% variation on ($k,\sigma,\mu)$=(',num2str(setvals(1)),',',num2str(setvals(2)),',',num2str(setvals(3)),')'];
 sgtitle(txt,'Interpreter','latex','Fontsize',16,'FontWeight','bold')
-hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_Max_' int2str(100*var) '_' int2str(N) 'N.eps'], hgexport('factorystyle'), 'Format', 'eps');
-hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_Max_' int2str(100*var) '_' int2str(N) 'N.svg'], hgexport('factorystyle'), 'Format', 'svg');
-hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_Max_' int2str(100*var) '_' int2str(N) 'N.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
+% hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_Max_' int2str(100*var) '_' int2str(N) 'N.eps'], hgexport('factorystyle'), 'Format', 'eps');
+% hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_Max_' int2str(100*var) '_' int2str(N) 'N.svg'], hgexport('factorystyle'), 'Format', 'svg');
+% hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_Max_' int2str(100*var) '_' int2str(N) 'N.pdf'], hgexport('factorystyle'), 'Format', 'pdf');

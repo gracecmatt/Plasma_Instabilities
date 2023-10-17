@@ -1,12 +1,9 @@
 function xi = Lorentzian_Disp_Using_Xie(k, sigma, mu, init_guess)
 
     % =================== options for root finding ========================
-    options = optimoptions('fsolve','Display','none');%,'Algorithm','trust-region','FiniteDifferenceType','central');
-    % options = optimoptions('fsolve','Display','off','Algorithm','levenberg-marquardt');
-
+    options = optimoptions('fsolve','Display','none');
 
     % ========= compute gamma using Fourier series approximation ==========
-    % F = ['1/sqrt(pi*',num2str(sigma,16),'^2)*exp(-(v-',num2str(mu,16),').^2/(',num2str(sigma,16),'^2))'];
     F = ['1/pi*',num2str(sigma,16),'./((v-',num2str(mu,16),').^2+',num2str(sigma,16),'^2)'];
     Fn = 0; % 0 = option to define your own F
     Nfourier = 1500; % number of Fourier coefficients to take

@@ -2,7 +2,7 @@
 rng('shuffle');
 parpool(4); %was 32
 % Initialize algorithm parameters
-N = 256;            %Number of samples for each parameter
+N = 128;            %Number of samples for each parameter
 h = 1e-6;           %Finite difference step size
 %trial = 1;         %Trial number (used when saving figures)
 
@@ -20,9 +20,9 @@ Xs = zeros(N,Nparams);                   %To save the normalized parameters
 omega_error = zeros(N,1);   
 
 % vals = [k, sigma, mu]
-setvals = [0.5; 5; 100];
+setvals = [0.5; 1; 0];
 
-var = 0.10; % x 100% variation considered
+var = 0.01; % x 100% variation considered
 xl = (1-var)*setvals;
 xu = (1+var)*setvals;
 
@@ -43,8 +43,8 @@ parfor jj = 1:N
     % Numerically solve 1D Vlasov-Poisson with baseline parameters
     init_guess = Vlasov_1D_linearized_Steve_v4(params(1), params(2), 0);
     xi_guess = init_guess/(params(2)*params(1));
-    omega = Lorentzian_Disp_Using_Xie(params(1)*params(2), 1, 0, xi_guess)*params(1)*params(2) + params(1)*params(3);
-    omega_exact = params(3)*params(1)+1 + 1i*(-params(2)*params(1));
+    omega_guess = Maxwellian_Disp_Using_Xie(params(1)*params(2), 1, 0, xi_guess)*params(1)*params(2) + params(1)*params(3);
+    omega_exact = params(3)*params(1)+1 + 1i.*(-params(2)*params(1));
 
     growth(jj) = imag(omega);
     omega_error(jj) = abs(real(omega_exact)-real(omega))+1i*abs(imag(omega_exact)-imag(omega));
@@ -53,14 +53,14 @@ end
 parfor jj = 1:N
     randparams = Xs(jj,:)';
     for kk = 1:Nparams
-        I = eye(Nparams);
+        I = eye(Nparams);                     
+        % Numerically solve 1D Vlasov-Poisson with perturbed parameters
         xplus = randparams + h*I(:,kk);
         paramsplus = 1/2*(diag(xu - xl)*xplus + (xu + xl));
-        
-        % Numerically solve 1D Vlasov-Poisson with perturbed parameters
+
         init_guess_plus = Vlasov_1D_linearized_Steve_v4(paramsplus(1),paramsplus(2),0);
         xi_guess_plus = init_guess_plus/(paramsplus(2)*paramsplus(1))
-        omega_plus = Lorentzian_Disp_Using_Xie(paramsplus(1)*paramsplus(2),1,0,xi_guess_plus)*paramsplus(1)*paramsplus(2) + paramsplus(1)*paramsplus(3);
+        omega_plus = Lor_Disp_Using_Xie(paramsplus(1)*paramsplus(2),1,0,xi_guess_plus)*paramsplus(1)*paramsplus(2) + paramsplus(1)*paramsplus(3);
         growth_plus(jj, kk) = imag(omega_plus);
     end
 end
@@ -85,17 +85,7 @@ cond = evalues(1)/sum(evalues);
 diff_growth = max(max(grad_growth)) - min(min(grad_growth));
 
 %Save the trial data
-save(['Data\Dispersion_Rate_Lorentz_P' int2str(Nparams) '_N' int2str(N) '_' num2str(var) 'var_data.mat'])
+save(['Data\Dispersion_Rate_Lornetz_P' int2str(Nparams) '_N' int2str(N) '_' num2str(var) 'var_data.mat'])
 
 % exit
 delete(gcp('nocreate'))
-
-% plot the error
-figure; 
-subplot(1,2,1)
-semilogy(real(omega_error),'*'); grid on
-title('$\Omega$ Error','Interpreter','latex','FontSize',12);
-subplot(1,2,2)
-semilogy(imag(omega_error),'*'); grid on
-title('$\gamma$ Error','Interpreter','latex','FontSize',12);
-max_error = max(abs(omega_error))

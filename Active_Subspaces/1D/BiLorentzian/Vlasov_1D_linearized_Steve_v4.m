@@ -30,10 +30,10 @@
 function w = Vlasov_1D_linearized_Steve_v4(k,sigma1,sigma2,mu1,mu2,beta)
 
 %close all                  
-Vmax =200;  % choose Vmax so that f0(Vmax) < 1e-16           
+Vmax=200;  % choose Vmax so that f0(Vmax) < 1e-16           
 L=2*pi/abs(k); % size of the system in x-direction
 N=1;           % 2N is a number of grid points in x-direction, Linearized code has N=1
-M=512*2;        % 2M is a number of grid points in v-direction 
+M=2^10;        % 2M is a number of grid points in v-direction 
 dv=Vmax/M;
 v=(-M:M-1)*dv;
 
@@ -220,7 +220,6 @@ for n = 1:nsteps
         %     title(sprintf('PHASE(E(t=%g))  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))
         end
         % pause(0.01)
-        % close figure(5) figure(55)
     end
 end      
 

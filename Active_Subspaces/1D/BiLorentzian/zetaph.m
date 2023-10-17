@@ -14,8 +14,8 @@ function [Zp]=zetaph(z,Fn,F,N)
 %     plot(z,real(Z),z,imag(Z));
 %  3. [x,y]=meshgrid(-1:0.1:1,-1:0.1:1); z=x+1i*y; [Zp,Z]=zetaph(z,1); 
 %     subplot(121);surf(x,y,real(Zp)); subplot(122);surf(x,y,imag(Zp));
-    if (nargin<4) 
-        N = 128/4; 
+    if (nargin<4)
+        N = 128/4;
     end
 
     % Default for usual Plasma Dispersion Function

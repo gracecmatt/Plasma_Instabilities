@@ -2,7 +2,7 @@ clear; clc;
 rng('shuffle');
 parpool(4); %was 32
 % Initialize algorithm parameters
-N = 64;                              %Number of samples for each parameter
+N = 256;                              %Number of samples for each parameter
 h = 1e-6;                                      %Finite difference step size
 
 % Pre-allocate memory
@@ -16,11 +16,12 @@ Xs = zeros(N,Nparams);                   %To save the normalized parameters
 %diff_growth = 0; %zeros(1,1);              %Differences in largest and
 %smallest element of grad_growth
 %I = eye(Nparams);                     
+omega_error = zeros(N,1);
 
 % vals = [k, sigma1, sigma2, mu1, mu2, beta]
-setvals = [0.5; 3; 1; 0; 6; 0.9];
+setvals = [0.5; 1; 1; 100; 106; 0.9];
 
-var = 0.01; % x 100% variation considered
+var = 0.10; % x 100% variation considered
 xl = (1-var)*setvals;
 xu = (1+var)*setvals;
 
@@ -44,9 +45,9 @@ parfor jj = 1:N
     init_guess = Vlasov_1D_linearized_Steve_v4(params(1),params(2),params(3),0,params(5)-params(4),params(6)); %tilde{Omega}+igamma
     xi_guess = init_guess/(params(2)*params(1));
     omega = BiLorentzian_Disp_Using_Xie(params(1)*params(2),1,params(3)/params(2),0,(params(5)-params(4))/params(2),params(6),xi_guess)*params(2)*params(1) + params(4)*params(1); %omega=xi*sigma*k+mu*k
-    omega_exact = BiLorentzian_Solution(params(1),params(2),params(3),params(4),params(5),params(6))
+    omega_exact = BiLorentzian_Solution(params(1),params(2),params(3),params(4),params(5),params(6));
     growth(jj) = imag(omega);
-    error(jj) = abs(omega_exact-growth(jj));
+    omega_error(jj) = abs(real(omega_exact)-real(omega))+1i*abs(imag(omega_exact)-imag(omega));
 end
 
 parfor jj = 1:N
@@ -57,7 +58,6 @@ parfor jj = 1:N
         xplus = randparams + h*I(:,kk);
         paramsplus = 1/2*(diag(xu - xl)*xplus + (xu + xl));
 
-        % Numerically solve 1D Vlasov-Poisson with baseline parameters
         init_guess_plus = Vlasov_1D_linearized_Steve_v4(paramsplus(1),paramsplus(2),paramsplus(3),0,paramsplus(5)-paramsplus(4),paramsplus(6)); %tilde{Omega}+igamma
         xi_guess_plus = init_guess_plus/(paramsplus(2)*paramsplus(1));
         omega_plus = BiLorentzian_Disp_Using_Xie(paramsplus(1)*paramsplus(2),1,paramsplus(3)/paramsplus(2),0,(paramsplus(5)-paramsplus(4))/paramsplus(2),paramsplus(6),xi_guess_plus)*paramsplus(2)*paramsplus(1) + paramsplus(4)*paramsplus(1); %omega=xi*sigma*k+mu*k
@@ -67,7 +67,6 @@ end
 parfor jj = 1:N
     % Calculate the appx gradients using finite differences
     grad_growth(:,jj) = (growth_plus(jj, :) - growth(jj))/h;
-
 end
 toc
 
@@ -90,5 +89,14 @@ save(['Data\Dispersion_Rate_BiMax_P' int2str(Nparams) '_N' int2str(N) '_var' num
 
 % exit
 delete(gcp('nocreate'))
-% sound(sin(1:3000));
-load train, sound(y,Fs)
+sound(sin(1:3000));
+% load train, sound(y,Fs)
+
+% plot the error
+figure; 
+subplot(1,2,1)
+semilogy(real(omega_error),'*'); grid on
+title('$\Omega$ Error','Interpreter','latex','FontSize',12);
+subplot(1,2,2)
+semilogy(imag(omega_error),'*'); grid on
+title('$\gamma$ Error','Interpreter','latex','FontSize',12);
