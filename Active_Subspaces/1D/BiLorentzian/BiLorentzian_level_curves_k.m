@@ -11,7 +11,7 @@ sigma1 = 2;
 sigma2 = 1;
 mu1 = 10;
 mu2 = mu1+6;
-beta = 0.9;
+beta = 0.8;
 
 % % view the distribution you are about to study
 % v = linspace(mu1-10,mu1+10,2000);
