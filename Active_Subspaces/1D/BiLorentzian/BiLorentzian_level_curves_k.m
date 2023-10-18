@@ -30,7 +30,7 @@ for k=kplot
 
     spectral_guess(count) = init_guess+mu1*k; %Omega+igamma
     % returns tilde{Omega} + igamma
-    % omega(count) = BiLorentzian_Disp_Using_Xie(k,sigma1,sigma2,mu1,mu2,beta,xi_guess)*k; %omega=xi*k
+    omega(count) = BiLorentzian_Disp_Using_Xie(k,sigma1,sigma2,mu1,mu2,beta,xi_guess)*k; %omega=xi*k
     omega_rescaled(count) = BiLorentzian_Disp_Using_Xie(k*sigma1,1,sigma2/sigma1,0,(mu2-mu1)/sigma1,beta,xi_guess_rescaled)*sigma1*k + mu1*k; %omega=xi*sigma1*k+mu1*k
     % returns abs(tilde{Omega})+mu1*k + igamma
     omega_exact(count) = BiLorentzian_Solution(k,sigma1,sigma2,mu1,mu2,beta);
