@@ -21,7 +21,7 @@ f0 = @(v) beta/pi*sigma1./((v-mu1).^2+sigma1^2) + (1-beta)/pi*sigma2./((v-mu2).^
 % integral(f0,-Inf,Inf); pause(0.1);
 
 for k=kplot
-    % returns abs(tilde{Omega}) + igamma
+      % returns abs(tilde{Omega}) + igamma
     % init_guess = analyticAPPROX(k,sigma1,sigma2,0,mu2-mu1,beta);
     init_guess = Vlasov_1D_linearized_Steve_v4(k,sigma1,sigma2,0,mu2-mu1,beta); %tilde{Omega}+igamma
 
@@ -29,10 +29,10 @@ for k=kplot
     xi_guess_rescaled = init_guess/(sigma1*k);
 
     spectral_guess(count) = init_guess+mu1*k; %Omega+igamma
-    % returns tilde{Omega} + igamma
+      % returns tilde{Omega} + igamma
     omega(count) = BiLorentzian_Disp_Using_Xie(k,sigma1,sigma2,mu1,mu2,beta,xi_guess)*k; %omega=xi*k
     omega_rescaled(count) = BiLorentzian_Disp_Using_Xie(k*sigma1,1,sigma2/sigma1,0,(mu2-mu1)/sigma1,beta,xi_guess_rescaled)*sigma1*k + mu1*k; %omega=xi*sigma1*k+mu1*k
-    % returns abs(tilde{Omega})+mu1*k + igamma
+      % returns abs(tilde{Omega})+mu1*k + igamma
     omega_exact(count) = BiLorentzian_Solution(k,sigma1,sigma2,mu1,mu2,beta);
 
     count = count+1;
