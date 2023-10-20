@@ -1,17 +1,18 @@
 %% BiLorentzian
 clear; clc;
-kplot = linspace(0.25,0.75,50);
+betaplot = linspace(0.8,0.99,40);
 count = 1;
-spectral_guess = zeros(1,length(kplot));
-omega = zeros(1,length(kplot));
-omega_rescaled = zeros(1,length(kplot));
-omega_exact = zeros(1,length(kplot));
+spectral_guess = zeros(1,length(betaplot));
+omega = zeros(1,length(betaplot));
+omega_rescaled = zeros(1,length(betaplot));
+omega_exact = zeros(1,length(betaplot));
 
-sigma1 = 1;
+k = 0.5;
 sigma2 = 0.6;
+sigma1 = 1;
 mu1 = 50;
-mu2 = mu1+6;
-beta = 0.9;
+mu2 = mu1+5;
+beta = 0.98;
 
 % % view the distribution you are about to study
 v = linspace(mu1-10,mu1+10,2000);
@@ -20,7 +21,7 @@ figure; plot(v,f0(v),'linewidth',2); title('Plot of Velocity Distribution $f_{BL
 % check normalization
 integral(f0,-Inf,Inf); pause(0.1);
 
-for k=kplot
+for beta=betaplot
       % returns abs(tilde{Omega}) + igamma
     % init_guess = analyticAPPROX(k,sigma1,sigma2,0,mu2-mu1,beta);
     init_guess = Vlasov_1D_linearized_Steve_v4(k,sigma1,sigma2,0,mu2-mu1,beta); %tilde{Omega}+igamma
@@ -46,28 +47,28 @@ txt3 = ['$\beta$ = ',num2str(beta)];
 txt = {txt1,txt2,txt3};
 
 figure
-plot(kplot, imag(spectral_guess),'.-'); hold on
-plot(kplot, imag(omega),'.-');
-plot(kplot, imag(omega_rescaled),'.-');
-plot(kplot, imag(omega_exact),'k');
-title('BiLorentzian $\gamma(k)$','Interpreter','latex','FontSize',16)
-xlabel('$k$','Interpreter','latex','FontSize',16)
-ylabel('$\gamma(k)$','Interpreter','latex','FontSize',16)
+plot(betaplot, imag(spectral_guess),'.-'); hold on
+plot(betaplot, imag(omega),'.-');
+plot(betaplot, imag(omega_rescaled),'.-');
+plot(betaplot, imag(omega_exact),'k');
+title('BiLorentzian $\gamma(\beta)$','Interpreter','latex','FontSize',16)
+xlabel('$\beta$','Interpreter','latex','FontSize',16)
+ylabel('$\gamma(\beta)$','Interpreter','latex','FontSize',16)
 legend('Spectral Method','Xie', 'Rescaled Xie','Exact Solution','location','East')
 xL=xlim; yL=ylim;
-text(median(kplot),yL(2),txt,'HorizontalAlignment','left','VerticalAlignment','top','Interpreter','latex','FontSize',12)
+text(median(betaplot),yL(2),txt,'HorizontalAlignment','left','VerticalAlignment','top','Interpreter','latex','FontSize',12)
 
 figure
-plot(kplot, abs(real(spectral_guess)),'.-'); hold on
-plot(kplot, abs(real(omega)),'.-');
-plot(kplot, abs(real(omega_rescaled)),'.-');
-plot(kplot, abs(real(omega_exact)), 'k');
-title('BiLorentzian $\Omega(k)$','Interpreter','latex','FontSize',16)
-xlabel('$k$','Interpreter','latex','FontSize',16)
-ylabel('$\Omega(k)$','Interpreter','latex','FontSize',16)
+plot(betaplot, abs(real(spectral_guess)),'.-'); hold on
+plot(betaplot, abs(real(omega)),'.-');
+plot(betaplot, abs(real(omega_rescaled)),'.-');
+plot(betaplot, abs(real(omega_exact)), 'k');
+title('BiLorentzian $\Omega(\beta)$','Interpreter','latex','FontSize',16)
+xlabel('$\beta$','Interpreter','latex','FontSize',16)
+ylabel('$\Omega(\beta)$','Interpreter','latex','FontSize',16)
 legend('Spectral Method','Xie','Rescaled Xie','Exact Solution','Location','East')
 xL=xlim; yL=ylim;
-text(median(kplot),yL(2),txt,'HorizontalAlignment','left','VerticalAlignment','top','Interpreter','latex','FontSize',12)
+text(median(betaplot),yL(2),txt,'HorizontalAlignment','left','VerticalAlignment','top','Interpreter','latex','FontSize',12)
 
 %% Error Analysis
 % L2 error = sqrt( sum( (y_exact - y_sample).^2 ) )
