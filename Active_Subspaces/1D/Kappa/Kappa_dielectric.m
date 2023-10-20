@@ -1,5 +1,5 @@
 function omega = Kappa_dielectric(k, sigma, mu, kappa, init_guess)
-
+% %%%% dont use yet, Grace needs to fix
     if(kappa == 2)
         D = @(omega) 1+(-1).*k.^(-2).*(2.*((-1).*k.*mu+omega).^2+k.^2.*sigma.^2).^(-3).*(8.* ...
           k.^2.*((-1).*k.*mu+omega).^4+24.*k.^4.*((-1).*k.*mu+omega).^2.*sigma.^2+ ...
