@@ -6,7 +6,7 @@ initial_guesses = zeros(1,length(kplot));
 omega_xie = zeros(1,length(kplot));
 omega_xie_rescale=zeros(1,length(kplot));
 
-sigma = 20;
+sigma = 1;
 mu = 0;
 nu = -1;
 M = 10;
