@@ -24,64 +24,65 @@ function [Zp]=zetaph(z,Fn,F,N,mu,sigma,nu)
        F = 'exp(-v.^2)/sqrt(pi)';
     end
     
-    if(Fn==5)
-       N=256*32;
-    end
+    % if(Fn==5)
+    %    N=256*32;
+    % end
 
     if(Fn==1) % F=delta(v-vd) 
-       zd=0;
-       [Zp,Z]=zdelta(z,zd);
-    elseif(Fn==2) % flat top F=(H(v-va)-H(v-vb))/(vb-va)
-       F='heaviside(v-0.5)-heaviside(v+0.5)';
-       del=0;
-       Z=calZ(z,F,N,del);
-       za=-0.5; zb=0.5;
-%        Z=(log(z-zb)-log(z-za))./(zb-za);
-       Zp=(1./(z-zb)-1./(z-za))./(zb-za);
-    elseif(Fn==3) % triangular distribution
-%        F=['(heaviside(v+1)-heaviside(v)).*(v+1)-',...
-%               '(heaviside(v)-heaviside(v-1)).*(v-1)'];
+%        zd=0;
+%        [Zp,Z]=zdelta(z,zd);
+%     elseif(Fn==2) % flat top F=(H(v-va)-H(v-vb))/(vb-va)
+%        F='heaviside(v-0.5)-heaviside(v+0.5)';
+%        del=0;
+%        Z=calZ(z,F,N,del);
+%        za=-0.5; zb=0.5;
+% %        Z=(log(z-zb)-log(z-za))./(zb-za);
+%        Zp=(1./(z-zb)-1./(z-za))./(zb-za);
+%     elseif(Fn==3) % triangular distribution
+% %        F=['(heaviside(v+1)-heaviside(v)).*(v+1)-',...
+% %               '(heaviside(v)-heaviside(v-1)).*(v-1)'];
+% %        [Fp,F]=calFp(F);
+%        F='((v>-1)&(v<=0)).*(v+1)-((v>0)&(v<=1)).*(v-1)';
+%        Fp='((v>-1)&(v<=0))-((v>0)&(v<=1))';
+%        del=0;
+%        Z=calZ(z,F,N,del);
+%        Zp=calZ(z,Fp,N,del);
+%     elseif(Fn==4) % gamma distribution
+%        gn=2; vt=1;
+%        F=['(gamma(',num2str(gn),')/gamma(',num2str(gn),...
+%            '-0.5)/(sqrt(pi*',num2str(gn),')*',num2str(vt),...
+%            ')).*(1+v.^2/(',num2str(gn),'*',num2str(vt),...
+%            '^2)).^(-',num2str(gn),')'];
 %        [Fp,F]=calFp(F);
-       F='((v>-1)&(v<=0)).*(v+1)-((v>0)&(v<=1)).*(v-1)';
-       Fp='((v>-1)&(v<=0))-((v>0)&(v<=1))';
-       del=0;
-       Z=calZ(z,F,N,del);
-       Zp=calZ(z,Fp,N,del);
-    elseif(Fn==4) % gamma distribution
-       gn=2; vt=1;
-       F=['(gamma(',num2str(gn),')/gamma(',num2str(gn),...
-           '-0.5)/(sqrt(pi*',num2str(gn),')*',num2str(vt),...
-           ')).*(1+v.^2/(',num2str(gn),'*',num2str(vt),...
-           '^2)).^(-',num2str(gn),')'];
-       [Fp,F]=calFp(F);
-       Z=calZ(z,F,N);
-       Zp=calZ(z,Fp,N);
+%        Z=calZ(z,F,N);
+%        Zp=calZ(z,Fp,N);
     elseif(Fn==5) % incomplete Maxwellian distribution
        F=['heaviside(v-',num2str(nu,16),').*exp(-(v-',num2str(mu,16),').^2/',num2str(sigma,16),'^2)/sqrt(pi*',num2str(sigma,16),'^2)'];
-       [Fp,F]=calFp(F);
-       Z=calZ(z,F,N);
+       Fp=['heaviside(abs(v)-',num2str(nu,16),').*-2.*(v-',num2str(mu,16),').*exp(-(v-',num2str(mu,16),').^2/',num2str(sigma,16),'^2)/sqrt(pi*',num2str(sigma,16),'^2)'];
+       % [Fp,F]=calFp(F);
+       % Z=calZ(z,F,N);
        Zp=calZ(z,Fp,N);
-       Zp=Zp-exp(-(nu-mu).^2)/sqrt(pi*sigma^2)./(z-nu); % with correction ???????????????????????????
-    elseif(Fn==6) % slowing down
-       % using heaviside() instead of abs() to support complex v in F(v) 
-       vt=1.0; vc=4;
-%        F=['(heaviside(v).*heaviside(',num2str(vc),'-v)./(v.^3+',...
-%           num2str(vt),'^3)+(1-heaviside(v)).*heaviside(',...
-%           num2str(vc),'+v)./((-v).^3+',num2str(vt),'^3))*3*sqrt(3)*',...
+       Zp=Zp-exp(-(nu-mu).^2)./sqrt(pi*sigma^2)./(z-nu); % with correction ???????????????????????????
+%     elseif(Fn==6) % slowing down
+%        % using heaviside() instead of abs() to support complex v in F(v) 
+%        vt=1.0; vc=4;
+% %        F=['(heaviside(v).*heaviside(',num2str(vc),'-v)./(v.^3+',...
+% %           num2str(vt),'^3)+(1-heaviside(v)).*heaviside(',...
+% %           num2str(vc),'+v)./((-v).^3+',num2str(vt),'^3))*3*sqrt(3)*',...
+% %           num2str(vt),'^2/(4*pi)'];
+% %        [Fp,F]=calFp(F);
+%        F=['(((v>=0)&(v<=',num2str(vc),'))./(v.^3+',...
+%           num2str(vt),'^3)+((v<0)&(v>=-',...
+%           num2str(vc),'))./((-v).^3+',num2str(vt),'^3))*3*sqrt(3)*',...
 %           num2str(vt),'^2/(4*pi)'];
-%        [Fp,F]=calFp(F);
-       F=['(((v>=0)&(v<=',num2str(vc),'))./(v.^3+',...
-          num2str(vt),'^3)+((v<0)&(v>=-',...
-          num2str(vc),'))./((-v).^3+',num2str(vt),'^3))*3*sqrt(3)*',...
-          num2str(vt),'^2/(4*pi)'];
-       Fp=['(((v>=0)&(v<=',num2str(vc),')).*(-3.*v.^2)./(v.^3+',...
-          num2str(vt),'^3).^2+((v<0)&(v>-',...
-          num2str(vc),')).*(3.*v.^2)./((-v).^3+',num2str(vt),...
-          '^3).^2)*3*sqrt(3)*',num2str(vt),'^2/(4*pi)'];
-       Z=calZ(z,F,N);
-       Zp=calZ(z,Fp,N);
-       Zp=Zp+3*sqrt(3)*vt^2/(4*pi)/(vc^3+vt^3).*(1./(z-vc)-...
-           1./(z+vc)); % with correction
+%        Fp=['(((v>=0)&(v<=',num2str(vc),')).*(-3.*v.^2)./(v.^3+',...
+%           num2str(vt),'^3).^2+((v<0)&(v>-',...
+%           num2str(vc),')).*(3.*v.^2)./((-v).^3+',num2str(vt),...
+%           '^3).^2)*3*sqrt(3)*',num2str(vt),'^2/(4*pi)'];
+%        Z=calZ(z,F,N);
+%        Zp=calZ(z,Fp,N);
+%        Zp=Zp+3*sqrt(3)*vt^2/(4*pi)/(vc^3+vt^3).*(1./(z-vc)-...
+%            1./(z+vc)); % with correction
     elseif(Fn==0) % for arbitrary analytical input function F ***********************************
        [Fp,F]=calFp(F);
        Z=calZ(z,F,N);

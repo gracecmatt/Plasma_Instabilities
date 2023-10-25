@@ -1,6 +1,6 @@
 %% BiLorentzian
 clear; clc;
-betaplot = linspace(0.8,0.99,40);
+betaplot = linspace(0.5,0.99);
 count = 1;
 spectral_guess = zeros(1,length(betaplot));
 omega = zeros(1,length(betaplot));
@@ -10,9 +10,9 @@ omega_exact = zeros(1,length(betaplot));
 k = 0.5;
 sigma2 = 0.6;
 sigma1 = 1;
-mu1 = 50;
-mu2 = mu1+5;
-beta = 0.98;
+mu1 = 0;
+mu2 = mu1+6;
+beta = 0.9;
 
 % % view the distribution you are about to study
 v = linspace(mu1-10,mu1+10,2000);
@@ -45,6 +45,8 @@ txt1 = ['$\mu_1$ = ',num2str(mu1),', $\mu_2$ = ', num2str(mu2)];
 txt2 = ['$\sigma_1$ = ',num2str(sigma1),', $\sigma_2$ = ', num2str(sigma2)];
 txt3 = ['$\beta$ = ',num2str(beta)];
 txt = {txt1,txt2,txt3};
+txt = ['$k$ = ',num2str(k),' $\mu_1$ = ',num2str(mu1),', $\mu_2$ = ', num2str(mu2);
+    '$\sigma_1$ = ',num2str(sigma1),', $\sigma_2$ = ', num2str(sigma2),'$\beta$ = ',num2str(beta)];
 
 figure
 plot(betaplot, imag(spectral_guess),'.-'); hold on

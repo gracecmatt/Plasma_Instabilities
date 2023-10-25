@@ -1,4 +1,4 @@
-function xi = BiMax_dispersion(p,init_guess)
+function xi = BiMax_dielectric(p,init_guess)
 % Calculating growth rate (imaginary component of angular frequency) using
 % explicit root finding method for dispersion relation.
 % ---Requires "zetaf.m" - representation of Z function

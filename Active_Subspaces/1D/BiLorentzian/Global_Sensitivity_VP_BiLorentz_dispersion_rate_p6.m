@@ -1,8 +1,8 @@
 clear; clc;
 rng('shuffle');
-% parpool(4); %was 32
+parpool(8); %was 32
 % Initialize algorithm parameters
-N = 512*8;                              %Number of samples for each parameter
+N = 512*4;                              %Number of samples for each parameter
 h = 1e-6;                                      %Finite difference step size
 
 % Pre-allocate memory
@@ -24,7 +24,7 @@ mu1 = 0;
 % vals = [k, sigma1, sigma2, mu1, mu2, beta]
 setvals = [0.5; 1; 0.6; mu1; mu1+6; 0.9];
 
-var = 0.07; % x 100% variation considered
+var = 0.10; % x 100% variation considered
 xl = (1-var)*setvals;
 xu = (1+var)*setvals;
 
@@ -34,7 +34,7 @@ if setvals(4)==0
     xu(4) = var;
 end
 
-xu(6) = min(xu(6),0.975); % keep beta <= 1
+xu(6) = min(xu(6),0.99); % keep beta <= 1
 
 % Run simulation
 tic
@@ -47,9 +47,11 @@ parfor jj = 1:N
     % Numerically solve 1D Vlasov-Poisson with baseline parameters
     init_guess = Vlasov_1D_linearized_Steve_v4(params(1),params(2),params(3),0,params(5)-params(4),params(6)); %tilde{Omega}+igamma
     xi_guess = init_guess/(params(2)*params(1));
+    
     omega = BiLorentzian_Disp_Using_Xie(params(1)*params(2),1,params(3)/params(2),0,(params(5)-params(4))/params(2),params(6),xi_guess)*params(2)*params(1) + params(4)*params(1); %omega=xi*sigma*k+mu*k
     omega_exact = BiLorentzian_Solution(params(1),params(2),params(3),params(4),params(5),params(6));
     growth(jj) = imag(omega);
+
     omega_error(jj) = abs(real(omega_exact)-real(omega))+1i*abs(imag(omega_exact)-imag(omega));
     spectral_error(jj) = abs(real(omega_exact)-real(init_guess+params(4)*params(1)))+1i*abs(imag(omega_exact)-imag(init_guess));
 end
@@ -101,13 +103,13 @@ end
 figure; 
 subplot(1,2,1)
 semilogy(real(omega_error),'*'); grid on
-ylim([10^(-17),10^(-5)]);
+% ylim([10^(-17),10^(-5)]);
 xlabel('Sample \#','Interpreter','latex','FontSize',12)
 ylabel('$|\Omega_{exact}-\Omega_{Xie}|$','Interpreter','latex','FontSize',12)
 title('$\Omega$ Error','Interpreter','latex','FontSize',12);
 subplot(1,2,2)
 semilogy(imag(omega_error),'*'); grid on
-ylim([10^(-17),10^(-5)]);
+% ylim([10^(-17),10^(-5)]);
 xlabel('Sample \#','Interpreter','latex','FontSize',12);
 ylabel('$|\gamma_{exact}-\gamma_{Xie}|$','Interpreter','latex','FontSize',12)
 title('$\gamma$ Error','Interpreter','latex','FontSize',12);

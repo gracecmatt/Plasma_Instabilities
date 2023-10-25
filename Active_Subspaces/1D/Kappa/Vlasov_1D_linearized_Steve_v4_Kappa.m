@@ -29,15 +29,11 @@
 
 function w = Vlasov_1D_linearized_Steve_v4_Kappa(k, sigma, mu, kappa)
 
-% theta is a vector with two entries - theta_1 and theta_2
-% mu is a vector with two entries - mu_1 and mu_2
-% beta is between 0 and 1
-
 %close all                  
 Vmax = 200;%8  % choose Vmax so that f0(Vmax) < 1e-16 (gm 10/13/23 use 50 for sigma=1, and 150 for sigma=5)      
 L=2*pi/abs(k); % size of the system in x-direction
 N=1;           % 2N is a number of grid points in x-direction, Linearized code has N=1
-M=512/2*2*2;   % 2M is a number of grid points in v-direction 
+M=2^12;   % 2M is a number of grid points in v-direction 
 dv=Vmax/M;
 v=(-M:M-1)*dv;
 
@@ -222,7 +218,7 @@ for n = 1:nsteps
             % % semilogy(dt*((0:n-1)+1/2),E_A(1:n).*exp(-dt*((0:n-1)+1/2)*gamma),[id_max_finish-1/2 id_max_start-1/2]*dt,[max_finish max_start].*exp(-[id_max_finish-1/2 id_max_start-1/2]*dt*gamma),'r*',[id_max_finish_w-1/2 id_max_start_w-1/2]*dt,[max_finish_w max_start_w].*exp(-[id_max_finish_w-1/2 id_max_start_w-1/2]*dt*gamma_add),'m*');
             % % title(sprintf('E(t=%g)*exp(-gamma*t)  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))
             % 
-            % figure(55);
+            % % figure(55);
             % plot(dt*((0:n-1)+1/2),E_PHASE);
             % title(sprintf('PHASE(E(t=%g))  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))
         end
