@@ -17,8 +17,8 @@ for sigma=sigmaplot
     % init_guess = Vlasov_1D_linearized_Steve_v4(k, sigma, 0);
     init_guess = analyticAPPROX(k,sigma,mu);
     initial_guesses(count) = init_guess;
-    omega_xie(count) = Maxwellian_Disp_Using_Xie(k, sigma, mu, init_guess)*k;
-    omega_xie_rescaled(count) = Maxwellian_Disp_Using_Xie(k*sigma, 1, 0, init_guess)*k*sigma + mu*k;
+    omega_xie(count) = Lorentzian_Disp_Using_Xie(k, sigma, mu, init_guess)*k;
+    omega_xie_rescaled(count) = Lorentzian_Disp_Using_Xie(k*sigma, 1, 0, init_guess/(k*sigma))*k*sigma + mu*k;
     count = count+1;
 end
 
