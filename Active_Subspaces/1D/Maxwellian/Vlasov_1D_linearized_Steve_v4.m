@@ -29,10 +29,10 @@
 
 function w = Vlasov_1D_linearized_Steve_v4(k, sigma, mu)
           
-Vmax = 8;%8  % choose Vmax so that f0(Vmax) < 1e-16           
+Vmax = 40;%8  % choose Vmax so that f0(Vmax) < 1e-16           
 L=2*pi/abs(k); % size of the system in x-direction
 N=1;           % 2N is a number of grid points in x-direction, Linearized code has N=1
-M=1024;        % 2M is a number of grid points in v-direction 
+M=2^9;        % 2M is a number of grid points in v-direction 
 dv=Vmax/M;
 v=(-M:M-1)*dv;
 
@@ -48,8 +48,11 @@ nplot = 10000;                    % plot solution every nplot time steps
 
 % Background distribution f0(v)
 % Maxwell distribution
+ % F = ['1/sqrt(pi*',num2str(sigma,16),'^2)*exp(-(v-',num2str(mu,16),').^2/(',num2str(sigma,16),'^2))'];
+% f0 = 1/sqrt(pi*sigma^2)*exp(-(v-mu).^2/sigma^2);
+% f0_v = 2.*(v-mu)/sigma^2 .* 1/sqrt(pi*sigma^2).*exp(-(v-mu).^2/sigma^2);
 f0=f_gauss((v-mu)/sigma)/sigma;
-f0_v=f_gauss((v-mu)/sigma).*(-(v-mu)/sigma^3);
+f0_v=f_gauss((v-mu)/sigma).*(-2*(v-mu)/sigma^3);
 
 % Bi-Maxwellian Distribution
 % weight1 = beta;     weight2 = 1-beta;
