@@ -21,8 +21,8 @@ for nu=nuplot
     
     %If constant initial guess is plugged in Xie finds well continuous
     %looking solutions. no major jumps
-    %xi_guess = (1.2-0.1i)/k;
-    %xi_guess_rescaled = ((1.2-0.1i)-mu*k)/(sigma*k);
+    xi_guess = (10-0i)/k;
+    xi_guess_rescaled = ((10-0.1i)-mu*k)/(sigma*k);
 
     omega_spectral(count) = init_guess + mu*k;
     omega_xie(count) = IncompleteMax_Disp_Using_Xie(k, sigma, mu, nu, xi_guess)*k;
