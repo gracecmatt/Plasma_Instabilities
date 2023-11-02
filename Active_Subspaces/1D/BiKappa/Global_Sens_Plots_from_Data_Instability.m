@@ -153,8 +153,8 @@ set(fig6,'PaperUnits','inches','PaperSize',[11 8.5])
 txt = ['Kappa = ',num2str(kappa),', ',int2str(var*100),'\% variation on ($k,\sigma_1,\sigma_2,\mu_1,\mu_2,\beta)=$(',num2str(setvals(1)),',',num2str(setvals(2)),',',num2str(setvals(3)),',',num2str(setvals(4)),',',num2str(setvals(5)),',',num2str(setvals(6)),')'];
 
 sgtitle(txt,'Interpreter','latex','Fontsize',16,'FontWeight','bold')
-hgexport(fig6, ['Figs/kappa',int2str(kappa),'/beta',num2str(beta),'/EigWVSSPfit_Dispersion_KappaBump_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
-hgexport(fig6, ['Figs/kappa',int2str(kappa),'/beta',num2str(beta),'/EigWVSSPfit_Dispersion_KappaBump_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.svg'], hgexport('factorystyle'), 'Format', 'svg');
+hgexport(fig6, ['Figs/kappa',int2str(kappa),'/EigWVSSPfit_Dispersion_KappaBump_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
+hgexport(fig6, ['Figs/kappa',int2str(kappa),'/EigWVSSPfit_Dispersion_KappaBump_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.svg'], hgexport('factorystyle'), 'Format', 'svg');
 
 % hgexport(fig6, ['Figs/Maksimovi1997/beta',num2str(beta),'/EigWVSSPfit_Dispersion_KappaBump_' int2str(100*var) '_' int2str(N) '_' int2str(deg) 'SLOW.eps'], hgexport('factorystyle'), 'Format', 'eps');
 % hgexport(fig6, ['Figs/Maksimovi1997/beta',num2str(beta),'/EigWVSSPfit_Dispersion_KappaBump_' int2str(100*var) '_' int2str(N) '_' int2str(deg) 'SLOW.svg'], hgexport('factorystyle'), 'Format', 'svg');

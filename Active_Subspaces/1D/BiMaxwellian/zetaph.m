@@ -132,7 +132,7 @@ function Z=hilb(z,F,N,del,L)
 %   it seems we should set del=0 for correct analytic continuation
 
     if nargin<5 
-        L = 10;%sqrt(N/sqrt(2)); % optimal choice of L
+        L = 6;%sqrt(N/sqrt(2)); % optimal choice of L
     end             
     if nargin<4, del = 1; end
     
@@ -183,10 +183,11 @@ function Z=hilb(z,F,N,del,L)
         g(id) = h.*(imag(z(id))>0)+(conj(h)+del*2i.*Fz(z(id))).*(imag(z(id))<0);
 
         % % --- code to plot Fourier coefficients (gm 5/18/23) ---
-        % semilogy(1:N,abs(flipud(a)),'linewidth',2); grid on;
+        % figure;semilogy(1:N,abs(flipud(a)),'linewidth',2); grid on;
         % xlabel('term number in Fourier series');
         % ylabel('magnitude of coefficient');
         % title('complex magnitude of Fourier coefficients')
     end
     Z=g.*pi;
+    g=2;
 end

@@ -32,7 +32,7 @@ function w = Vlasov_1D_linearized_Steve_v4(k, sigma1, sigma2, mu1, mu2, beta)
 Vmax = 50;%8  % choose Vmax so that f0(Vmax) < 1e-16           
 L=2*pi/abs(k); % size of the system in x-direction
 N=1;           % 2N is a number of grid points in x-direction, Linearized code has N=1
-M=1024*4;        % 2M is a number of grid points in v-direction 
+M=2^11;        % 2M is a number of grid points in v-direction 
 dv=Vmax/M;
 v=(-M:M-1)*dv;
 
@@ -41,7 +41,7 @@ T_recurrence=L/dv; %min(L/dv,1000);
 tfinal=T_recurrence*0.3;          % Stops the simulation before T_recurrence  
 T_period=2*pi;%sqrt(1+4*k^2);     % We need approximate the value of one period, T _period=2pi/Re[w], for Maxwellian f0(v)=exp(-v^2/2)/sqrt(2pi)   T _period=~sqrt(1+4*k^2)
 n_half_period=floor(T_period/2/dt); % Approximate half-period in terms of time steps dt 
-t_first_measure=T_recurrence*0.1; % Time of "the first measurement". Make sure the transient dynamics in df(v) is gone after t_first_measure
+t_first_measure=T_recurrence*0.12; % Time of "the first measurement". Make sure the transient dynamics in df(v) is gone after t_first_measure
 n_first_measure=ceil(t_first_measure/dt)+1;
 nsteps = round(tfinal / dt);      % number of time steps
 nplot = 10000;                    % plot solution every nplot time steps

@@ -56,9 +56,14 @@ function [Zp]=zetaph(z,Fn,F,N,mu,sigma,nu)
 %        [Fp,F]=calFp(F);
 %        Z=calZ(z,F,N);
 %        Zp=calZ(z,Fp,N);
-    elseif(Fn==5) % incomplete Maxwellian distribution
-       F=['heaviside(v-',num2str(nu,16),').*exp(-(v-',num2str(mu,16),').^2/',num2str(sigma,16),'^2)/sqrt(pi*',num2str(sigma,16),'^2)'];
-       Fp=['heaviside(abs(v)-',num2str(nu,16),').*-2.*(v-',num2str(mu,16),').*exp(-(v-',num2str(mu,16),').^2/',num2str(sigma,16),'^2)/sqrt(pi*',num2str(sigma,16),'^2)'];
+    elseif(Fn==5) % incomplete Maxwellian distribution (normalized 10/25)
+       % F=['heaviside(v-',num2str(nu,16),').*exp(-(v-',num2str(mu,16),').^2/',num2str(sigma,16),'^2)/sqrt(pi*',num2str(sigma,16),'^2)'];
+       F=['heaviside(v-',num2str(nu,16),')./heaviside(',num2str(mu,16),'-',num2str(nu,16),...
+           ').*exp(-(v-',num2str(mu,16),').^2/(',num2str(sigma,16),'^2))./sqrt(pi*',num2str(sigma,16),'^2)'];
+       % Fp=['heaviside(abs(v)-',num2str(nu,16),').*-2*(v-',num2str(mu,16),').*exp(-(v-',num2str(mu,16),').^2/',num2str(sigma,16),'^2)/sqrt(pi*',num2str(sigma,16),'^2)'];
+       Fp=['heaviside(real(v)-',num2str(nu,16),')./heaviside(',num2str(mu,16),'-',num2str(nu,16),...
+           ').*-2.*(v-',num2str(mu,16),').*exp(-(v-',num2str(mu,16),').^2/(',num2str(sigma,16),'^2))./sqrt(pi*',num2str(sigma,16),'^2)'];
+
        % [Fp,F]=calFp(F);
        % Z=calZ(z,F,N);
        Zp=calZ(z,Fp,N);

@@ -1,13 +1,13 @@
 clear; %close all;
 rng('shuffle');
-% parpool(4); 
+parpool(8); 
 % Initialize algorithm parameters
-N = 64;      %Number of samples for each parameter
+N = 512*4;      %Number of samples for each parameter
 h = 1e-6;     %Finite difference step size
 
 kappa = 2; % kappa values allowed: kappa > 3/2
 beta = 0.9;
-mu1 = 10;
+mu1 = 0;
 
 % Pre-allocate memory
 growth = zeros(N,1);                        %Output of interest (growth rate)
@@ -15,22 +15,13 @@ Nparams = 6;
 growth_plus = zeros(N,Nparams);             %Perturbed output of interest
 grad_growth = zeros(Nparams,N);             %Gradient of output of interest 
 Xs = zeros(N,Nparams);                      %To save the normalized parameters                
+omega_error = zeros(N,1);
+spectral_error = zeros(N,1);
 
-% [k; theta1; theta2; mu1; mu2; beta; kappa];
-setvals = [0.5; 1; 1; mu1; mu1+6; beta];
+% [k; sigma1; sigma2; mu1; mu2; beta; kappa];
+setvals = [0.5; 1; 0.6; mu1; mu1+2.5; beta];
 
-% % plot the distribution
-% theta1 = setvals(2);    mu1 = setvals(4);    
-% theta2 = setvals(3);    mu2 = setvals(5);
-% beta = setvals(6);      
-% vplot = linspace(mu1*0.9,mu1*1.1,1000);
-% C1=(pi*theta1^2*(kappa-1.5))^(-1/2)*exp(gammaln(kappa)-gammaln(kappa-0.5));
-% C2=(pi*theta2^2*(kappa-1.5))^(-1/2)*exp(gammaln(kappa)-gammaln(kappa-0.5));
-% f0=beta*C1*(1+(vplot-mu1).^2/(kappa-1.5)*theta1^2).^(-kappa) + ...
-%    (1-beta)*C2*(1+(vplot-mu2).^2/(kappa-1.5)*theta2^2).^(-kappa);
-% figure; plot(vplot,f0)
-
-var = 0.01; % x 100% variation considered 
+var = 0.5; % x 100% variation considered 
 xl = (1-var)*setvals;
 xu = (1+var)*setvals;
 
@@ -40,7 +31,7 @@ if setvals(4) == 0
     xu(4) = var;
 end
 
-xu(6) = min(xu(6),1); % keep beta <= 1
+xu(6) = min(xu(6),0.98); % keep beta <= 1
 
 % Run simulation
 tic
@@ -50,41 +41,28 @@ parfor jj = 1:N
     Xs(jj,:) = 2*rand(1,Nparams) - 1;
     params = 1/2*(diag(xu - xl)*Xs(jj,:)' + (xu + xl));
 
-    % Numerically solve 1D Vlasov-Poisson with baseline parameters
-    % init_guess = Vlasov_1D_linearized_Steve_v4_Kappa( ...
-    %     params(1), params(2), params(3), params(4), params(5), params(6), kappa);
-    % % growth(jj) = dielectric_kappa( ...
-    % %     params(1), params(2), params(3), params(4), params(5), params(6), kappa-1, init_guess);
-    % growth(jj) = Kappa_Bump_Disp_Using_Xie(...
-    %     params(1), params(2), params(3), params(4), params(5), params(6), kappa, init_guess); 
-    
     % rescaled functions: (gm 10.11.23)
     init_guess = Vlasov_1D_linearized_Steve_v4_Kappa(params(1),params(2),params(3),0,params(5)-params(4),params(6),kappa); %tilde{Omega}+igamma
+    omega_guess = init_guess+params(4)*params(1);
     xi_guess = init_guess/(params(2)*params(1));
-    omega = Kappa_Bump_Disp_Using_Xie(params(1)*params(2),1,params(3)/params(2),0,(params(5)-params(4))/params(2),params(6),kappa,xi_guess)*params(2)*params(1) + params(4)*params(1); %omega=xi*sigma*k+mu*k
+    omega = BiKappa_Disp_Using_Xie(params(1)*params(2),1,params(3)/params(2),0,(params(5)-params(4))/params(2),params(6),kappa,xi_guess)*params(2)*params(1) + params(4)*params(1); %omega=xi*sigma*k+mu*k
+    omega_disp = BiKappa_dielectric(params(1),params(2),params(3),params(4),params(5),params(6),kappa,omega_guess);
     growth(jj) = imag(omega);
-    % error(jj) = abs(omega_exact-growth(jj));
+    omega_error(jj) = abs(real(omega_disp)-real(omega))+1i*abs(imag(omega_disp)-imag(omega));
+    spectral_error(jj) = abs(real(omega_disp)-real(init_guess+params(4)*params(1)))+1i*abs(imag(omega_disp)-imag(init_guess));
 end
 
 parfor jj = 1:N
     randparams = Xs(jj,:)';
     for kk = 1:Nparams
         I = eye(Nparams);
-
-        % Numerically solve 1D Vlasov-Poisson with perturbed parameters
         xplus = randparams + h*I(:,kk);
         paramsplus = 1/2*(diag(xu - xl)*xplus + (xu + xl));
-        % init_guess_plus = Vlasov_1D_linearized_Steve_v4_Kappa( ...
-        %     paramsplus(1), paramsplus(2), paramsplus(3), paramsplus(4), paramsplus(5), paramsplus(6), kappa);
-        % % growth_plus(jj, kk) = dielectric_kappa( ...
-        % %     paramsplus(1), paramsplus(2), paramsplus(3), paramsplus(4), paramsplus(5), paramsplus(6), kappa-1, init_guess_plus);
-        % growth_plus(jj, kk) = Kappa_Bump_Disp_Using_Xie(...
-        %     paramsplus(1), paramsplus(2), paramsplus(3), paramsplus(4), paramsplus(5), paramsplus(6), kappa, init_guess_plus);
-        
-        % rescaled functions: (gm 10.11.23)
+
+        % Numerically solve 1D Vlasov-Poisson with perturbed parameters
         init_guess_plus = Vlasov_1D_linearized_Steve_v4_Kappa(paramsplus(1),paramsplus(2),paramsplus(3),0,paramsplus(5)-paramsplus(4),paramsplus(6),kappa); %tilde{Omega}+igamma
         xi_guess_plus = init_guess_plus/(paramsplus(2)*paramsplus(1));
-        omega_plus = Kappa_Bump_Disp_Using_Xie(paramsplus(1)*paramsplus(2),1,paramsplus(3)/paramsplus(2),0,(paramsplus(5)-paramsplus(4))/paramsplus(2),paramsplus(6),kappa,xi_guess_plus)*paramsplus(2)*paramsplus(1) + paramsplus(4)*paramsplus(1); %omega=xi*sigma*k+mu*k
+        omega_plus = BiKappa_Disp_Using_Xie(paramsplus(1)*paramsplus(2),1,paramsplus(3)/paramsplus(2),0,(paramsplus(5)-paramsplus(4))/paramsplus(2),paramsplus(6),kappa,xi_guess_plus)*paramsplus(2)*paramsplus(1) + paramsplus(4)*paramsplus(1); %omega=xi*sigma*k+mu*k
         growth_plus(jj, kk) = imag(omega_plus);
     end
 end
@@ -109,8 +87,29 @@ cond = evalues(1)/sum(evalues);
 diff_growth = max(max(grad_growth)) - min(min(grad_growth));
 
 %Save the trial data
-save(['Data/kappa',int2str(kappa),'/beta' num2str(beta) '/Dispersion_Rate_Kappa_Bump_P' int2str(Nparams) '_N' int2str(N) '_' num2str(var) 'data_par.mat'])
+save(['Data/kappa',int2str(kappa),'/Dispersion_Rate_Kappa_Bump_P' int2str(Nparams) '_N' int2str(N) '_' num2str(var) 'data_par.mat'])
 
 %exit
 delete(gcp('nocreate'))
-load train, sound(y,Fs)
+% sound(sin(1:3000));
+
+% plot the error
+figure; 
+subplot(1,2,1)
+semilogy(real(omega_error),'*'); grid on
+% ylim([10^(-17),10^(-5)]);
+xlabel('Sample \#','Interpreter','latex','FontSize',12)
+ylabel('$|\Omega_{dielectirc}-\Omega_{Xie}|$','Interpreter','latex','FontSize',12)
+title('$\Omega$ Error','Interpreter','latex','FontSize',12);
+subplot(1,2,2)
+semilogy(imag(omega_error),'*'); grid on
+% ylim([10^(-17),10^(-5)]);
+xlabel('Sample \#','Interpreter','latex','FontSize',12);
+ylabel('$|\gamma_{dielectric}-\gamma_{Xie}|$','Interpreter','latex','FontSize',12)
+title('$\gamma$ Error','Interpreter','latex','FontSize',12);
+txt = [num2str(var*100),'\% variation on $(k,\sigma_1,\sigma_2,\mu_1,\mu_2,\beta)$=(',num2str(setvals(1)),',',num2str(setvals(2)),',',num2str(setvals(3)),',',num2str(setvals(4)),',',num2str(setvals(5)),',',num2str(setvals(6)),')'];
+sgtitle(txt,'Interpreter','latex','FontSize',14)
+
+max_error = max(abs(omega_error))
+
+max_spectral_error = max(abs(spectral_error))

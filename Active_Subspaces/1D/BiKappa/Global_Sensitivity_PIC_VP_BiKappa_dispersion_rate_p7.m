@@ -7,7 +7,7 @@ h = 1e-8;     %Finite difference step size
 
 kappa = 1.93; % kappa values allowed: kappa > 3/2
 beta = 1; % beta values allowed: beta in [0,1]
-sigma =  0.007065164793364;
+sigma =  1;
 
 % Pre-allocate memory
 growth = zeros(N,1);                        %Output of interest (growth rate)
@@ -59,7 +59,7 @@ for jj = 1:N
         params(1), params(2), params(3), params(4), params(5), params(6), params(7));
     % growth(jj) = dielectric_kappa( ...
     %     params(1), params(2), params(3), params(4), params(5), params(6), kappa-1, init_guess);
-    growth(jj) = Kappa_Bump_Disp_Using_Xie(...
+    growth(jj) = BiKappa_Disp_Using_Xie(...
         params(1), params(2), params(3), params(4), params(5), params(6), params(7), init_guess); 
 end
 
@@ -75,7 +75,7 @@ parfor jj = 1:N
             paramsplus(1), paramsplus(2), paramsplus(3), paramsplus(4), paramsplus(5), paramsplus(6), paramsplus(7));
         % growth_plus(jj, kk) = dielectric_kappa( ...
         %     paramsplus(1), paramsplus(2), paramsplus(3), paramsplus(4), paramsplus(5), paramsplus(6), kappa-1, init_guess_plus);
-        growth_plus(jj,kk) = Kappa_Bump_Disp_Using_Xie(...
+        growth_plus(jj,kk) = BiKappa_Disp_Using_Xie(...
             paramsplus(1), paramsplus(2), paramsplus(3), paramsplus(4), paramsplus(5), paramsplus(6), paramsplus(7), init_guess_plus);
     end
 end

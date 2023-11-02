@@ -4,7 +4,8 @@ function xi = IncompleteMax_Disp_Using_Xie(k, sigma, mu, nu, init_guess)
     options = optimoptions('fsolve','Display','off');
 
     % ========= compute omega using Fourier series approximation ==========
-    F = ['heaviside(v-',num2str(nu,16),')./sqrt(pi*',num2str(sigma,16),'^2).*exp(-(v-',num2str(mu,16),').^2/(',num2str(sigma,16),'^2))'];
+    % F = H(v-nu)/H(mu-nu)*exp(-(v-mu)^2/sigma^2)/sqrt(pi*sigma^2)
+    F = ['heaviside(v-',num2str(nu,16),')./heaviside(',num2str(mu,16),'-',num2str(nu,16),').*exp(-(v-',num2str(mu,16),').^2/(',num2str(sigma,16),'^2))./sqrt(pi*',num2str(sigma,16),'^2)'];
 
     Fn = 5; % 5 = option for incomplete maxwellian
     Nfourier = 2000; % number of Fourier coefficients to take
