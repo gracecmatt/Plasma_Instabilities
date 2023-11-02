@@ -1,2 +1,2 @@
 # README
-This folder contains the dielectric functions computed in the provided Mathematica notebook for the Kappa distribution for $\kappa=1,2,6$ with parameter options for the bump. 
+This folder contains the dielectric functions computed in the provided Mathematica notebook for the Kappa distribution for $\kappa=2,6$. There are separate files for Bi-Kappa and Kappa for convenience. 
