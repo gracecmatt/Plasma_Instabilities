@@ -121,8 +121,8 @@ title('Eigenvalues of C','Interpreter','latex','Fontsize',14,'FontWeight','bold'
 xlabel('$\ell$','Interpreter','latex','Fontsize',14)
 ylabel('$\lambda_\ell$','Interpreter','latex','Fontsize',14)
 set(get(gca,'Title'),'Units','Normalized','Position',[.45,1.0])
-txt = ['Condition # = ',num2str(cond,4),]; xL=xlim; yL=ylim;
-text(xL(2),yL(2),txt,'HorizontalAlignment','right','VerticalAlignment','top','FontSize',12)
+% txt = ['Condition # = ',num2str(cond,4),]; xL=xlim; yL=ylim;
+% text(xL(2),yL(2),txt,'HorizontalAlignment','right','VerticalAlignment','top','FontSize',12)
 
 subplot(1,3,2), plot(1:Nparams,w,'.-b','MarkerSize',30)
 xlim([0,Nparams+1])
@@ -134,11 +134,7 @@ ylabel('Parameter Weights','Interpreter','latex','Fontsize',14)
 set(get(gca,'Title'),'Units','Normalized','Position',[.45,1.0])
 set(gca,'TickLabelInterpreter','latex');
 xticks(1:Nparams)
-%set(gca,'XTickLabel',{'$\alpha$','$\mu$','$\sigma^2$'})
-%set(gca,'XTickLabel',{'$k$','$\mu$','$\sigma^2$'})
-%set(gca,'XTickLabel',{'$\alpha$','$k$','$\mu$','$\sigma^2$','$\beta$'})
-%set(gca,'XTickLabel',{'$\beta_1$' '$\sigma^2_1$' '$\mu_1$' '$\beta_2$' '$\sigma^2_2$' '$\mu_2$' '$k$'})
-set(gca,'XTickLabel',{'$k$' '$\sigma_1$' '$\sigma_2$' '$\mu_1$' '$\mu_2$' '$\beta$'})
+set(gca,'XTickLabel',{'$k$' '$\sigma$' '$\mu$'})
 
 subplot(1,3,3), plot(A(:,1), A(:,2), 'r');
 hold on
@@ -157,7 +153,7 @@ maxgrowth = max(growth); mingrowth = min(growth);
 grid on;
 
 set(fig6,'PaperUnits','inches','PaperSize',[11 8.5])
-txt = ['BiMaxwellian, ',int2str(var*100),'\% variation on ($k,\sigma_1,\sigma_2,\mu_1,\mu_2,\beta)=$(',num2str(setvals(1)),',',num2str(setvals(2)),',',num2str(setvals(3)),',',num2str(setvals(4)),',',num2str(setvals(5)),',',num2str(setvals(6)),')'];
+txt = ['Maxwellian, ',num2str(var*100),'\% variation on ($k,\sigma,\mu)=$(',num2str(setvals(1)),',',num2str(setvals(2)),',',num2str(setvals(3)),')'];
 sgtitle(txt,'Interpreter','latex','Fontsize',16,'FontWeight','bold')%,'Position',[12.5 1.25 0])
-hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_BiMax_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '_' num2str(setvals(5)-setvals(4)) '_.eps'], hgexport('factorystyle'), 'Format', 'eps');
-hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_BiMax_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '_' num2str(setvals(5)-setvals(4)) '_.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
+hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_Max_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '_.eps'], hgexport('factorystyle'), 'Format', 'eps');
+hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_Max_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '_.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
