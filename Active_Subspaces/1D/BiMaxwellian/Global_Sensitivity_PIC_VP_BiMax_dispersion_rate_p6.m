@@ -1,6 +1,6 @@
 clear; clc;
 rng('shuffle');
-parpool(4); %was 32
+parpool(8);
 % Initialize algorithm parameters
 N = 512;                              %Number of samples for each parameter
 h = 1e-6;                                      %Finite difference step size
@@ -11,16 +11,12 @@ Nparams = 6;
 growth_plus = zeros(N,Nparams);               %Perturbed output of interest
 grad_growth = zeros(Nparams,N);             %Gradient of output of interest 
 Xs = zeros(N,Nparams);                   %To save the normalized parameters
-%w = zeros(Nparams,1);                                %Weight vectors 
-%evalues = zeros(Nparams,1);           %Eigenvalues of the C matrix
-%diff_growth = 0; %zeros(1,1);              %Differences in largest and
-%smallest element of grad_growth
-%I = eye(Nparams);                     
+omega_error = zeros(N,1);
 
 % vals = [k, sigma1, sigma2, mu1, mu2, beta]
-setvals = [0.5; 1; 1; 0; 4; 0.9];
+setvals = [0.5; 2; 0.6; 1; 5.5; 0.9];
 
-var = 0.25; % x 100% variation considered
+var = 0.50; % x 100% variation considered
 xl = (1-var)*setvals;
 xu = (1+var)*setvals;
 
@@ -30,7 +26,8 @@ if setvals(4)==0
     xu(4) = var;
 end
 
-xu(6) = min(xu(6),1); % keep beta <= 1
+xu(6) = min(xu(6),0.97); % keep beta < 1
+xl(6) = max(xl(6),0.58); % keep beta > 0.5
 
 % Run simulation
 tic
@@ -39,45 +36,15 @@ parfor jj = 1:N
     % Randomly sample parameters within acceptable ranges
     Xs(jj,:) = 2*rand(1,Nparams) - 1;
     params = 1/2*(diag(xu - xl)*Xs(jj,:)' + (xu + xl));
-    k = params(1);
-    sigma1 = params(2);
-    sigma2 = params(3);
-    mu1 = params(4);
-    mu2 = params(5);
-    beta = params(6);
 
-    % % % Numerically solve 1D Vlasov-Poisson with baseline parameters
-    % % init_guess = Vlasov_1D_linearized_Steve_v4(params(1),params(2),params(3),0,params(5)-params(4),params(6)); %tilde{Omega}+igamma
-    % % xi_guess = init_guess/(params(1)*params(2));
-    % % omega = BiMaxwellian_Disp_Using_Xie(params(1)*params(2),1,params(3)/params(2),0,...
-    % %     (params(5)-params(4))/params(2),params(6),xi_guess)*params(1)*params(2) + params(1)*params(4); %omega=xi*k*sigma1+mu1*k
-    % % growth(jj) = imag(omega);
-
-    % Numerically solve 1D Vlasov-Poisson with baseline parameters
-    init_guess = Vlasov_1D_linearized_Steve_v4(k,sigma1,sigma2,0,mu2-mu1,beta); %tilde{Omega}+igamma
-    xi_guess = (init_guess)/(sigma1*k);
-    % omega = BiMaxwellian_Disp_Using_Xie(k, sigma1, sigma2, mu1, mu2, beta, xi_guess)*k; %omega=xi*k
-    omega = BiMaxwellian_Disp_Using_Xie(k*sigma1,1,sigma2/sigma1,0,(mu2-mu1)/sigma1,beta,xi_guess)*k*sigma1 + k*mu1; %omega=xi*k*sigma1+mu1*k
+    % Numerically solve 1D Vlasov-Poisson with randomly drawn parameters
+    init_guess = Vlasov_1D_linearized_Steve_v4(params(1),params(2),params(3),0,params(5)-params(4),params(6));
+    xi_guess = init_guess/params(1); % shifted (not scaled)
+ 
+    omega = BiMaxwellian_Disp_Using_Xie(params(1),params(2),params(3),0,params(5)-params(4),params(6),xi_guess)*params(1) + params(4)*params(1);
+    dielectric = BiMax_dielectric([params(1),params(2),params(3),0,params(5)-params(4),randparams(6)],xi_guess)*params(1) + params(4)*params(1);
     growth(jj) = imag(omega);
-
-    % % init_guess = Vlasov_1D_linearized_Steve_v4(params(1), params(2), 0);
-    % % xi_guess = init_guess/(params(1)*params(2));
-    % % omega(jj) = Maxwellian_Disp_Using_Xie(params(1)*params(2), 1, 0, xi_guess)*params(1)*params(2) + params(1)*params(3);
-    % % growth(jj) = imag(omega(jj));
-
-    % growth(jj) = dispersion_growthrate_BiMax(params, init_guess);
-    
-    %while growth(jj) < 0 || growth(jj) > 2 
-    % while (growth(jj) > 5  || growth(jj) < 1e-10)
-    %     Xs(jj,:) = 2*rand(1,Nparams) - 1;
-    %     params = 1/2*(diag(xu - xl)*Xs(jj,:)' + (xu + xl));
-    %     growth(jj) = dispersion_growthrate_BiMax(params);
-    % end 
-
-    % % rescaled version:
-    % init_guess = Vlasov_1D_linearized_Steve_v4(k, sigma1, sigma2, 0, mu2-mu1, beta); %\tilde{Omega}+igamma
-    % xi_scaled = init_guess/(sigma1*k);
-    % omega_xie_rescaled(count) = BiMaxwellian_Disp_Using_Xie(k*sigma1, 1, sigma2/sigma1, 0, (mu2-mu1)/sigma1, beta, xi_scaled)*k*sigma1 + mu1*k; % omega = xi*k*sigma1 + mu1*k
+    omega_error(jj) = abs(real(omega)-real(dielectric)) + 1i*abs(imag(omega)-imag(dielectric));
 end
 
 parfor jj = 1:N
@@ -88,33 +55,11 @@ parfor jj = 1:N
         xplus = randparams + h*I(:,kk);
         paramsplus = 1/2*(diag(xu - xl)*xplus + (xu + xl));
 
-        k = paramsplus(1);
-        sigma1 = paramsplus(2);
-        sigma2 = paramsplus(3);
-        mu1 = paramsplus(4);
-        mu2 = paramsplus(5);
-        beta = paramsplus(6);
-
-        % % init_guess_plus = Vlasov_1D_linearized_Steve_v4(paramsplus(1),paramsplus(2),paramsplus(3),0,paramsplus(5)-paramsplus(4),paramsplus(6));
-        % % xi_guess_plus = init_guess_plus/(paramsplus(1)*paramsplus(2));
-        % % omega_plus = BiMaxwellian_Disp_Using_Xie(paramsplus(1)*paramsplus(2),1,paramsplus(3)/paramsplus(2),0,...
-        % %     (paramsplus(5)-paramsplus(4))/paramsplus(2),paramsplus(6),xi_guess_plus)*paramsplus(1)*paramsplus(2) + paramsplus(1)*paramsplus(4);
-        % % growth_plus(jj, kk) = imag(omega_plus);
-        % % % growth_plus(jj, kk) = dispersion_growthrate_BiMax(paramsplus,init_guess_plus);
-
-        % Numerically solve 1D Vlasov-Poisson with baseline parameters
-        init_guess_plus = Vlasov_1D_linearized_Steve_v4(k,sigma1,sigma2,0,mu2-mu1,beta); %tilde{Omega}+igamma
-        xi_guess_plus = (init_guess_plus)/(sigma1*k);
-        % omega_plus = BiMaxwellian_Disp_Using_Xie(k, sigma1, sigma2, mu1, mu2, beta, xi_guess_plus)*k; %omega=xi*k
-        omega_plus = BiMaxwellian_Disp_Using_Xie_pm(k*sigma1,1,sigma2/sigma1,0,(mu2-mu1)/sigma1,beta,xi_guess_plus)*k*sigma1 + k*mu1; %omega=xi*k*sigma1+mu1*k
-        growth_plus(jj, kk) = imag(omega_plus);
-        
-        %while growth_plus(jj,kk) <0 || growth_plus(jj,kk) >2 % set to 2 for 10%, set to 1 for 25% runs
-        % while (growth_plus(jj,kk) > 5 || growth_plus(jj,kk) < 1e-10)
-        %     xplus = randparams + h*I(:,kk);
-        %     paramsplus = 1/2*(diag(xu - xl)*xplus + (xu + xl));
-        %     growth_plus(jj, kk)= dispersion_growthrate_BiMax(paramsplus);
-        % end 
+        init_guess_plus = Vlasov_1D_linearized_Steve_v4(paramsplus(1),paramsplus(2),paramsplus(3),0,paramsplus(5)-paramsplus(4),paramsplus(6));
+        xi_guess_plus = init_guess_plus/paramsplus(1); % shifted (not scaled)
+     
+        omega0_plus = BiMaxwellian_Disp_Using_Xie(paramsplus(1),paramsplus(2),paramsplus(3),0,paramsplus(5)-paramsplus(4),paramsplus(6),xi_guess_plus)*paramsplus(1);
+        growth_plus(jj, kk) = imag(omega0_plus);
     end
 end
 parfor jj = 1:N
@@ -138,9 +83,7 @@ cond = evalues(1)/sum(evalues);
 diff_growth = max(max(grad_growth)) - min(min(grad_growth));
 
 %Save the trial data
-save(['Data\Dispersion_Rate_BiMax_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var) '_mudif' num2str(setvals(5)-setvals(4)) '_beta' num2str(setvals(6)) '_data.mat'])
+save(['Data\Dispersion_BiMax_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var) '_data.mat'])
 
 % exit
 delete(gcp('nocreate'))
-% sound(sin(1:3000));
-load train, sound(y,Fs)

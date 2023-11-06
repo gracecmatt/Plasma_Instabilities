@@ -121,8 +121,8 @@ xlim([0,Nparams+1])
 title('Eigenvalues of C','Interpreter','latex','Fontsize',16,'FontWeight','bold')
 xlabel('$\ell$','Interpreter','latex','Fontsize',14)
 ylabel('$\lambda_\ell$','Interpreter','latex','Fontsize',14)
-txt = ['Condition # = ',num2str(cond,4),]; xL=xlim; yL=ylim;
-text(xL(2),yL(2),txt,'HorizontalAlignment','right','VerticalAlignment','top','FontSize',12)
+% txt = ['Condition # = ',num2str(cond,4),]; xL=xlim; yL=ylim;
+% text(xL(2),yL(2),txt,'HorizontalAlignment','right','VerticalAlignment','top','FontSize',12)
 
 
 
@@ -135,7 +135,7 @@ xlabel('Parameters','Interpreter','latex','Fontsize',14)
 ylabel('Parameter Weights','Interpreter','latex','Fontsize',14)
 set(gca,'TickLabelInterpreter','latex');
 xticks(1:Nparams)
-set(gca,'XTickLabel',{'$k$' '$\mu_1$' '$\mu_2$' '$\theta_1$' '$\theta_2$' '$\beta$' '$\kappa$'})
+set(gca,'XTickLabel',{'$k$' '$\mu_1$' '$\mu_2$' '$\sigma_1$' '$\sigma_2$' '$\beta$' '$\kappa$'})
 
 subplot(1,3,3), plot(A(:,1), A(:,2), 'r');
 hold on
@@ -147,14 +147,10 @@ ylabel('Growth Rate','Interpreter','latex','FontSize',14)
 maxgrowth = max(growth); mingrowth = min(growth);
 grid on;
 
-% set(fig6,'PaperUnits','inches','PaperSize',[11 8.5])
-% txt = ['Kappa = ',num2str(kappa),', ',int2str(var*100),'% variation, Condition # = ',num2str(cond)];
 set(fig6,'PaperUnits','inches','PaperSize',[11 8.5])
-txt = ['Kappa = ',num2str(kappa),', ',int2str(var*100),'\% variation on ($k,\sigma_1,\sigma_2,\mu_1,\mu_2,\beta)=$(',num2str(setvals(1)),',',num2str(setvals(2)),',',num2str(setvals(3)),',',num2str(setvals(4)),',',num2str(setvals(5)),',',num2str(setvals(6)),')'];
+txt = ['Kappa, ',int2str(var*100),'\% variation on ($k,\sigma_1,\sigma_2,\mu_1,\mu_2,\beta)$=(',num2str(setvals(1)),',',num2str(setvals(2)),',',num2str(setvals(3)),',',num2str(setvals(4)),',',num2str(setvals(5)),',',num2str(setvals(6)),')'];
+% txt = ['Kappa, ',int2str(var*100),'\% variation on ($k,\sigma_1,\sigma_2,\mu_1,\mu_2,\beta,\kappa)$=(',num2str(setvals(1)),',',num2str(setvals(2)),',',num2str(setvals(3)),',',num2str(setvals(4)),',',num2str(setvals(5)),',',num2str(setvals(6)),',',num2str(setvals(7)),')'];
 
 sgtitle(txt,'Interpreter','latex','Fontsize',16,'FontWeight','bold')
-hgexport(fig6, ['Figs/kappa',int2str(kappa),'/EigWVSSPfit_Dispersion_KappaBump_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
-hgexport(fig6, ['Figs/kappa',int2str(kappa),'/EigWVSSPfit_Dispersion_KappaBump_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.svg'], hgexport('factorystyle'), 'Format', 'svg');
-
-% hgexport(fig6, ['Figs/Maksimovi1997/beta',num2str(beta),'/EigWVSSPfit_Dispersion_KappaBump_' int2str(100*var) '_' int2str(N) '_' int2str(deg) 'SLOW.eps'], hgexport('factorystyle'), 'Format', 'eps');
-% hgexport(fig6, ['Figs/Maksimovi1997/beta',num2str(beta),'/EigWVSSPfit_Dispersion_KappaBump_' int2str(100*var) '_' int2str(N) '_' int2str(deg) 'SLOW.svg'], hgexport('factorystyle'), 'Format', 'svg');
+hgexport(fig6, ['Figs/EigWVSSPfit_Dispersion_BiKappa',int2str(kappa),'_' int2str(Nparams) '_' int2str(N) '_' int2str(100*var) '_' int2str(deg) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
+hgexport(fig6, ['Figs/EigWVSSPfit_Dispersion_BiKappa',int2str(kappa),'_' int2str(Nparams) '_' int2str(N) '_' int2str(100*var) '_' int2str(deg) '.svg'], hgexport('factorystyle'), 'Format', 'svg');
