@@ -7,3 +7,7 @@
 [[/../../Active_Subspaces/1D/BiMaxwellian/Figs/SampRandBiMax_P6_N10000_var50.pdf]]
 
 [[BiMax random samples figure](https://github.com/gracecmatt/Plasma_Instabilities/blob/main/Active_Subspaces/1D/BiMaxwellian/Figs/SampRandBiMax_P6_N10000_var50.pdf)
+
+<div id="header" align="center">
+  <img src="https://github.com/gracecmatt/Plasma_Instabilities/blob/main/Active_Subspaces/1D/BiMaxwellian/Figs/SampRandBiMax_P6_N10000_var50.eps" width="100"/>
+</div>
