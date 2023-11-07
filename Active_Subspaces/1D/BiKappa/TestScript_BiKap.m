@@ -223,23 +223,25 @@ sgtitle({txt1;txt2},'Interpreter','latex','FontSize',16)
 % eps is a vector format file type that works well in LaTeX
 % pdf is a vector format file type that is easy to share and view
 
-savefig(fig1,  ['Figs\LevelCurvesBiKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.fig'])
-hgexport(fig1, ['Figs\LevelCurvesBiKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
-hgexport(fig1, ['Figs\LevelCurvesBiKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
-savefig(fig2,  ['Figs\LevelCurvesBiKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.fig'])
-hgexport(fig2, ['Figs\LevelCurvesBiKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
-hgexport(fig2, ['Figs\LevelCurvesBiKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
-
-savefig(fig3,  ['Figs\RelErrorBiKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.fig'])
-hgexport(fig3, ['Figs\RelErrorBiKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
-hgexport(fig3, ['Figs\RelErrorBiKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
-savefig(fig4,  ['Figs\RelErrorBiKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.fig'])
-hgexport(fig4, ['Figs\RelErrorBiKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
-hgexport(fig4, ['Figs\RelErrorBiKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
-
-savefig(fig5,  ['Figs\SampRandBiKap' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.fig'])
-hgexport(fig5, ['Figs\SampRandBiKap' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N^2) '_var' num2str(var*100) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
-hgexport(fig5, ['Figs\SampRandBiKap' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N^2) '_var' num2str(var*100) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
-
-clear fig1 fig2 fig3 fig4 fig5
 save(['Data\TestingDataBiKap' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '_data.mat'])
+
+% savefig(fig1,  ['Figs\LevelCurvesBiKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.fig'])
+% hgexport(fig1, ['Figs\LevelCurvesBiKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
+% hgexport(fig1, ['Figs\LevelCurvesBiKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
+% savefig(fig2,  ['Figs\LevelCurvesBiKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.fig'])
+% hgexport(fig2, ['Figs\LevelCurvesBiKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
+% hgexport(fig2, ['Figs\LevelCurvesBiKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
+% 
+% savefig(fig3,  ['Figs\RelErrorBiKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.fig'])
+% hgexport(fig3, ['Figs\RelErrorBiKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
+% hgexport(fig3, ['Figs\RelErrorBiKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
+% savefig(fig4,  ['Figs\RelErrorBiKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.fig'])
+% hgexport(fig4, ['Figs\RelErrorBiKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
+% hgexport(fig4, ['Figs\RelErrorBiKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
+% 
+% savefig(fig5,  ['Figs\SampRandBiKap' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.fig'])
+% hgexport(fig5, ['Figs\SampRandBiKap' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N^2) '_var' num2str(var*100) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
+% hgexport(fig5, ['Figs\SampRandBiKap' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N^2) '_var' num2str(var*100) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
+% 
+% clear fig1 fig2 fig3 fig4 fig5
+% save(['Data\TestingDataBiKap' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '_data.mat'])
