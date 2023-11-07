@@ -10,8 +10,7 @@
 % So we solve
 % df_t + i*k*v*df - i/k*rho*f0_v= Dvvvv*(f-<f>)_vvvv on [0,L]x[-Vmax,Vmax] with periodic boundary conditions in x (one mode in k-space only) and v
 
-% Using Split Step 2nd Order 
-% and Exact solution for both of terms
+% Using Split Step 2nd Order and Exact solution for both of terms
 
 % for Maxwell background (sigma=1) exact solutions for different k are (gamma=Im[w]=Landau damping): 
 % k=0     w_true=1
@@ -107,7 +106,6 @@ df=f0_v./(omega_guess-v*k);
 %MAX_efunction=max(abs(f_efunction));
 %df=f_efunction;
 
-
 %Plot Background distribution f0(v) and I.C. df(v,t=0)
 % figure(1);
 % plot(v,f0);
@@ -130,14 +128,11 @@ Dvvvv=abs(gamma_true)*(Vmax*2/M/pi)^4; % This is roughly what we need to kill re
 Dvvvv=0;
 DvvvvFM=exp(-(ifftshift(-M:M-1)*2*pi/(2*Vmax)).^4*Dvvvv*dt); 
 
-
-
 % Array Preallocation
 t = 0;
 id_max_start=0;
 E_A=zeros(1,nsteps);
 EE=zeros(1,nsteps);
-
 
 
 % main time-stepping loop:
@@ -228,8 +223,6 @@ end
 
         
 
-
-         
 %--------------------------------------------------------
 function out = f_gauss(v)
 out = exp(-v.^2)/sqrt(pi);

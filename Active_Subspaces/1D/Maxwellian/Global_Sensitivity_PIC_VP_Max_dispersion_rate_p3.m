@@ -11,7 +11,7 @@ growth = zeros(N,1);                      %Output of interest (growth rate)
 growth_plus = zeros(N,Nparams);               %Perturbed output of interest
 grad_growth = zeros(Nparams,N);             %Gradient of output of interest 
 Xs = zeros(N,Nparams);                   %To save the normalized parameters
-omega_error = zeros(N,1);
+omega_error = zeros(N,1);           %Compare Xie/dielectric funtion results
 
 % vals = [k, sigma, mu]
 setvals = [0.5; 2; 1];
@@ -58,8 +58,8 @@ parfor jj = 1:N
         init_guess_plus = BohmGross_Max(paramsplus(1),paramsplus(2),0);
         xi_guess_plus = init_guess_plus/paramsplus(1); % shifted (not scaled)
     
-        omega_plus = Maxwellian_Disp_Using_Xie(paramsplus(1),paramsplus(2),0,xi_guess_plus)*paramsplus(1) + paramsplus(3)*paramsplus(1);
-        growth_plus(jj,kk) = imag(omega_plus);
+        omega0_plus = Maxwellian_Disp_Using_Xie(paramsplus(1),paramsplus(2),0,xi_guess_plus)*paramsplus(1);
+        growth_plus(jj,kk) = imag(omega0_plus);
     end
 end
 parfor jj = 1:N
