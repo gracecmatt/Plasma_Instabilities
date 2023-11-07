@@ -7,7 +7,7 @@ clear; clc;
 
 N = 100; % number of samples in level curves
 Nparams = 3;
-kappa = 2; % kappa = 2 or 6
+kappa = 6; % kappa = 2 or 6
 
 % parameters = [k, sigma, mu]
 baseparams = [0.5; 2; 1];
@@ -213,23 +213,25 @@ sgtitle(txt,'Interpreter','latex','FontSize',16)
 % eps is a vector format file type that works well in LaTeX
 % pdf is a vector format file type that is easy to share and view
 
-savefig(fig1,  ['Figs\LevelCurvesKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.fig'])
-hgexport(fig1, ['Figs\LevelCurvesKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
-hgexport(fig1, ['Figs\LevelCurvesKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
-savefig(fig2,  ['Figs\LevelCurvesKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.fig'])
-hgexport(fig2, ['Figs\LevelCurvesKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
-hgexport(fig2, ['Figs\LevelCurvesKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
-
-savefig(fig3,  ['Figs\RelErrorKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.fig'])
-hgexport(fig3, ['Figs\RelErrorKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
-hgexport(fig3, ['Figs\RelErrorKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
-savefig(fig4,  ['Figs\RelErrorKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.fig'])
-hgexport(fig4, ['Figs\RelErrorKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
-hgexport(fig4, ['Figs\RelErrorKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
-
-savefig(fig5,  ['Figs\SampRandKap' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.fig'])
-hgexport(fig5, ['Figs\SampRandKap' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N^2) '_var' num2str(var*100) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
-hgexport(fig5, ['Figs\SampRandKap' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N^2) '_var' num2str(var*100) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
-
-clear fig1 fig2 fig3 fig4 fig5
 save(['Data\TestingDataKap' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '_data.mat']);
+
+% savefig(fig1,  ['Figs\LevelCurvesKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.fig'])
+% hgexport(fig1, ['Figs\LevelCurvesKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
+% hgexport(fig1, ['Figs\LevelCurvesKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
+% savefig(fig2,  ['Figs\LevelCurvesKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.fig'])
+% hgexport(fig2, ['Figs\LevelCurvesKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
+% hgexport(fig2, ['Figs\LevelCurvesKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
+% 
+% savefig(fig3,  ['Figs\RelErrorKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.fig'])
+% hgexport(fig3, ['Figs\RelErrorKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
+% hgexport(fig3, ['Figs\RelErrorKap' int2str(kappa) '_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
+% savefig(fig4,  ['Figs\RelErrorKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.fig'])
+% hgexport(fig4, ['Figs\RelErrorKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
+% hgexport(fig4, ['Figs\RelErrorKap' int2str(kappa) '_Omega_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
+% 
+% savefig(fig5,  ['Figs\SampRandKap' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.fig'])
+% hgexport(fig5, ['Figs\SampRandKap' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N^2) '_var' num2str(var*100) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
+% hgexport(fig5, ['Figs\SampRandKap' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N^2) '_var' num2str(var*100) '.pdf'], hgexport('factorystyle'), 'Format', 'pdf');
+% 
+% clear fig1 fig2 fig3 fig4 fig5
+% save(['Data\TestingDataKap' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '_data.mat']);
