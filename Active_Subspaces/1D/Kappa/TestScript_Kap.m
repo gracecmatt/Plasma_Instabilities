@@ -158,13 +158,14 @@ end
 pause(0.5) % pause to let figures show up
 %% Run simulations N^2 times with randomly selected parameters
 rng('shuffle');
+rng(sum(100*clock));
+Xs = 2*rand(N^2,Nparams) - 1; % do sampling in serial
+
 % tic;
 % if N==50; parpool(5); elseif N==100; parpool(10); else; parpool(12); end
 parpool(10);
 parfor j = 1:N^2
-    rng(sum(100*clock)+pi*j);
     % Randomly sample parameters within acceptable ranges
-    Xs(j,:) = 2*rand(1,Nparams) - 1;
     randparams = 1/2*(diag(xu - xl)*Xs(j,:)' + (xu + xl));
 
     % Numerically solve 1D Vlasov-Poisson with randomly drawn parameters
