@@ -54,8 +54,8 @@ for i = 1:Nparams
             mu2=params(5);
             beta=params(6);
 
-        init_guess = Vlasov_1D_linearized_Steve_v4(k,sigma1,sigma2,0,mu2-mu1,beta) + mu1*k;
-        % init_guess = BohmGross_BiMax(k,sigma1,sigma2,0,mu2-mu1,beta) + mu1*k;
+        % init_guess = Vlasov_1D_linearized_Steve_v4(k,sigma1,sigma2,0,mu2-mu1,beta) + mu1*k;
+        init_guess = BohmGross_BiMax(k,sigma1,sigma2,0,mu2-mu1,beta) + mu1*k;
 
         xi_guess = init_guess/k;
         xi_guess_shift = init_guess/k-mu1;
@@ -179,7 +179,8 @@ parfor j = 1:N^2
     randparams = 1/2*(diag(xu - xl)*Xs(j,:)' + (xu + xl));
 
     % Numerically solve 1D Vlasov-Poisson with randomly drawn parameters
-    init_guess = Vlasov_1D_linearized_Steve_v4(randparams(1),randparams(2),randparams(3),0,randparams(5)-randparams(4),randparams(6));
+    init_guess = BohmGross_BiMax(randparams(1),randparams(2),randparams(3),0,randparams(5)-randparams(4),randparams(6));
+    % init_guess = Vlasov_1D_linearized_Steve_v4(randparams(1),randparams(2),randparams(3),0,randparams(5)-randparams(4),randparams(6));
     xi_guess = init_guess/randparams(1); % shifted (not scaled)
  
     spectral = init_guess + randparams(4)*randparams(1);
@@ -192,6 +193,7 @@ end
 delete(gcp('nocreate'));
 errorMax_spectral = max(abs([errorRand.spectral]));
 errorMax = max(abs([errorRand.omega]));
+errorMean = mean(abs([errorRand.omega]));
 % toc
 
 %% Plot the percent error in the N^2 randomly drawn samples
