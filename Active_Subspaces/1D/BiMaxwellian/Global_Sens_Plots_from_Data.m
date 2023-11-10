@@ -6,7 +6,7 @@ w= -w;
 
 %Compute and plot polynomial approximation & errors
 deg = 2; %Order of polynomial approximation
-p = polyfit(Xs*w,growth,deg); %coefficients of the polynomial
+p = polyfit(Xs*w,growth,deg);
 error = abs(growth - polyval(p,Xs*w));
 l2err = error'*error
 
@@ -49,7 +49,7 @@ title('Weight Vector','Fontsize',16);
 xlabel('Parameters','Fontsize',14)
 ylabel('Parameter Weights','Fontsize',14)
 xticks(1:Nparams)
-set(gca,'XTickLabel',{'$k$' '$\sigma$' '$\mu$' '$\nu$'});
+set(gca,'XTickLabel',{'$k$' '$\sigma_1$' '$\sigma_2$' '$\mu_1$' '$\mu_2$' '$\beta$'})
 
 % SUBPLOT 3: SUFFICIENT SUMMARY
 pos = [0.7 0.1 0.225 0.74];
@@ -59,14 +59,14 @@ plot(Xs*w,growth,'ko');
 ax = gca; ax.FontSize = 10; %use for setting tick font size
 title('Sufficient Summary Plot','Fontsize',16);
 xlabel('$w^T p_j$','Interpreter','latex','FontSize',15);
-ylabel('$\gamma(p)$','Interpreter','latex','FontSize',15);
+xlabel('$\gamma(p)$','Interpreter','latex','FontSize',15);
 legend('Quadratic Fit','Data','FontSize',9.5,'Location','NorthWest','Box','off');
 maxgrowth = max(growth); mingrowth = min(growth);
 grid on;
 
 set(fig6,'PaperUnits','inches','PaperSize',[11 8.5])
-txt = ['Incomplete Maxwellian, ',int2str(var*100),'% Variation'];
+txt = ['BiMaxwellian, ',int2str(var*100),'% Variation'];
 sgtitle(txt,'Fontsize',23,'FontWeight','bold');
 
-hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_IMax_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.eps']);
-hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_IMax_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.pdf']);
+hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_BiMax_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.eps']);
+hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_BiMax_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.pdf']);

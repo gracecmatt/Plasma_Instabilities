@@ -181,6 +181,7 @@ end
 delete(gcp('nocreate'));
 errorMax_spectral = max(abs([errorRand.spectral]));
 errorMax = max(abs([errorRand.omega]));
+errorMean = meanx(abs([errorRand.omega]));
 % toc
 
 %% Plot the percent error in the N^2 randomly drawn samples

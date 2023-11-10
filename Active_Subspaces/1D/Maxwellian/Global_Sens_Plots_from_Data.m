@@ -49,7 +49,7 @@ title('Weight Vector','Fontsize',16);
 xlabel('Parameters','Fontsize',14)
 ylabel('Parameter Weights','Fontsize',14)
 xticks(1:Nparams)
-set(gca,'XTickLabel',{'$k$' '$\sigma$' '$\mu$' '$\nu$'});
+set(gca,'XTickLabel',{'$k$' '$\sigma$' '$\mu$'});
 
 % SUBPLOT 3: SUFFICIENT SUMMARY
 pos = [0.7 0.1 0.225 0.74];
@@ -65,8 +65,8 @@ maxgrowth = max(growth); mingrowth = min(growth);
 grid on;
 
 set(fig6,'PaperUnits','inches','PaperSize',[11 8.5])
-txt = ['Incomplete Maxwellian, ',int2str(var*100),'% Variation'];
+txt = ['Maxwellian, ',int2str(var*100),'% Variation'];
 sgtitle(txt,'Fontsize',23,'FontWeight','bold');
 
-hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_IMax_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.eps']);
-hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_IMax_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.pdf']);
+hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_Max_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.eps']);
+hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_Max_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.pdf']);

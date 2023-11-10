@@ -54,8 +54,8 @@ for i = 1:Nparams
             mu2=params(5);
             beta=params(6);
 
-        init_guess = Vlasov_1D_linearized_Steve_v4(k,sigma1,sigma2,0,mu2-mu1,beta) + mu1*k;
-        % init_guess = BohmGross_BiMax(k,sigma1,sigma2,0,mu2-mu1,beta) + mu1*k;
+        % init_guess = Vlasov_1D_linearized_Steve_v4(k,sigma1,sigma2,0,mu2-mu1,beta) + mu1*k;
+        init_guess = BohmGross_BiMax(k,sigma1,sigma2,0,mu2-mu1,beta) + mu1*k;
 
         xi_guess = init_guess/k;
         xi_guess_shift = init_guess/k-mu1;
@@ -88,8 +88,8 @@ close all
 txtbase = string(['$(k,\sigma_1,\sigma_2,\mu_1,\mu_2,\beta)$=(',num2str(baseparams(1)),...
     ',',num2str(baseparams(2)),',',num2str(baseparams(3)),',',num2str(baseparams(4)),...
     ',',num2str(baseparams(5)),',',num2str(baseparams(6)),')']);
-txtleg1 = {'Spectral','Xie','Shifted Xie','Shifted & Scaled Xie','Dielectric Func.'};
-txtleg2 = {'Spectral','Xie','Shifted Xie','Shifted & Scaled Xie'};
+txtleg1 = {'Bohm-Gross','Xie','Shifted Xie','Shifted & Scaled Xie','Dielectric Func.'};
+txtleg2 = {'Bohm-Gross','Xie','Shifted Xie','Shifted & Scaled Xie'};
 
 newcolors = {'#4363d8','#e6194B','#3cb44b','#7E2F8E','#42d4f4'};
 
@@ -179,7 +179,8 @@ parfor j = 1:N^2
     randparams = 1/2*(diag(xu - xl)*Xs(j,:)' + (xu + xl));
 
     % Numerically solve 1D Vlasov-Poisson with randomly drawn parameters
-    init_guess = Vlasov_1D_linearized_Steve_v4(randparams(1),randparams(2),randparams(3),0,randparams(5)-randparams(4),randparams(6));
+    init_guess = BohmGross_BiMax(randparams(1),randparams(2),randparams(3),0,randparams(5)-randparams(4),randparams(6));
+    % init_guess = Vlasov_1D_linearized_Steve_v4(randparams(1),randparams(2),randparams(3),0,randparams(5)-randparams(4),randparams(6));
     xi_guess = init_guess/randparams(1); % shifted (not scaled)
  
     spectral = init_guess + randparams(4)*randparams(1);
@@ -192,6 +193,7 @@ end
 delete(gcp('nocreate'));
 errorMax_spectral = max(abs([errorRand.spectral]));
 errorMax = max(abs([errorRand.omega]));
+errorMean = mean(abs([errorRand.omega]));
 % toc
 
 %% Plot the percent error in the N^2 randomly drawn samples
