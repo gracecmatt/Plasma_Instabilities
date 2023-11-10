@@ -55,8 +55,8 @@ for i = 1:Nparams
             mu2=params(5);
             beta=params(6);
 
-        % init_guess = BohmGross_BiKap(k,sigma1,sigma2,0,mu2-mu1,beta,kappa) + mu1*k;
-        init_guess = Vlasov_1D_linearized_Steve_v4_Kappa(k,sigma1,sigma2,0,mu2-mu1,beta,kappa) + mu1*k;
+        init_guess = BohmGross_BiKap(k,sigma1,sigma2,0,mu2-mu1,beta,kappa) + mu1*k;
+        % init_guess = Vlasov_1D_linearized_Steve_v4_Kappa(k,sigma1,sigma2,0,mu2-mu1,beta,kappa) + mu1*k;
 
         xi_guess = init_guess/k;
         xi_guess_shift = init_guess/k-mu1;
@@ -180,12 +180,13 @@ parfor j = 1:N^2
     randparams = 1/2*(diag(xu - xl)*Xs(j,:)' + (xu + xl));
 
     % Numerically solve 1D Vlasov-Poisson with randomly drawn parameters
-    init_guess = Vlasov_1D_linearized_Steve_v4_Kappa(randparams(1),randparams(2),randparams(3),0,randparams(5)-randparams(4),randparams(6),kappa);
+    init_guess = BohmGross_BiKap(randparams(1),randparams(2),randparams(3),0,randparams(5)-randparams(4),randparams(6),kappa);
+    % init_guess = Vlasov_1D_linearized_Steve_v4_Kappa(randparams(1),randparams(2),randparams(3),0,randparams(5)-randparams(4),randparams(6),kappa);
     xi_guess = init_guess/(randparams(1)*randparams(2)); % shifted and scaled
  
     spectral = init_guess + randparams(4)*randparams(1);
     xie = BiKappa_Disp_Using_Xie(randparams(1)*randparams(2),1,randparams(3)/randparams(2),0,(randparams(5)-randparams(4))/randparams(2),randparams(6),kappa,xi_guess)*randparams(1)*randparams(2) + randparams(4)*randparams(1);
-    dielectric = BiKappa_dielectric(randparams(1),randparams(2),randparams(3),0,randparams(5)-randparams(4),randparams(6),kappa,init_guess)+randparams(4)*randparams(1);
+    dielectric = BiKappa_dielectric(randparams(1),randparams(2),randparams(3),0,randparams(5)-randparams(4),randparams(6),kappa,init_guess) + randparams(4)*randparams(1);
         
     errorRand(j).omega = abs(real(dielectric)-real(xie))/abs(real(dielectric))+1i*abs(imag(dielectric)-imag(xie))/abs(imag(dielectric));
     errorRand(j).spectral = abs(real(dielectric)-real(spectral))/abs(real(dielectric))+1i*abs(imag(dielectric)-imag(spectral))/abs(imag(dielectric));
@@ -193,6 +194,7 @@ end
 delete(gcp('nocreate'));
 errorMax_spectral = max(abs([errorRand.spectral]));
 errorMax = max(abs([errorRand.omega]));
+errorMean = mean(abs([errorRand.omega]));
 % toc
 
 %% Plot the percent error in the N^2 randomly drawn samples
