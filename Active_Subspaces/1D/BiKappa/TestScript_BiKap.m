@@ -89,8 +89,8 @@ close all
 txtbase = string(['$(k,\sigma_1,\sigma_2,\mu_1,\mu_2,\beta)$=(',num2str(baseparams(1)),...
     ',',num2str(baseparams(2)),',',num2str(baseparams(3)),',',num2str(baseparams(4)),...
     ',',num2str(baseparams(5)),',',num2str(baseparams(6)),')']);
-txtleg1 = {'Spectral','Xie','Shifted Xie','Shifted & Scaled Xie','Dielectric Func.'};
-txtleg2 = {'Spectral','Xie','Shifted Xie','Shifted & Scaled Xie'};
+txtleg1 = {'Bohm-Gross','Xie','Shifted Xie','Shifted & Scaled Xie','Dielectric Func.'};
+txtleg2 = {'Bohm-Gross','Xie','Shifted Xie','Shifted & Scaled Xie'};
 
 newcolors = {'#4363d8','#e6194B','#3cb44b','#7E2F8E','#42d4f4'};
 
