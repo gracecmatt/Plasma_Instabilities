@@ -6,17 +6,17 @@ N = 512;                              %Number of samples for each parameter
 h = 1e-6;                                      %Finite difference step size
 
 % Pre-allocate memory
-growth = zeros(N,1);                      %Output of interest (growth rate)
 Nparams = 6;
+growth = zeros(N,1);                      %Output of interest (growth rate)
 growth_plus = zeros(N,Nparams);               %Perturbed output of interest
 grad_growth = zeros(Nparams,N);             %Gradient of output of interest 
-Xs = zeros(N,Nparams);                   %To save the normalized parameters
+% Xs = zeros(N,Nparams);                 %To save the normalized parameters
 omega_error = zeros(N,1);
 
 % vals = [k, sigma1, sigma2, mu1, mu2, beta]
 setvals = [0.5; 2; 0.6; 1; 5.5; 0.9];
 
-var = 0.50; % x 100% variation considered
+var = 0.05; % x 100% variation considered
 xl = (1-var)*setvals;
 xu = (1+var)*setvals;
 
@@ -31,18 +31,19 @@ xl(6) = max(xl(6),0.58); % keep beta > 0.5
 
 % Run simulation
 tic
+rng(sum(100*clock));
+Xs = 2*rand(N^2,Nparams) - 1; % do sampling in serial
 parfor jj = 1:N
-    rng(sum(100*clock)+pi*jj);
     % Randomly sample parameters within acceptable ranges
-    Xs(jj,:) = 2*rand(1,Nparams) - 1;
     params = 1/2*(diag(xu - xl)*Xs(jj,:)' + (xu + xl));
 
     % Numerically solve 1D Vlasov-Poisson with randomly drawn parameters
-    init_guess = Vlasov_1D_linearized_Steve_v4(params(1),params(2),params(3),0,params(5)-params(4),params(6));
+    init_guess = BohmGross_BiMax(params(1),params(2),params(3),0,params(5)-params(4),params(6));
+    % init_guess = Vlasov_1D_linearized_Steve_v4(params(1),params(2),params(3),0,params(5)-params(4),params(6));
     xi_guess = init_guess/params(1); % shifted (not scaled)
  
     omega = BiMaxwellian_Disp_Using_Xie(params(1),params(2),params(3),0,params(5)-params(4),params(6),xi_guess)*params(1) + params(4)*params(1);
-    dielectric = BiMax_dielectric([params(1),params(2),params(3),0,params(5)-params(4),randparams(6)],xi_guess)*params(1) + params(4)*params(1);
+    dielectric = BiMax_dielectric([params(1),params(2),params(3),0,params(5)-params(4),params(6)],xi_guess)*params(1) + params(4)*params(1);
     growth(jj) = imag(omega);
     omega_error(jj) = abs(real(omega)-real(dielectric)) + 1i*abs(imag(omega)-imag(dielectric));
 end
@@ -55,7 +56,8 @@ parfor jj = 1:N
         xplus = randparams + h*I(:,kk);
         paramsplus = 1/2*(diag(xu - xl)*xplus + (xu + xl));
 
-        init_guess_plus = Vlasov_1D_linearized_Steve_v4(paramsplus(1),paramsplus(2),paramsplus(3),0,paramsplus(5)-paramsplus(4),paramsplus(6));
+        init_guess_plus = BohmGross_BiMax(paramsplus(1),paramsplus(2),paramsplus(3),0,paramsplus(5)-paramsplus(4),paramsplus(6));
+        % init_guess_plus = Vlasov_1D_linearized_Steve_v4(paramsplus(1),paramsplus(2),paramsplus(3),0,paramsplus(5)-paramsplus(4),paramsplus(6));
         xi_guess_plus = init_guess_plus/paramsplus(1); % shifted (not scaled)
      
         omega0_plus = BiMaxwellian_Disp_Using_Xie(paramsplus(1),paramsplus(2),paramsplus(3),0,paramsplus(5)-paramsplus(4),paramsplus(6),xi_guess_plus)*paramsplus(1);
@@ -83,7 +85,7 @@ cond = evalues(1)/sum(evalues);
 diff_growth = max(max(grad_growth)) - min(min(grad_growth));
 
 %Save the trial data
-save(['Data\Dispersion_BiMax_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var) '_data.mat'])
+save(['Dispersion_BiMax_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '_data.mat'])
 
 % exit
 delete(gcp('nocreate'))

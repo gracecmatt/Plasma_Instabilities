@@ -10,13 +10,13 @@ Nparams = 3;
 growth = zeros(N,1);                      %Output of interest (growth rate)
 growth_plus = zeros(N,Nparams);               %Perturbed output of interest
 grad_growth = zeros(Nparams,N);             %Gradient of output of interest 
-Xs = zeros(N,Nparams);                   %To save the normalized parameters
+% Xs = zeros(N,Nparams);                 %To save the normalized parameters
 omega_error = zeros(N,1);           %Compare Xie/dielectric funtion results
 
 % vals = [k, sigma, mu]
 setvals = [0.5; 2; 1];
 
-var = 0.50; % x 100% variation considered
+var = 0.05; % x 100% variation considered
 xl = (1-var)*setvals;
 xu = (1+var)*setvals;
 
@@ -28,10 +28,10 @@ end
 
 % Run simulation
 tic
+rng(sum(100*clock));
+Xs = 2*rand(N^2,Nparams) - 1; % do sampling in serial
 parfor jj = 1:N
-    rng(sum(100*clock)+pi*jj);
     % Randomly sample parameters within acceptable ranges
-    Xs(jj,:) = 2*rand(1,Nparams) - 1;
     params = 1/2*(diag(xu - xl)*Xs(jj,:)' + (xu + xl));
 
     % Numerically solve 1D Vlasov-Poisson with baseline parameters
@@ -77,13 +77,13 @@ w2 = U(:,2);
 evalues = diag(S.^2);
 
 % Compute the condition number (need a new name??)
-cond = evalues(1)/sum(evalues)
+cond = evalues(1)/sum(evalues);
 
 % Find the difference of max and min grad_growth to check for errors
 diff_growth = max(max(grad_growth)) - min(min(grad_growth));
 
 %Save the trial data
-save(['Data\Dispersion_Max_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '_data.mat'])
+save(['Dispersion_Max_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '_data.mat'])
 
 % exit
 delete(gcp('nocreate'))
