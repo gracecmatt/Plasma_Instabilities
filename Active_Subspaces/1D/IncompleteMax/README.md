@@ -1,7 +1,7 @@
 # Readme
 This folder contains all work on the Incomplete Maxwellian Velocity Distribution.
 
-$$f_{IM}(v;\mu,\sigma,\nu)=\frac{H(v-\nu)e^{-\frac{(v-\mu)^2}{\sigma^2}}}{\sqrt{\pi\sigma^2}\frac{1}{2}\left(1+erf(\frac{\mu-\nu}{\sigma})\right)}$$
+$$f_{IM}(v;\mu,\sigma,\nu)=\frac{H(v-\nu)e^{-\frac{(v-\mu)^2}{\sigma^2}}}{\sqrt{\pi\sigma^2}\frac{1}{2}\left(1+\text{erf}(\frac{\mu-\nu}{\sigma})\right)}$$
 
 Parameters investigated: 
 $\mu$ (mean of the corresponding complete gaussian, or location of peak)
