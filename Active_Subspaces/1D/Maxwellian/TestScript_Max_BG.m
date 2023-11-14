@@ -103,7 +103,7 @@ end
 delete(gcp('nocreate'));
 errorMax_spectral = max(abs([errorRand.spectral]));
 errorMax = max(abs([errorRand.omega]));
-errorMean = meanx(abs([errorRand.omega]));
+errorMean = mean(abs([errorRand.omega]));
 % toc
 
 %% Save the testing data and figures

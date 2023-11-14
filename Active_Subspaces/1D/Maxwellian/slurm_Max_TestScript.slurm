@@ -27,4 +27,4 @@ module load apps/matlab/2021b
 
 # run the code and direct all matlab (i.e., command window) output to outfilep6.txt
 
-matlab -nodisplay -nosplash -r TestScript_Max
+matlab -nodisplay -nosplash -r TestScript_Max_BG

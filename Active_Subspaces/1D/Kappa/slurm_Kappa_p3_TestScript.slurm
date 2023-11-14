@@ -28,4 +28,4 @@ module load apps/matlab/2021b
 
 # run the code and direct all matlab (i.e., command window) output to outfilep6.txt
 
-matlab -nodisplay -nosplash -r TestScript_Kap
+matlab -nodisplay -nosplash -r TestScript_Kap_BG
