@@ -1,10 +1,12 @@
 # Readme
 This folder contains all work on the Incomplete Maxwellian Velocity Distribution.
 
+$$f_{IM}(v;\mu,\sigma,\nu)=\frac{H(v-\nu)e^{-\frac{(v-\mu)^2}{\sigma^2}}}{\sqrt{\pi\sigma^2}\frac{1}{2}\left(1+\text{erf}(\frac{\mu-\nu}{\sigma})\right)}$$
+
 Parameters investigated: 
-mu (mean of the corresponding complete gaussian, or location of peak)
-sigma (standard deviation of the distribution or spread of the peak)
-nu (cut off, distribution is 0 to the left of v=nu)
+$\mu$ (mean of the corresponding complete gaussian, or location of peak)
+$\sigma$ (standard deviation of the distribution or spread of the peak)
+$\nu$ (cut off, distribution is 0 to the left of $v=\nu$)
 
 *M (sharpness parameter, some methods are ill equiped to deal with discontinuities 
 so we approximated with an erf function that aproaches a step function as M->inf)
@@ -19,7 +21,7 @@ Requires an inital guess. One of the methods tested. "Xie method"
 7. IncompleteMax_level_curves_nu (.asv): Makes level curve plots nu vs omega, does not run currently? when did it become an .asv?
 8. Max_dielectric (.m): Bounds an omega guess for a set of parameters? Requires initial guess. Only for Gaussian and used to guess for small nu?
 9. slurm_IMax_TestScript (.slurm): Organizes tasks for parallel computing
-10. TestingDataIMax_P4_N100_var50_data (.mat): Auto runs? Not sure what this does different than TestScript_IMax
+10. TestingDataIMax_P4_N100_var50_data (.mat): Auto runs? Not sure what this does different than TestScript_IMax - saved variables and output from TestScript.m
 11. TestScript_Figs_IMax (.m): Plots level curves and percent error, plots random scatter plot of error in area around parameter point.
 SAVES THE FIGURES TO THE FOLDER
 12. TestScript_IMax (.m): Plots level curves and percent error, plots random scatter plot of error in area around parameter point.

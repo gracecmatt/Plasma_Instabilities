@@ -1,4 +1,4 @@
-%% Plot output variables from Mio
+%% Plot output variables
 % updated positions, fonts, sizing, and removed unused plots
 
 %May need to switch sign of parameter weights to put on the same scale
