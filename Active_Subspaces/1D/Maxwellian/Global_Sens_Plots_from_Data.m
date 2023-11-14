@@ -1,4 +1,4 @@
-%% Plot output variables from Mio
+%% Plot output variables
 % updated positions, fonts, sizing, and removed unused plots
 
 %May need to switch sign of parameter weights to put on the same scale
@@ -68,5 +68,5 @@ set(fig6,'PaperUnits','inches','PaperSize',[11 8.5])
 txt = ['Maxwellian, ',int2str(var*100),'% Variation'];
 sgtitle(txt,'Fontsize',23,'FontWeight','bold');
 
-hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_Max_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.eps']);
-hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_Max_' int2str(100*var) '_' int2str(N) '_' int2str(deg) '.pdf']);
+hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_Max_' int2str(Nparams) '_' int2str(N) '_' int2str(100*var) '_' int2str(deg) '.eps']);
+hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_Max_' int2str(Nparams) '_' int2str(N) '_' int2str(100*var) '_' int2str(deg) '.pdf']);

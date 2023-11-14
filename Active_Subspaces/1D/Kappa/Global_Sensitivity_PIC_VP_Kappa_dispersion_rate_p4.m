@@ -17,7 +17,7 @@ omega_error = zeros(N,1);           %Compare Xie/dielectric funtion results
 % vals = [k, sigma, mu, kappa]
 setvals = [0.5; 2; 1; kappa];
 
-var = 0.50; % x 100% variation considered 
+var = 0.05; % x 100% variation considered 
 xl = (1-var)*setvals;
 xu = (1+var)*setvals;
 
@@ -35,15 +35,15 @@ end
 
 % Run simulation
 tic
+rng(sum(100*clock));
+Xs = 2*rand(N^2,Nparams) - 1; % do sampling in serial
 parfor jj = 1:N
-    rng(sum(100*clock)+pi*jj);
     % Randomly sample parameters within acceptable ranges
-    Xs(jj,:) = 2*rand(1,Nparams) - 1;
     params = 1/2*(diag(xu - xl)*Xs(jj,:)' + (xu + xl));
     
     % Numerically solve 1D Vlasov-Poisson with randomly drawn parameters
+    % init_guess = BohmGross_Kap(params(1),params(2),0,kappa);
     init_guess = Vlasov_1D_linearized_Steve_v4_Kappa(params(1),params(2),0,params(4));
-%     init_guess = BohmGross_Kap(params(1),params(2),0,kappa);
     xi_guess = init_guess/(params(1)*params(2)); % shifted and scaled
 
     omega = Kappa_Disp_Using_Xie(params(1)*params(2),1,0,params(4),xi_guess)*params(1)*params(2) + params(3)*params(1);
@@ -60,8 +60,8 @@ parfor jj = 1:N
         xplus = randparams + h*I(:,kk);
         paramsplus = 1/2*(diag(xu - xl)*xplus + (xu + xl));
         
+        % init_guess_plus = BohmGross_Kap(paramsplus(1),paramsplus(2),0,kappa);
         init_guess_plus = Vlasov_1D_linearized_Steve_v4_Kappa(paramsplus(1),paramsplus(2),0,paramsplus(4));
-%         init_guess_plus = BohmGross_Kap(paramsplus(1),paramsplus(2),0,kappa);
         xi_guess_plus = init_guess_plus/(paramsplus(1)*paramsplus(2)); % shifted and scaled
     
         omega0_plus = Kappa_Disp_Using_Xie(paramsplus(1)*paramsplus(2),1,0,paramsplus(4),xi_guess_plus)*paramsplus(1)*paramsplus(2);
@@ -83,13 +83,13 @@ w2 = U(:,2);
 evalues = diag(S.^2);
     
 % Compute the condition number (need a new name??)
-cond = evalues(1)/sum(evalues)
+cond = evalues(1)/sum(evalues);
 
 % Find the difference of max and min grad_growth to check for errors
 diff_growth = max(max(grad_growth)) - min(min(grad_growth));
    
 %Save the trial data
-save(['Data\Dispersion_Kappa' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N) '_var' int2str(var*100) '_data.mat'])
+save(['Dispersion_Kappa' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N) '_var' int2str(var*100) '_data.mat'])
 
 %exit
 delete(gcp('nocreate'))
