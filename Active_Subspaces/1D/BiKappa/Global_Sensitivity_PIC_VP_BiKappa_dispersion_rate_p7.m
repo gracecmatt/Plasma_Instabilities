@@ -40,10 +40,10 @@ end
 
 % Run simulation
 tic
+rng(sum(100*clock));
+Xs = 2*rand(N,Nparams) - 1; % do sampling in serial
 parfor jj = 1:N
-    rng(sum(100*clock)+pi*jj);
     % Randomly sample parameters within acceptable ranges
-    Xs(jj,:) = 2*rand(1,Nparams) - 1;
     params = 1/2*(diag(xu - xl)*Xs(jj,:)' + (xu + xl));
 
     % rescaled functions: (gm 10.11.23)
@@ -86,13 +86,13 @@ w2 = U(:,2);
 evalues = diag(S.^2);
 
 % Compute the condition number
-cond = evalues(1)/sum(evalues)
+cond = evalues(1)/sum(evalues);
 
 % Find the difference of max and min grad_growth to check for errors
 diff_growth = max(max(grad_growth)) - min(min(grad_growth));
 
 %Save the trial data
-save(['Data/Dispersion_BiKappa' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N) '_var' int2str(var*100) '_data.mat'])
+save(['Dispersion_BiKappa' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N) '_var' int2str(var*100) '_data.mat'])
 
 %exit
 delete(gcp('nocreate'))
