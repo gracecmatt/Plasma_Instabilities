@@ -14,9 +14,9 @@ grad_growth = zeros(Nparams,N);             %Gradient of output of interest
 omega_error = zeros(N,1);           %Compare Xie/dielectric funtion results                   
 
 % vals = [k, sigma, mu, nu]
-setvals = [0.5; 1; 1; -20];
+setvals = [0.5; 1; 1; -1];
 
-var = 0.05; % x 100% variation considered
+var = 0.01; % x 100% variation considered
 xl = (1-var)*setvals;
 xu = (1+var)*setvals;
 
@@ -29,7 +29,7 @@ end
 % Run simulation
 tic
 rng(sum(100*clock));
-Xs = 2*rand(N^2,Nparams) - 1; % do sampling in serial
+Xs = 2*rand(N,Nparams) - 1; % do sampling in serial
 parfor jj = 1:N
     % Randomly sample parameters within acceptable ranges
     params = 1/2*(diag(xu - xl)*Xs(jj,:)' + (xu + xl));
@@ -53,7 +53,7 @@ parfor jj = 1:N
         xplus = randparams + h*I(:,kk);
         paramsplus = 1/2*(diag(xu - xl)*xplus + (xu + xl));
 
-        init_guess_plus = BohmGross_Max(paramsplus(1),paramsplus(2),0,paramsplus(4));
+        init_guess_plus = BohmGross_IMax(paramsplus(1),paramsplus(2),0,paramsplus(4));
         % init_guess_plus = Vlasov_1D_linearized_Steve_v4(paramsplus(1),paramsplus(2),0,paramsplus(4),M)
         xi_guess_plus = init_guess_plus/paramsplus(1); % shifted (not scaled)
 

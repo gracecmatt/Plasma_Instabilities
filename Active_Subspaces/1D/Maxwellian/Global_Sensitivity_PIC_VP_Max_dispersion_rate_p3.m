@@ -29,7 +29,7 @@ end
 % Run simulation
 tic
 rng(sum(100*clock));
-Xs = 2*rand(N^2,Nparams) - 1; % do sampling in serial
+Xs = 2*rand(N,Nparams) - 1; % do sampling in serial
 parfor jj = 1:N
     % Randomly sample parameters within acceptable ranges
     params = 1/2*(diag(xu - xl)*Xs(jj,:)' + (xu + xl));
