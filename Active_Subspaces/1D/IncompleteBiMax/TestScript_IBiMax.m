@@ -5,16 +5,16 @@
 % spectral code for the initial guess, and the Xie code shifted, not scaled.
 clear; clc;
 
-N = 10; % number of samples in level curves
+N = 100; % number of samples in level curves
 Nparams = 7;
-M = 10; % slope of erf approximation to step function, for spectral code
+M = 8; % slope of erf approximation to step function, for spectral code
 
 % parameters = [k, sigma1, sigma2, mu1, mu2, beta, nu]
 baseparams = [0.5; 1; 0.6; 1; 4; 0.9; -20];
 txtparams = ["k","\sigma_1","\sigma_2","\mu_1","\mu_2","\beta","\nu"];
 
 % set variations
-var = 0.05; % x 100% variation considered
+var = 0.5; % x 100% variation considered
 xl = (1-var)*baseparams;
 xu = (1+var)*baseparams;
 xu(6) = min(xu(6),0.97); % keep beta < 1
@@ -85,88 +85,88 @@ errorIm.xie_shift = abs(imag(omega.dielectric)-imag(omega.xie_shift))./abs(imag(
 errorIm.xie_shiftscaled = abs(imag(omega.dielectric)-imag(omega.xie_shiftscaled))./abs(imag(omega.dielectric));
 
 %% Plot Level Curves and Percent Errors
-close all
-txtbase = string(['$(k,\sigma_1,\sigma_2,\mu_1,\mu_2,\beta)$=(',num2str(baseparams(1)),...
-    ',',num2str(baseparams(2)),',',num2str(baseparams(3)),',',num2str(baseparams(4)),...
-    ',',num2str(baseparams(5)),',',num2str(baseparams(6)),',',num2str(baseparams(7)),')']);
-txtleg1 = {'Spectral','Xie','Shifted Xie','Shifted & Scaled Xie','Dielectric Func.'};
-txtleg2 = {'Spectral','Xie','Shifted Xie','Shifted & Scaled Xie'};
-
-newcolors = {'#4363d8','#e6194B','#3cb44b','#7E2F8E','#42d4f4'};
-
-% plot the level curves
-fig1 = figure; tiledlayout(2,4);
-for i=1:Nparams
-    nexttile
-    plot(paramsarr(i,:), imag(omega.spectral(i,:)),'.-'); hold on
-    plot(paramsarr(i,:), imag(omega.xie(i,:)),'.-');
-    plot(paramsarr(i,:), imag(omega.xie_shift(i,:)),'.-');
-    plot(paramsarr(i,:), imag(omega.xie_shiftscaled(i,:)),'.-');
-    plot(paramsarr(i,:), imag(omega.dielectric(i,:)),'k');
-        title('$\gamma('+txtparams(i)+')$ Level Curves','Interpreter','latex','FontSize',14);
-        xlabel('$'+txtparams(i)+'$','Interpreter','latex','FontSize',12);
-        ylabel('$\gamma('+txtparams(i)+')$','Interpreter','latex','FontSize',12);
-        colororder(newcolors);
-end
-    leg = legend(txtleg1,'Orientation','Horizontal','FontSize',8);
-    leg.Layout.Tile = 'north';
-    txt = 'Incomplete BiMaxwellian $\gamma(p)$ around';
-    sgtitle({txt,txtbase},'Interpreter','latex','FontSize',16);
-
-fig2 = figure; tiledlayout(2,4);
-for i=1:Nparams
-    nexttile
-    plot(paramsarr(i,:), real(omega.spectral(i,:)),'.-'); hold on
-    plot(paramsarr(i,:), real(omega.xie(i,:)),'.-');
-    plot(paramsarr(i,:), real(omega.xie_shift(i,:)),'.-');
-    plot(paramsarr(i,:), real(omega.xie_shiftscaled(i,:)),'.-');
-    plot(paramsarr(i,:), real(omega.dielectric(i,:)),'k');
-        title('$\Omega('+txtparams(i)+')$ Level Curves','Interpreter','latex','FontSize',14);
-        xlabel('$'+txtparams(i)+'$','Interpreter','latex','FontSize',12);
-        ylabel('$\Omega('+txtparams(i)+')$','Interpreter','latex','FontSize',12);
-        colororder(newcolors);
-end
-    leg = legend(txtleg1,'Orientation','Horizontal','FontSize',8);
-    leg.Layout.Tile = 'north';
-    txt = 'Incomplete BiMaxwellian $\Omega(p)$ around';
-    sgtitle({txt,txtbase},'Interpreter','latex','FontSize',16);
-
-% plot the percent error
-fig3 = figure; tiledlayout(2,4);
-for i=1:Nparams
-    nexttile
-    semilogy(paramsarr(i,:), errorIm.spectral(i,:),'.-'); hold on
-    semilogy(paramsarr(i,:), errorIm.xie(i,:),'.-');
-    semilogy(paramsarr(i,:), errorIm.xie_shift(i,:),'.-');
-    semilogy(paramsarr(i,:), errorIm.xie_shiftscaled(i,:),'.-');
-        title('Relative Error in $\gamma('+txtparams(i)+')$','Interpreter','latex','FontSize',14);
-        xlabel('$'+txtparams(i)+'$','Interpreter','latex','FontSize',12);
-        ylabel('Relative Error','Interpreter','latex','FontSize',12);
-        ylim([0,1]); grid on; colororder(newcolors);
-end
-    leg = legend(txtleg2,'Orientation','Horizontal','FontSize',9);
-    leg.Layout.Tile = 'north';
-    txt = 'Incomplete BiMaxwellian Error in $\gamma(p)$ around';
-    sgtitle({txt,txtbase},'Interpreter','latex','FontSize',16);
-
-fig4 = figure; tiledlayout(2,4);
-for i=1:Nparams
-    nexttile
-    semilogy(paramsarr(i,:), errorRe.spectral(i,:),'.-'); hold on
-    semilogy(paramsarr(i,:), errorRe.xie(i,:),'.-');
-    semilogy(paramsarr(i,:), errorRe.xie_shift(i,:),'.-');
-    semilogy(paramsarr(i,:), errorRe.xie_shiftscaled(i,:),'.-');
-        title('Relative Error in $\Omega('+txtparams(i)+')$','Interpreter','latex','FontSize',14);
-        xlabel('$'+txtparams(i)+'$','Interpreter','latex','FontSize',12);
-        ylabel('Relative Error','Interpreter','latex','FontSize',12);
-        ylim([0,1]); grid on; colororder(newcolors);
-end
-    leg = legend(txtleg2,'Orientation','Horizontal','FontSize',9);
-    leg.Layout.Tile = 'north';
-    txt = 'Incomplete BiMaxwellian Error in $\Omega(p)$ around';
-    sgtitle({txt,txtbase},'Interpreter','latex','FontSize',16);
-
-pause(0.5) % pause to let figures show up
+% close all
+% txtbase = string(['$(k,\sigma_1,\sigma_2,\mu_1,\mu_2,\beta)$=(',num2str(baseparams(1)),...
+%     ',',num2str(baseparams(2)),',',num2str(baseparams(3)),',',num2str(baseparams(4)),...
+%     ',',num2str(baseparams(5)),',',num2str(baseparams(6)),',',num2str(baseparams(7)),')']);
+% txtleg1 = {'Spectral','Xie','Shifted Xie','Shifted & Scaled Xie','Dielectric Func.'};
+% txtleg2 = {'Spectral','Xie','Shifted Xie','Shifted & Scaled Xie'};
+% 
+% newcolors = {'#4363d8','#e6194B','#3cb44b','#7E2F8E','#42d4f4'};
+% 
+% % plot the level curves
+% fig1 = figure; tiledlayout(2,4);
+% for i=1:Nparams
+%     nexttile
+%     plot(paramsarr(i,:), imag(omega.spectral(i,:)),'.-'); hold on
+%     plot(paramsarr(i,:), imag(omega.xie(i,:)),'.-');
+%     plot(paramsarr(i,:), imag(omega.xie_shift(i,:)),'.-');
+%     plot(paramsarr(i,:), imag(omega.xie_shiftscaled(i,:)),'.-');
+%     plot(paramsarr(i,:), imag(omega.dielectric(i,:)),'k');
+%         title('$\gamma('+txtparams(i)+')$ Level Curves','Interpreter','latex','FontSize',14);
+%         xlabel('$'+txtparams(i)+'$','Interpreter','latex','FontSize',12);
+%         ylabel('$\gamma('+txtparams(i)+')$','Interpreter','latex','FontSize',12);
+%         colororder(newcolors);
+% end
+%     leg = legend(txtleg1,'Orientation','Horizontal','FontSize',8);
+%     leg.Layout.Tile = 'north';
+%     txt = 'Incomplete BiMaxwellian $\gamma(p)$ around';
+%     sgtitle({txt,txtbase},'Interpreter','latex','FontSize',16);
+% 
+% fig2 = figure; tiledlayout(2,4);
+% for i=1:Nparams
+%     nexttile
+%     plot(paramsarr(i,:), real(omega.spectral(i,:)),'.-'); hold on
+%     plot(paramsarr(i,:), real(omega.xie(i,:)),'.-');
+%     plot(paramsarr(i,:), real(omega.xie_shift(i,:)),'.-');
+%     plot(paramsarr(i,:), real(omega.xie_shiftscaled(i,:)),'.-');
+%     plot(paramsarr(i,:), real(omega.dielectric(i,:)),'k');
+%         title('$\Omega('+txtparams(i)+')$ Level Curves','Interpreter','latex','FontSize',14);
+%         xlabel('$'+txtparams(i)+'$','Interpreter','latex','FontSize',12);
+%         ylabel('$\Omega('+txtparams(i)+')$','Interpreter','latex','FontSize',12);
+%         colororder(newcolors);
+% end
+%     leg = legend(txtleg1,'Orientation','Horizontal','FontSize',8);
+%     leg.Layout.Tile = 'north';
+%     txt = 'Incomplete BiMaxwellian $\Omega(p)$ around';
+%     sgtitle({txt,txtbase},'Interpreter','latex','FontSize',16);
+% 
+% % plot the percent error
+% fig3 = figure; tiledlayout(2,4);
+% for i=1:Nparams
+%     nexttile
+%     semilogy(paramsarr(i,:), errorIm.spectral(i,:),'.-'); hold on
+%     semilogy(paramsarr(i,:), errorIm.xie(i,:),'.-');
+%     semilogy(paramsarr(i,:), errorIm.xie_shift(i,:),'.-');
+%     semilogy(paramsarr(i,:), errorIm.xie_shiftscaled(i,:),'.-');
+%         title('Relative Error in $\gamma('+txtparams(i)+')$','Interpreter','latex','FontSize',14);
+%         xlabel('$'+txtparams(i)+'$','Interpreter','latex','FontSize',12);
+%         ylabel('Relative Error','Interpreter','latex','FontSize',12);
+%         ylim([0,1]); grid on; colororder(newcolors);
+% end
+%     leg = legend(txtleg2,'Orientation','Horizontal','FontSize',9);
+%     leg.Layout.Tile = 'north';
+%     txt = 'Incomplete BiMaxwellian Error in $\gamma(p)$ around';
+%     sgtitle({txt,txtbase},'Interpreter','latex','FontSize',16);
+% 
+% fig4 = figure; tiledlayout(2,4);
+% for i=1:Nparams
+%     nexttile
+%     semilogy(paramsarr(i,:), errorRe.spectral(i,:),'.-'); hold on
+%     semilogy(paramsarr(i,:), errorRe.xie(i,:),'.-');
+%     semilogy(paramsarr(i,:), errorRe.xie_shift(i,:),'.-');
+%     semilogy(paramsarr(i,:), errorRe.xie_shiftscaled(i,:),'.-');
+%         title('Relative Error in $\Omega('+txtparams(i)+')$','Interpreter','latex','FontSize',14);
+%         xlabel('$'+txtparams(i)+'$','Interpreter','latex','FontSize',12);
+%         ylabel('Relative Error','Interpreter','latex','FontSize',12);
+%         ylim([0,1]); grid on; colororder(newcolors);
+% end
+%     leg = legend(txtleg2,'Orientation','Horizontal','FontSize',9);
+%     leg.Layout.Tile = 'north';
+%     txt = 'Incomplete BiMaxwellian Error in $\Omega(p)$ around';
+%     sgtitle({txt,txtbase},'Interpreter','latex','FontSize',16);
+% 
+% pause(0.5) % pause to let figures show up
 %% Run simulations N^2 times with randomly selected parameters
 rng('shuffle');
 rng(sum(100*clock));
@@ -198,35 +198,35 @@ errorMean = mean(abs([errorRand.omega]));
 % toc
 
 %% Plot the percent error in the N^2 randomly drawn samples
-fig5 = figure; tiledlayout(1,2);
-nexttile
-semilogy(real([errorRand.omega]),'*');
-    title('$\Omega$ Relative Error','Interpreter','latex','FontSize',14);
-    xlabel('Sample \#','Interpreter','latex','FontSize',14);
-    ylabel('$\big|\frac{\Omega_{dielctric}-\Omega_{Xie}}{\Omega_{dielectric}}\big|$','Interpreter','latex','FontSize',14);
-    xlim([0,N^2]); grid on
-nexttile
-semilogy(imag([errorRand.omega]),'*');
-    title('$\gamma$ Relative Error','Interpreter','latex','FontSize',14);
-    xlabel('Sample \#','Interpreter','latex','FontSize',14);
-    ylabel('$\big|\frac{\gamma_{dielectric}-\gamma_{Xie}}{\gamma_{dielectric}}\big|$','Interpreter','latex','FontSize',14);
-    xlim([0,N^2]); grid on
-
-txt1 = ['Incomplete BiMaxwellian, ',num2str(var*100),'\% variation on'];
-txt2 = ['$(k,\sigma_1,\sigma_2,\mu_1,\mu_2,\beta,\nu)$=(',...
-    num2str(baseparams(1)),',',num2str(baseparams(2)),',',num2str(baseparams(3)),',',num2str(baseparams(4)),',',num2str(baseparams(5)),',',num2str(baseparams(6)),',',num2str(baseparams(7)),')'];
-sgtitle({txt1;txt2},'Interpreter','latex','FontSize',16)
-    txt = ['Maximum Relative Error: ',num2str(errorMax,'%0.4e')];
-    leg = legend('','Orientation','Horizontal','color','none'); legend boxoff;
-    leg.Layout.Tile = 'north';
-    annotation('textbox',[.25 .65 .6 .2], ...
-        'String',txt,'EdgeColor','none','Interpreter','latex','FontSize',12);
+% fig5 = figure; tiledlayout(1,2);
+% nexttile
+% semilogy(real([errorRand.omega]),'*');
+%     title('$\Omega$ Relative Error','Interpreter','latex','FontSize',14);
+%     xlabel('Sample \#','Interpreter','latex','FontSize',14);
+%     ylabel('$\big|\frac{\Omega_{dielctric}-\Omega_{Xie}}{\Omega_{dielectric}}\big|$','Interpreter','latex','FontSize',14);
+%     xlim([0,N^2]); grid on
+% nexttile
+% semilogy(imag([errorRand.omega]),'*');
+%     title('$\gamma$ Relative Error','Interpreter','latex','FontSize',14);
+%     xlabel('Sample \#','Interpreter','latex','FontSize',14);
+%     ylabel('$\big|\frac{\gamma_{dielectric}-\gamma_{Xie}}{\gamma_{dielectric}}\big|$','Interpreter','latex','FontSize',14);
+%     xlim([0,N^2]); grid on
+% 
+% txt1 = ['Incomplete BiMaxwellian, ',num2str(var*100),'\% variation on'];
+% txt2 = ['$(k,\sigma_1,\sigma_2,\mu_1,\mu_2,\beta,\nu)$=(',...
+%     num2str(baseparams(1)),',',num2str(baseparams(2)),',',num2str(baseparams(3)),',',num2str(baseparams(4)),',',num2str(baseparams(5)),',',num2str(baseparams(6)),',',num2str(baseparams(7)),')'];
+% sgtitle({txt1;txt2},'Interpreter','latex','FontSize',16)
+%     txt = ['Maximum Relative Error: ',num2str(errorMax,'%0.4e')];
+%     leg = legend('','Orientation','Horizontal','color','none'); legend boxoff;
+%     leg.Layout.Tile = 'north';
+%     annotation('textbox',[.25 .65 .6 .2], ...
+%         'String',txt,'EdgeColor','none','Interpreter','latex','FontSize',12);
 
 %% Save the testing data and figures
 % eps is a vector format file type that works well in LaTeX
 % pdf is a vector format file type that is easy to share and view
 
-save(['Data\TestingDataBiMax_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '_data.mat'])
+save(['Data\TestingDataIBiMax_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '_data.mat'])
 
 % savefig(fig1,  ['Figs\LevelCurvesBiMax_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.fig'])
 % hgexport(fig1, ['Figs\LevelCurvesBiMax_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.eps'], hgexport('factorystyle'), 'Format', 'eps');
