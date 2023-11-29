@@ -13,7 +13,7 @@ txtleg2 = {'Spectral','Xie','Shifted Xie','Shifted & Scaled Xie'};
 newcolors = {'#4363d8','#e6194B','#3cb44b','#7E2F8E','#42d4f4'};
 
 % plot the level curves
-fig1 = figure; tiledlayout(3,2);
+fig1 = figure; tiledlayout(4,2);
 for i=1:Nparams
     nexttile
     plot(paramsarr(i,:), imag(omega.spectral(i,:)),'.-'); hold on
@@ -31,7 +31,7 @@ end
     txt = 'BiMaxwellian $\gamma(p)$ around';
     sgtitle({txt,txtbase},'Interpreter','latex','FontSize',16);
 
-fig2 = figure; tiledlayout(3,2);
+fig2 = figure; tiledlayout(4,2);
 for i=1:Nparams
     nexttile
     plot(paramsarr(i,:), real(omega.spectral(i,:)),'.-'); hold on
@@ -50,7 +50,7 @@ end
     sgtitle({txt,txtbase},'Interpreter','latex','FontSize',16);
 
 % plot the percent error
-fig3 = figure; tiledlayout(3,2);
+fig3 = figure; tiledlayout(4,2);
 for i=1:Nparams
     nexttile
     semilogy(paramsarr(i,:), errorIm.spectral(i,:),'.-'); hold on
@@ -67,7 +67,7 @@ end
     txt = 'BiMaxwellian Error in $\gamma(p)$ around';
     sgtitle({txt,txtbase},'Interpreter','latex','FontSize',16);
 
-fig4 = figure; tiledlayout(3,2);
+fig4 = figure; tiledlayout(4,2);
 for i=1:Nparams
     nexttile
     semilogy(paramsarr(i,:), errorRe.spectral(i,:),'.-'); hold on
