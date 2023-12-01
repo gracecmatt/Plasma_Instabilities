@@ -226,7 +226,7 @@ errorMean = mean(abs([errorRand.omega]));
 % eps is a vector format file type that works well in LaTeX
 % pdf is a vector format file type that is easy to share and view
 
-save(['Data\TestingDataIBiMax_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '_data.mat'])
+save(['TestingDataIBiMax_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '_data.mat'])
 
 % savefig(fig1,  ['Figs\LevelCurvesBiMax_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.fig'])
 % hgexport(fig1, ['Figs\LevelCurvesBiMax_gamma_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '.eps'], hgexport('factorystyle'), 'Format', 'eps');

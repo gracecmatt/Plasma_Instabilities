@@ -29,3 +29,25 @@ SAVES THE FIGURES TO THE FOLDER
 one of the methods tested "spectral method"
 14. zetaf (.m): algebraic function used in various places
 15. zetaph (.m): Calculates the general plasma dispersion function via Xie method, Used in IncompleteMax_Disp_Using_Xie to calculate omega.
+
+
+**Distribution**
+$$f_{IM}(v)=H(v-\nu) \frac{\exp\left[-\frac{(v-\mu)^2}{\sigma^2}\right]}{\sqrt{\pi \sigma^2} \left(1+\text{erf}(\frac{\mu-\nu}{\sigma})\right) \frac{1}{2}}$$
+
+**Derivative**
+$$f_{IM}'(v)= \frac{\exp\left[-\frac{(v-\mu)^2}{\sigma^2}\right] \left(\sigma^2\delta(v-\nu)-2(v-\mu)H(v-\nu)\right) }{\sqrt{\pi}\sigma^3 \left(1+\text{erf}(\frac{\mu-\nu}{\sigma})\right) \frac{1}{2}}$$
+
+**Integral to compute using Xie/Weideman algorithm**
+```math
+\begin{aligned}
+\int \frac{f_{IM}'(v)}{v-z}dv = \left. \left[ \frac{1}{v-z}\frac{1}{\sqrt{\pi}\sigma}\frac{\exp\left[\frac{-(v-\mu)^2}{\sigma^2}\right]}{\left(1+\text{erf}(\frac{\mu-\nu}{\sigma})\right)\frac{1}{2}}\right]  \right\vert_{v=\nu} + \int \frac{H(v-\nu)}{v-z} \frac{-2(v-\mu)}{\sqrt{\pi}\sigma^3}\frac{\exp\left[\frac{-(v-\mu)^2}{\sigma^2}\right]}{\left(1+\text{erf}(\frac{\mu-\nu}{\sigma})\right) \frac{1}{2}} dv
+\end{aligned}
+```
+Simplified
+```math
+\begin{aligned}
+\int \frac{f_{IM}'(v)}{v-z}dv =\text{Zp} + \frac{1}{\nu-z} \frac{2}{\sqrt{\pi}\sigma}\frac{\exp\left[\frac{-(\nu-\mu)^2}{\sigma^2}\right]}{\left(1+\text{erf}(\frac{\mu-\nu}{\sigma})\right)},
+\:\:\: \text{Zp} = \text{calZ}\left(z, 
+-4 H(v-\nu)  \frac{(v-\mu)}{\sqrt{\pi}\sigma^3}\frac{\exp\left[\frac{-(v-\mu)^2}{\sigma^2}\right]}{\left(1+\text{erf}(\frac{\mu-\nu}{\sigma})\right)}, N\right)
+\end{aligned}
+```
