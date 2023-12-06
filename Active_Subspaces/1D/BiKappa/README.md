@@ -1,4 +1,20 @@
 # README
+## Kappa Bump-on-Tail Distributions (Symmetric and Non-Symmetric)
+**Non-Symmetric Distribution**
+```math
+\begin{aligned}
+f_{\kappa BOT}(v)&=  \beta \frac{\left(\kappa-\frac{3}{2}\right)^{-\frac{1}{2}}}{\sqrt{\pi\sigma_1^2}}\frac{\Gamma(\kappa)}{\Gamma\left(\kappa-\frac{1}{2}\right)}\left( 1+\frac{(v-\mu_1)^2}{\left(\kappa-\frac{3}{2}\right)\sigma_1^2}\right)^{-\kappa} + (1-\beta) \frac{\left(\kappa-\frac{3}{2}\right)^{-\frac{1}{2}}}{\sqrt{\pi\sigma_2^2}}\frac{\Gamma(\kappa)}{\Gamma\left(\kappa-\frac{1}{2}\right)}\left( 1+\frac{(v-\mu_2)^2}{\left(\kappa-\frac{3}{2}\right)\sigma_2^2}\right)^{-\kappa} \\
+ &=\left(\kappa-\frac{3}{2}\right)^{-\frac{1}{2}} \frac{\Gamma(\kappa)}{\Gamma\left(\kappa-\frac{1}{2}\right)} \left( \frac{\beta}{\sqrt{\pi\sigma_1^2}}\left( 1+\frac{(v-\mu_1)^2}{\left(\kappa-\frac{3}{2}\right)\sigma_1^2}\right)^{-\kappa} +  \frac{1-\beta}{\sqrt{\pi\sigma_2^2}}\left(1+\frac{(v-\mu_2)^2}{\left(\kappa-\frac{3}{2}\right)\sigma_2^2}\right)^{-\kappa} \right)
+\end{aligned}
+```
+
+**Symmetric Distribution**
+```math
+\begin{aligned}
+f_{\kappa DBOT}(v)&=  \beta\frac{\left(\kappa-\frac{3}{2}\right)^{-\frac{1}{2}}}{\sqrt{\pi\sigma_1^2}}\frac{\Gamma(\kappa)}{\Gamma\left(\kappa-\frac{1}{2}\right)}\left( 1+\frac{(v-\mu)^2}{\left(\kappa-\frac{3}{2}\right)\sigma_1^2}\right)^{-\kappa} + \frac{(1-\beta)}{2}\frac{\left(\kappa-\frac{3}{2}\right)^{-\frac{1}{2}}}{\sqrt{\pi\sigma_2^2}}\frac{\Gamma(\kappa)}{\Gamma\left(\kappa-\frac{1}{2}\right)}\left[ \left(1+\frac{(v-(\mu+v_0))^2}{\left(\kappa-\frac{3}{2}\right)\sigma_2^2}\right)^{-\kappa} + \left(1+\frac{(v-(\mu-v_0))^2}{\left(\kappa-\frac{3}{2}\right)\sigma_2^2}\right)^{-\kappa}\right] \\
+ &=  \left(\kappa-\frac{3}{2}\right)^{-\frac{1}{2}} \frac{\Gamma(\kappa)}{\Gamma\left(\kappa-\frac{1}{2}\right)} \left( \frac{\beta}{\sqrt{\pi\sigma_1^2}}\left( 1+\frac{(v-\mu)^2}{\left(\kappa-\frac{3}{2}\right)\sigma_1^2} \right)^{-\kappa} + \frac{1-\beta}{2 \sqrt{\pi\sigma_2^2}} \left[ \left(1+\frac{(v-(\mu+v_0))^2}{\left(\kappa-\frac{3}{2}\right)\sigma_2^2}\right)^{-\kappa} + \left(1+\frac{(v-(\mu-v_0))^2}{\left(\kappa-\frac{3}{2}\right)\sigma_2^2}\right)^{-\kappa}\right] \right)
+\end{aligned}
+```
 
 ## Notes
 - Use spectral code as initial condition
