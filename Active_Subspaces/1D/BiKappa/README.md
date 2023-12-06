@@ -20,10 +20,16 @@ f_{\kappa DBOT}(v)&=  \beta\frac{\left(\kappa-\frac{3}{2}\right)^{-\frac{1}{2}}}
 - Use spectral code as initial condition
 - Run Xie code shifted and scaled
 
+**Common analytic assumptions**
+1. $T_2 < T_1 \Rightarrow \sigma_2^2 < \sigma_1^2$, Bump has smaller spread of velocities
+2. $n_2 \ll n_1 \Rightarrow \beta\approx 1$, Most of the particles are in the bulk
+3. $v_0 \gg \frac{2 k_B T_1}{m} \Rightarrow v_0 \gg \sigma_1^2$, The bump is far from the mean, also implies: $v_0 \gg \sigma_1^2 > \sigma_2^2$
+
+
 ## Summary of Files
 1. `BiKappa_AllSolScript.m` Solves the dispersion relation for all solutions and attempts to ignore redundant or incorrect solutions.
 3. `BiKappa_Disp_Using_Xie.m` Solves the dispersion relation for the kappa bump-on-tail using Fourier series approximation for the complex integral as in the Xie/Weideman algorithm.
-3. `BiKappa_dielectric.m` Provides the functional forms for the kappa dielectric functions for $\kappa=2,6$.
+3. `BiKappa_dielectric.m` Provides the functional forms for the kappa dielectric functions for $\kappa=2,4$.
 4. `BohmGross_BiKap.m` Solves the Bohm-Gross relation for this distribution (something isn't working).
 1. `Global_Sens_Plots_from_Data_Instability.m` Plots the 1D sufficient summary plots with some variation from a given base parameter set. 
 2. `Global_Sensitivity_PIC_VP_Kappa_dispersion_rate_p6.m` Code to run active subspaces.
@@ -34,10 +40,8 @@ f_{\kappa DBOT}(v)&=  \beta\frac{\left(\kappa-\frac{3}{2}\right)^{-\frac{1}{2}}}
 5. `Vlasov_1D_linearized_Steve_v4_Kappa.m` Fourth edition of the spectral method for solving VP with kappa equilibrium distribution.
 8. `zetaph.m` Code to produce Fourier series approximation as in Xie/Weideman algorithm.
 
-**Common analytic assumptions**
-1. $T_2 < T_1 \Rightarrow \sigma_2^2 < \sigma_1^2$, Bump has smaller spread of velocities
-2. $n_2 \ll n_1 \Rightarrow \beta\approx 1$, $Most of the particles are in the bulk
-3. $v_0 \gg \frac{2 k_B T_1}{m} \Rightarrow v_0 \gg \sigma_1^2$, The bump is far from the mean, also implies: $v_0 \gg \sigma_1^2 > \sigma_2^2$
-
 ## References
-
+1. 1973. Principles of Plasma Physics. Krall and Trivelpiece. Ch 9.4 Stability of Multipeaked Distributino in Warm Plasmas - Gentle-Bump Instability
+2. 2015. Sarkar, Paul, Denra. Kappa Bump-on-Tail Instability
+3. 2020. Noreen, Shiekh, Habumugisha, Zaheer, Shah. Kappa Bump-on-Tail Instability with more generalized distribution
+4. 2023. Sheikh, Zaheer, Noreen, Shah. Kappa Bump-on-Tail Instability with quasilinear approach
