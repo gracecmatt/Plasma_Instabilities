@@ -41,7 +41,7 @@ f_{\kappa DBOT}(v)&=  \beta\frac{\left(\kappa-\frac{3}{2}\right)^{-\frac{1}{2}}}
 8. `zetaph.m` Code to produce Fourier series approximation as in Xie/Weideman algorithm.
 
 ## References
-1. 1973. Principles of Plasma Physics. Krall and Trivelpiece. Ch 9.4 Stability of Multipeaked Distributino in Warm Plasmas - Gentle-Bump Instability
-2. 2015. Sarkar, Paul, Denra. Kappa Bump-on-Tail Instability
-3. 2020. Noreen, Shiekh, Habumugisha, Zaheer, Shah. Kappa Bump-on-Tail Instability with more generalized distribution
-4. 2023. Sheikh, Zaheer, Noreen, Shah. Kappa Bump-on-Tail Instability with quasilinear approach
+1. (1973) Principles of Plasma Physics. Krall and Trivelpiece. Ch 9.4 Stability of Multipeaked Distributino in Warm Plasmas - Gentle-Bump Instability
+2. (2015) Sarkar, Paul, Denra. Kappa Bump-on-Tail Instability
+3. (2020) Noreen, Shiekh, Habumugisha, Zaheer, Shah. Kappa Bump-on-Tail Instability with more generalized distribution
+4. (2023) Sheikh, Zaheer, Noreen, Shah. Kappa Bump-on-Tail Instability with quasilinear approach
