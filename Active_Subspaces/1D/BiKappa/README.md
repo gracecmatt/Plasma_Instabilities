@@ -34,3 +34,10 @@ f_{\kappa DBOT}(v)&=  \beta\frac{\left(\kappa-\frac{3}{2}\right)^{-\frac{1}{2}}}
 5. `Vlasov_1D_linearized_Steve_v4_Kappa.m` Fourth edition of the spectral method for solving VP with kappa equilibrium distribution.
 8. `zetaph.m` Code to produce Fourier series approximation as in Xie/Weideman algorithm.
 
+**Common analytic assumptions**
+1. $T_2 < T_1 \Rightarrow \sigma_2^2 < \sigma_1^2$, Bump has smaller spread of velocities
+2. $n_2 \ll n_1 \Rightarrow \beta\approx 1$, $Most of the particles are in the bulk
+3. $v_0 \gg \frac{2 k_B T_1}{m} \Rightarrow v_0 \gg \sigma_1^2$, The bump is far from the mean, also implies: $v_0 \gg \sigma_1^2 > \sigma_2^2$
+
+## References
+
