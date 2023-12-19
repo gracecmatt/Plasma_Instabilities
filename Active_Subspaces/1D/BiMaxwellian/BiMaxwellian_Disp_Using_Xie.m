@@ -4,10 +4,12 @@ function xi = BiMaxwellian_Disp_Using_Xie(k, sigma1, sigma2, mu1, mu2, beta, ini
     options = optimoptions('fsolve','Display','off');
 
     % ========= compute gamma using Fourier series approximation ==========
-    F = [num2str(beta,16),'/sqrt(pi*',num2str(sigma1,16),'^2)*exp(-(v-',num2str(mu1,16),').^2/(',num2str(sigma1,16),'^2)) + ',...
-        num2str(1-beta,16),'/sqrt(pi*',num2str(sigma2,16),'^2)*exp(-(v-',num2str(mu2,16),').^2/(',num2str(sigma2,16),'^2))'];
+    % F = [num2str(beta,16),'/sqrt(pi*',num2str(sigma1,16),'^2)*exp(-(v-',num2str(mu1,16),').^2/(',num2str(sigma1,16),'^2)) + ',...
+    %     num2str(1-beta,16),'/sqrt(pi*',num2str(sigma2,16),'^2)*exp(-(v-',num2str(mu2,16),').^2/(',num2str(sigma2,16),'^2))'];
+    F = [num2str(beta,16),'/sqrt(2*pi*',num2str(sigma1,16),')*exp(-(v-',num2str(mu1,16),').^2/(2*',num2str(sigma1,16),')) + ',...
+        num2str(1-beta,16),'/sqrt(2*pi*',num2str(sigma2,16),')*exp(-(v-',num2str(mu2,16),').^2/(2*',num2str(sigma2,16),'))'];
     Fn = 0; % 0 = option to define your own F
-    Nfourier = 400; % number of Fourier coefficients to take
+    Nfourier = 300; % number of Fourier coefficients to take
     D = @(z) 1-1/k^2*zetaph(z, Fn, F, Nfourier); % dielectric function
 
     % ============================== solve ================================
@@ -32,5 +34,4 @@ function xi = BiMaxwellian_Disp_Using_Xie(k, sigma1, sigma2, mu1, mu2, beta, ini
     % elseif(xiImag_1<=xiImag_2)
     %     xi = -abs(xiReal_2)+1i*xiImag_2; 
     % end
-
 end

@@ -16,7 +16,7 @@ newcolors = {'#4363d8','#e6194B','#3cb44b','#7E2F8E','#42d4f4'};
 fig1 = figure; tiledlayout(3,2);
 for i=1:Nparams
     nexttile
-    plot(paramsarr(i,:), imag(omega.spectral(i,:)),'.-'); hold on
+    plot(paramsarr(i,:), imag(omega.init(i,:)),'.-'); hold on
     plot(paramsarr(i,:), imag(omega.xie(i,:)),'.-');
     plot(paramsarr(i,:), imag(omega.xie_shift(i,:)),'.-');
     plot(paramsarr(i,:), imag(omega.xie_shiftscaled(i,:)),'.-');
@@ -34,7 +34,7 @@ end
 fig2 = figure; tiledlayout(3,2);
 for i=1:Nparams
     nexttile
-    plot(paramsarr(i,:), real(omega.spectral(i,:)),'.-'); hold on
+    plot(paramsarr(i,:), real(omega.init(i,:)),'.-'); hold on
     plot(paramsarr(i,:), real(omega.xie(i,:)),'.-');
     plot(paramsarr(i,:), real(omega.xie_shift(i,:)),'.-');
     plot(paramsarr(i,:), real(omega.xie_shiftscaled(i,:)),'.-');
@@ -53,7 +53,7 @@ end
 fig3 = figure; tiledlayout(3,2);
 for i=1:Nparams
     nexttile
-    semilogy(paramsarr(i,:), errorIm.spectral(i,:),'.-'); hold on
+    semilogy(paramsarr(i,:), errorIm.init(i,:),'.-'); hold on
     semilogy(paramsarr(i,:), errorIm.xie(i,:),'.-');
     semilogy(paramsarr(i,:), errorIm.xie_shift(i,:),'.-');
     semilogy(paramsarr(i,:), errorIm.xie_shiftscaled(i,:),'.-');
@@ -70,7 +70,7 @@ end
 fig4 = figure; tiledlayout(3,2);
 for i=1:Nparams
     nexttile
-    semilogy(paramsarr(i,:), errorRe.spectral(i,:),'.-'); hold on
+    semilogy(paramsarr(i,:), errorRe.init(i,:),'.-'); hold on
     semilogy(paramsarr(i,:), errorRe.xie(i,:),'.-');
     semilogy(paramsarr(i,:), errorRe.xie_shift(i,:),'.-');
     semilogy(paramsarr(i,:), errorRe.xie_shiftscaled(i,:),'.-');

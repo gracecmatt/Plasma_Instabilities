@@ -95,7 +95,6 @@ function [Zp]=zetaph(z,Fn,F,N)
        Z=calZ(z,F,N);
        Zp=calZ(z,Fp,N);
     end
-
 end
 
 function [Fp,F]=calFp(F) 
@@ -119,7 +118,7 @@ function Z=calZ(z,F,N,del)
    Z=hilb(z,F,N,del);
    ind1=find(isnan(Z));
      % changed from 1e-10 to 1e-16 (gm 6/29/23)
-   z1=z(ind1)+1e-10;             % avoid NaN of higher order singular point
+   z1=z(ind1)+1e-10;            % avoid NaN of higher order singular point
    Z(ind1)=hilb(z1,F,N,del);  % e.g., z=ia for Lorentzian F='1./(a^2+v.^2)'
 end
 
@@ -132,7 +131,7 @@ function Z=hilb(z,F,N,del,L)
 %   it seems we should set del=0 for correct analytic continuation
 
     if nargin<5 
-        L = 6;%sqrt(N/sqrt(2)); % optimal choice of L
+        L = sqrt(N/sqrt(2)); % optimal choice of L
     end             
     if nargin<4, del = 1; end
     
@@ -178,7 +177,7 @@ function Z=hilb(z,F,N,del,L)
         h = 1i*(2*p./(L-1i*z1).^2+(a0/L)./(L-1i*z1));  % Evaluate h(f(v))
 
         % convert upper half-plane results to lower half-plane if necesary
-        % Z(id) = h.*(imag(z(id))>0)+conj(h-2i.*Fz(z1)).*(imag(z(id))<0); 
+        % g(id) = h.*(imag(z(id))>0)+conj(h-2i.*Fz(z1)).*(imag(z(id))<0); 
             % changed Z to g for clarity (gm 6/29/23)
         g(id) = h.*(imag(z(id))>0)+(conj(h)+del*2i.*Fz(z(id))).*(imag(z(id))<0);
 
@@ -189,5 +188,4 @@ function Z=hilb(z,F,N,del,L)
         % title('complex magnitude of Fourier coefficients')
     end
     Z=g.*pi;
-    g=2;
 end

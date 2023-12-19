@@ -14,9 +14,9 @@ grad_growth = zeros(Nparams,N);             %Gradient of output of interest
 omega_error = zeros(N,1);
 
 % vals = [k, sigma1, sigma2, mu1, mu2, beta]
-setvals = [0.5; 2; 0.6; 1; 5.5; 0.9];
+setvals = [0.5; 1; 1; 0; 4; 0.8];
 
-var = 0.05; % x 100% variation considered
+var = 0.10; % x 100% variation considered
 xl = (1-var)*setvals;
 xu = (1+var)*setvals;
 
@@ -26,15 +26,17 @@ if setvals(4)==0
     xu(4) = var;
 end
 
-xu(6) = min(xu(6),0.97); % keep beta < 1
-xl(6) = max(xl(6),0.58); % keep beta > 0.5
+xu(6) = min(xu(6),0.99); % keep beta < 1
+xl(6) = max(xl(6),0.51); % keep beta > 0.5
 
 % Run simulation
 tic
 rng(sum(100*clock));
 Xs = 2*rand(N,Nparams) - 1; % do sampling in serial
 parfor jj = 1:N
+    % rng(sum(100*clock));
     % Randomly sample parameters within acceptable ranges
+    % Xs(jj,:) = 2*rand(1,Nparams) - 1;
     params = 1/2*(diag(xu - xl)*Xs(jj,:)' + (xu + xl));
 
     % Numerically solve 1D Vlasov-Poisson with randomly drawn parameters
@@ -85,7 +87,7 @@ cond = evalues(1)/sum(evalues);
 diff_growth = max(max(grad_growth)) - min(min(grad_growth));
 
 %Save the trial data
-save(['Dispersion_BiMax_P' int2str(Nparams) '_N' int2str(N) '_var' int2str(var*100) '_data.mat'])
+save(['Data/Dispersion_BiMax_P' int2str(Nparams) '_N' int2str(N) '_var' int2str(var*100) '_data.mat'])
 
 % exit
 delete(gcp('nocreate'))
