@@ -2,9 +2,9 @@ close all; clear;clc
 rng('shuffle');
 parpool(12);
 % Initialize algorithm parameters
-N = 1200;                              %Number of samples for each parameter
+N = 480;                              %Number of samples for each parameter
 h = 1e-6;                                      %Finite difference step size
-kappa = 4;
+kappa = 2;
 
 % Pre-allocate memory
 Nparams = 4;
@@ -15,9 +15,9 @@ grad_growth = zeros(Nparams,N);             %Gradient of output of interest
 omega_error = zeros(N,1);           %Compare Xie/dielectric funtion results
 
 % vals = [k, sigma, mu, kappa]
-setvals = [0.5; 2; 1; kappa];
+setvals = [0.5; 1; 1; kappa];
 
-var = 0.25; % x 100% variation considered 
+var = 0.01; % x 100% variation considered 
 xl = (1-var)*setvals;
 xu = (1+var)*setvals;
 
@@ -47,9 +47,10 @@ parfor jj = 1:N
     xi_guess = init_guess/(params(1)*params(2)); % shifted & scaled
 
     omega = Kappa_Disp_Using_Xie(params(1)*params(2),1,0,params(4),xi_guess)*params(1)*params(2) + params(3)*params(1);
-    dielectric = Kappa_dielectric(params(1),params(2),0,kappa,init_guess) + params(3)*params(1);
+    % dielectric = Kappa_dielectric(params(1),params(2),0,kappa,init_guess) + params(3)*params(1);
+    exact = Kappa_exact(params(1)*params(2),params(4),xi_guess)*params(1)*params(2) + params(3)*params(1);
     growth(jj) = imag(omega);
-    omega_error(jj) = abs(real(omega)-real(dielectric)) + 1i*abs(imag(omega)-imag(dielectric));
+    omega_error(jj) = abs(real(omega)-real(exact)) + 1i*abs(imag(omega)-imag(exact));
 end
 
 parfor jj = 1:N

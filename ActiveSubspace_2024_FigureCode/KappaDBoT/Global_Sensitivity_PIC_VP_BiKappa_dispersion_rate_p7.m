@@ -12,8 +12,8 @@ Nparams = 7;
 growth = zeros(N,1);                      %Output of interest (growth rate)
 growth_plus = zeros(N,Nparams);               %Perturbed output of interest
 grad_growth = zeros(Nparams,N);             %Gradient of output of interest 
-% Xs = zeros(N,Nparams);                   %To save the normalized parameters                
-% omega_error = zeros(N,1);           %Compare Xie/dielectric funtion results
+% Xs = zeros(N,Nparams);                 %To save the normalized parameters                
+omega_error = zeros(N,1);         %Compare Xie/dielectric funtion results
 
 % vals = [k; sigma1; sigma2; mu; v0; beta; kappa];
 setvals = [0.5; 1; 0.7; 1; 5; 0.95; kappa];
@@ -52,8 +52,9 @@ for jj = 1:N
 
     omega = BiKappa_Disp_Using_Xie(params(1)*params(2),1,params(3)/params(2),0,params(5)/params(2),params(6),params(7),xi_guess)*params(2)*params(1);% + params(4)*params(1);
     % dielectric = BiKappa_dielectric(params(1),params(2),params(3),0,params(5),params(6),kappa,init_guess) + params(4)*params(1);
+    exact = Kappa_exact(params(1)*params(2),params(7));
     growth(jj) = imag(omega);
-    % omega_error(jj) = abs(real(omega)-real(dielectric)) + 1i*abs(imag(omega)-imag(dielectric));
+    omega_error(jj) = abs(real(omega)-real(exact)) + 1i*abs(imag(omega)-imag(exact));
 end
 
 parfor jj = 1:N

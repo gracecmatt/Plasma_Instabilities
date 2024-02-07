@@ -33,7 +33,7 @@ function w = Vlasov_1D_linearized_Steve_v4_Kappa(k, sigma1, sigma2, mu, v0, beta
 Vmax = 86;%8  % choose Vmax so that f0(Vmax) < 1e-16           
 L=2*pi/abs(k); % size of the system in x-direction
 N=1;           % 2N is a number of grid points in x-direction, Linearized code has N=1
-M=512*4;   % 2M is a number of grid points in v-direction 
+M=2^11;        % 2M is a number of grid points in v-direction 
 dv=Vmax/M;
 v=(-M:M-1)*dv;
 
