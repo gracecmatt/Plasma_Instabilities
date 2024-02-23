@@ -170,11 +170,6 @@ function [Z,aN]=hilb(z,F,N,del,L)
         W = (L^2+v.^2);                           % default weight function
         FF = FF.*W; FF = [0; FF];              % function to be transformed
         a = (fft(fftshift(FF)))/M2;             % coefficients of transform
-        % --- added by gm 8/10/23 to determine convergence of Fourier coefficients
-        % thresh = max(1e-15, min( abs(a(1:N+1)) )*1.1); % if a_n never gets below 1e-15, choose the smallest value of a in (1:N+1)
-        % aBelowThresh = a(abs(a(1:N+1)) < thresh); % coefficients below threshhold
-        % aN(id) = mean(abs(aBelowThresh));
-        % -----------------------------------------------------------------
         a0 = a(1); a = flipud(a(2:N+1));             % reorder coefficients
         z1 = (imag(z(id))>0).*z(id)+(imag(z(id))<0).*conj(z(id));
         t = (L+1i*z1)./(L-1i*z1); p = polyval(a,t); % polynomial evaluation
@@ -184,13 +179,6 @@ function [Z,aN]=hilb(z,F,N,del,L)
 %         Z(id) = h.*(imag(z(id))>0)+conj(h-2i.*Fz(z1)).*(imag(z(id))<0);
         g(id) = h.*(imag(z(id))>0)+(conj(h)+del*2i.*Fz(z(id))).*(imag(z(id))<0);
 
-        % % --- code to plot Fourier coefficients (gm 5/18/23) ---
-        % figure
-        % semilogy(1:N,abs(flipud(a)),'linewidth',2); grid on;
-        % xlabel('term number in Fourier series');
-        % ylabel('magnitude of coefficient');ylim([0,15]);
-        % title('complex magnitude of Fourier coefficients')
     end
-    % aN = max(abs(aN));
     Z=g.*pi;
 end

@@ -24,5 +24,5 @@ function omega = BohmGross_IMax(k,sigma,mu,nu)
     % Sort roots by greatest imaginary part
     temp = sort(1i*omega,'ComparisonMethod','real');
     omega = -1i*temp(1);
-    g=2;
+
 end

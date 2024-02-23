@@ -16,7 +16,7 @@ omega_error = zeros(N,1);           %Compare Xie/dielectric funtion results
 % vals = [k, sigma, mu, nu]
 setvals = [0.5; 1; 0; -1];
 
-var = 0.25; % x 100% variation considered
+var = 0.50; % x 100% variation considered
 xl = (1-var)*setvals;
 xu = (1+var)*setvals;
 
@@ -66,7 +66,7 @@ parfor jj = 1:N
     % Calculate the appx gradients using finite differences
     grad_growth(:,jj) = (growth_plus(jj, :) - growth(jj))/h;
 end
-toc
+toc; sound(sin(1:.4:400))
 
 % Compute the singular value decomposition of the matrix C
 [U,S,V] = svd(1/sqrt(N)*grad_growth);
@@ -76,14 +76,15 @@ w2 = U(:,2);
 %Compute the eigenvalues of C
 evalues = diag(S.^2);
 
-% Compute the condition number (need a new name??)
-cond = evalues(1)/sum(evalues);
+% Compute the first two eigenvalue ratios
+eta(1) = evalues(1)/sum(evalues);
+eta(2) = (evalues(1)+evalues(2))/sum(evalues);
 
 % Find the difference of max and min grad_growth to check for errors
 diff_growth = max(max(grad_growth)) - min(min(grad_growth));
 
 %Save the trial data
-save(['Dispersion_IncompleteMax_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '_data.mat'])
+save(['Data/Dispersion_IncompleteMax_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '_data.mat'])
 
 % exit
 delete(gcp('nocreate'))

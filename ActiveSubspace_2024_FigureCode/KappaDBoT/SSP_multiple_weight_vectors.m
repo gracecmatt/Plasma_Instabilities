@@ -10,17 +10,17 @@ growth_1var = growth;
 Xs_25var = Xs; 
 cond2 = (evalues(1)+evalues(2))/sum(evalues)
 
-% figure; 
-% scatter(Xs*w_1_1var, Xs*w_2_1var, 60, growth_1var, 'o','filled');
-% colormap(jet);
-% c1 = colorbar;
-% xlabel('$w_1^Tp_j$', 'Interpreter','latex','Fontsize',16,'FontWeight','bold')
-% ylabel('$w_2^Tp_j$', 'Interpreter','latex','Fontsize',16,'FontWeight','bold')
-% ylabel(c1,'Growth Rate','FontSize',16,'Rotation',270);
-% c1.Label.Position(1) = 5;
-% %title('15% variation')
-% title('$25\%$ variation','Interpreter','latex','Fontsize',16,'FontWeight','bold')
-% %title('Global parameter variation','Interpreter','latex','Fontsize',16,'FontWeight','bold')
+figure; 
+scatter(Xs*w_1_1var, Xs*w_2_1var, 60, growth_1var, 'o','filled');
+colormap(jet);
+c1 = colorbar;
+xlabel('$w_1^Tp_j$', 'Interpreter','latex','Fontsize',16,'FontWeight','bold')
+ylabel('$w_2^Tp_j$', 'Interpreter','latex','Fontsize',16,'FontWeight','bold')
+ylabel(c1,'Growth Rate','FontSize',16,'Rotation',270);
+c1.Label.Position(1) = 5;
+%title('15% variation')
+title('$25\%$ variation','Interpreter','latex','Fontsize',16,'FontWeight','bold')
+%title('Global parameter variation','Interpreter','latex','Fontsize',16,'FontWeight','bold')
 
 % ax = gca; 
 % ax.FontSize = 16; 

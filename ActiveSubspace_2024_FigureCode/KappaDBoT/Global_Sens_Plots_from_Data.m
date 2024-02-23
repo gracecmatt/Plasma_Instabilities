@@ -70,8 +70,8 @@ plot(A(:,1), A(:,2), 'Color',color,'linewidth',1.5); hold on
 plot(Xs*w,growth,'ko');
 ax = gca; ax.FontSize = 10; %use for setting tick font size
 title('Sufficient Summary Plot','Fontsize',16);
-ylabel('$w^T p_j$','FontSize',14);
-xlabel('$\gamma(p)$','FontSize',14);
+xlabel('$w^T p_j$','FontSize',14);
+ylabel('$\gamma(p)$','FontSize',14);
 legend('Quadratic Fit','Data','FontSize',12,'Location','NorthWest','Box','off');
 maxgrowth = max(growth); mingrowth = min(growth);
 grid on;

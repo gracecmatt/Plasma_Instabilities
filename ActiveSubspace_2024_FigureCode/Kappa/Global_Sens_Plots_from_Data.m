@@ -22,6 +22,10 @@ A = [gridx, polygrid];
 [temp, order] = sort(A(:,1));
 A = A(order,:);
 
+for i=1:length(evalues)
+    if evalues(i)<10^(-16); evalues(i)=0; end
+end
+
 %% Subplots of Eigenvalues, Weight vector, and SSP with appx
 % close all
 fig6 = figure('Position', [100, 100, 900, 450]);
@@ -67,12 +71,12 @@ plot(A(:,1), A(:,2), 'Color',color,'linewidth',1.5); hold on
 plot(Xs*w,growth,'ko');
 ax = gca; ax.FontSize = 10; %use for setting tick font size
 title('Sufficient Summary Plot','Fontsize',16);
-ylabel('$w^T p_j$','FontSize',14);
-xlabel('$\gamma(p)$','FontSize',14);
+xlabel('$w^T p_j$','FontSize',14);
+ylabel('$\gamma(p)$','FontSize',14);
 legend('Quadratic Fit','Data','FontSize',12,'Location','NorthWest','Box','off');
 maxgrowth = max(growth); mingrowth = min(growth);
 % ylim([0.9*mingrowth, 1.1*maxgrowth])
-% ylim([-0.94,-0.05])
+% ylim([-3,0.3])
 grid on;
 
 txt = ['\textbf{Kappa ($\kappa\!=\!',int2str(kappa),'$), ',int2str(var*100),'\% Variation}'];

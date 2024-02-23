@@ -75,14 +75,9 @@ nplot = 10000;                    % plot solution every nplot time steps
 
 % % Kappa Distribution (slow decay f0(v) ~ 1/v^(2*(kappa+1))
 % Changed on 12/13/22
-% C1 = (pi*sigma^2*(kappa-1.5))^(-1/2)*exp(gammaln(kappa)-gammaln(kappa-0.5));
-% f0 = C1*(1+(v-mu).^2/((kappa-1.5)*sigma^2)).^(-kappa);
-% f0_v = C1*2*(v-mu)*(-kappa)/((kappa-1.5)*sigma^2).*(1+(v-mu).^2/((kappa-1.5)*sigma^2)).^(-kappa-1);
-% for comparison with non-integer kappa formula only!!
-C1 = (pi*sigma^2*(kappa))^(-1/2)*exp(gammaln(kappa)-gammaln(kappa-0.5));
-f0 = C1*(1+(v-mu).^2/((kappa)*sigma^2)).^(-kappa-1);
-f0_v = C1*2*(v-mu)*(-kappa)/((kappa)*sigma^2).*(1+(v-mu).^2/((kappa)*sigma^2)).^(-kappa-2);
-
+C1 = (pi*sigma^2*(kappa-1.5))^(-1/2)*exp(gammaln(kappa)-gammaln(kappa-0.5));
+f0 = C1*(1+(v-mu).^2/((kappa-1.5)*sigma^2)).^(-kappa);
+f0_v = C1*2*(v-mu)*(-kappa)/((kappa-1.5)*sigma^2).*(1+(v-mu).^2/((kappa-1.5)*sigma^2)).^(-kappa-1);
 
 
 % Kappa with bump

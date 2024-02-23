@@ -4,6 +4,10 @@
 %May need to switch sign of parameter weights to put on the same scale
 w= -w;
 
+% Compute the first two eigenvalue ratios
+eta(1) = evalues(1)/sum(evalues);
+eta(2) = (evalues(1)+evalues(2))/sum(evalues);
+
 %Compute and plot polynomial approximation & errors
 deg = 2; %Order of polynomial approximation
 p = polyfit(Xs*w,growth,deg);
@@ -64,20 +68,16 @@ plot(A(:,1), A(:,2), 'Color',color,'linewidth',1.5); hold on
 plot(Xs*w,growth,'ko');
 ax = gca; ax.FontSize = 10; %use for setting tick font size
 title('Sufficient Summary Plot','Fontsize',16);
-ylabel('$w^T p_j$','FontSize',14);
-xlabel('$\gamma(p)$','FontSize',14);
+xlabel('$w^T p_j$','FontSize',14);
+ylabel('$\gamma(p)$','FontSize',14);
 legend('Quadratic Fit','Data','FontSize',12,'Location','NorthWest','Box','off');
 maxgrowth = max(growth); mingrowth = min(growth);
 grid on;
 
-% set(fig6,'PaperUnits','inches','PaperSize',[11 8.5])
-txt = ['\textbf{BiMaxwellian, ',int2str(var*100),'\% Variation}'];
+txt = ['\textbf{Maxwellian Bump-on-Tail, ',int2str(var*100),'\% Variation}'];
 sgtitle(txt,'FontWeight','bold','FontSize',22);
 
 set(gcf, 'PaperPosition', [0 0 9 6]); %Position the plot further to the upper-left conder
 set(gcf, 'PaperSize', [9 6]); % Extends the plot to fill the entire paper
 saveas(gcf, ['Figs/EigWVSSPfit_Dispersion_BiMax_' int2str(Nparams) '_' int2str(N) '_' int2str(100*var) '_' int2str(deg) '.pdf'])
 saveas(gcf, ['Figs/EigWVSSPfit_Dispersion_BiMax_' int2str(Nparams) '_' int2str(N) '_' int2str(100*var) '_' int2str(deg) '.fig'])
-
-% hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_BiMax_' int2str(Nparams) '_' int2str(N) '_' int2str(100*var) '_' int2str(deg) '.eps']);
-% hgexport(fig6, ['Figs\EigWVSSPfit_Dispersion_BiMax_' int2str(Nparams) '_' int2str(N) '_' int2str(100*var) '_' int2str(deg) '.pdf']);

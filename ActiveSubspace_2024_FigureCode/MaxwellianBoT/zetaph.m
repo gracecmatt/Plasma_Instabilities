@@ -181,11 +181,6 @@ function Z=hilb(z,F,N,del,L)
             % changed Z to g for clarity (gm 6/29/23)
         g(id) = h.*(imag(z(id))>0)+(conj(h)+del*2i.*Fz(z(id))).*(imag(z(id))<0);
 
-        % % --- code to plot Fourier coefficients (gm 5/18/23) ---
-        % figure;semilogy(1:N,abs(flipud(a)),'linewidth',2); grid on;
-        % xlabel('term number in Fourier series');
-        % ylabel('magnitude of coefficient');
-        % title('complex magnitude of Fourier coefficients')
     end
     Z=g.*pi;
 end
