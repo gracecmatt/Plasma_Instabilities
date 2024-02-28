@@ -1,10 +1,10 @@
 clear; clc;
 rng('shuffle');
-parpool(12); 
+parpool(10); 
 % Initialize algorithm parameters
 N = 1200;                              %Number of samples for each parameter
 h = 1e-6;                                      %Finite difference step size
-kappa = 2;                              % kappa values allowed: kappa > 3/2              
+kappa = 4;                              % kappa values allowed: kappa > 3/2              
 
 % Pre-allocate memory
 Nparams = 7;
@@ -15,7 +15,7 @@ grad_growth = zeros(Nparams,N);             %Gradient of output of interest
 % vals = [k; sigma1; sigma2; mu; v0; beta; kappa];
 setvals = [0.5; 1; 0.7; 1; 5; 0.95; kappa];
 
-var = 0.05; % x 100% variation considered 
+var = 0.25; % x 100% variation considered 
 xl = (1-var)*setvals;
 xu = (1+var)*setvals;
 
@@ -38,7 +38,7 @@ end
 tic
 rng(sum(100*clock));
 Xs = 2*rand(N,Nparams) - 1; % do sampling in serial
-for jj = 1:N
+parfor jj = 1:N
     % Randomly sample parameters within acceptable ranges
     params = 1/2*(diag(xu - xl)*Xs(jj,:)' + (xu + xl));
 
