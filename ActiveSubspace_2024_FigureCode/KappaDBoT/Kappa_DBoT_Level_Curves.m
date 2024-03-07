@@ -32,6 +32,7 @@ figure;
 surf(v0_grid, beta_grid, gamma_grid);
 view(0, 90);
 cb = colorbar;
+colormap(bluewhitered);
 xlabel('$v_0$', 'FontSize', 16, 'Interpreter', 'latex');
 ylabel('$\beta$', 'FontSize', 16, 'Interpreter', 'latex');
 ylabel(cb, 'Growth Rate $\gamma$', 'FontSize', 16, 'Interpreter', 'latex');
@@ -39,7 +40,10 @@ ax = gca; ax.FontSize = 20;
 xlim([min(v0_grid), max(v0_grid)]);
 ylim([min(beta_grid), max(beta_grid)]);
 title('Kappa DBoT Level Curves: $v_0$, $\beta$ vs. $\gamma$', ...
-    'Interpreter', 'latex', 'FontSize', 20)
+    'Interpreter', 'latex', 'FontSize', 20);
+params = [0.5; 1; 0.7; 1; -999; -999; kappa];
+subtitle(['$k=',num2str(params(1)),',\sigma_1=',num2str(params(2)), ...
+    ',\sigma_2=',num2str(params(3)),',\mu=',num2str(params(4)),',\kappa=',num2str(params(7)),'$']);
 
 set(gcf, 'PaperPosition', [0 0 9 6]); %Position the plot further to the upper-left conder
 set(gcf, 'PaperSize', [9 6]); % Extends the plot to fill the entire paper
