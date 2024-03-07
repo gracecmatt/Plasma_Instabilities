@@ -1,0 +1,29 @@
+clear; clc;
+kappa = 2;
+v0_grid = linspace(3,5,50);
+k_grid = linspace(0.35,0.65,50);
+gamma_grid = zeros(length(v0_grid),length(k_grid));
+
+for ii=1:length(v0_grid)
+    for jj=1:length(k_grid)
+
+        v0 = v0_grid(ii);
+        k = k_grid(jj);
+
+        params = [k; 1; 0.7; 1; v0; 0.85; kappa];
+
+        init_guess = Vlasov_1D_linearized_Steve_v4_Kappa(params(1),params(2),params(3),0,params(5),params(6),params(7));
+        xi_guess = init_guess/(params(2)*params(1)); % shifted & scaled
+
+        omega = BiKappa_Disp_Using_Xie(params(1)*params(2),1,params(3)/params(2),0,params(5)/params(2),params(6),params(7),xi_guess)*params(2)*params(1);% + params(4)*params(1);
+        gamma_grid(ii,jj) = imag(omega);
+
+    end
+end
+
+%%
+
+surf(v0_grid, k_grid, gamma_grid);
+view(0, 90);
+colorbar;
+xlabel('$v_0$')

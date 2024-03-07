@@ -79,7 +79,7 @@ grid on;
 txt = ['\textbf{Kappa Bump-on-Tail ($\kappa\!=\!',int2str(kappa),'$), ',int2str(var*100),'\% Variation}'];
 sgtitle(txt,'FontWeight','bold','Interpreter','latex','FontSize',22);
 
-
+%%
 set(gcf, 'PaperPosition', [0 0 9 6]); %Position the plot further to the upper-left conder
 set(gcf, 'PaperSize', [9 6]); % Extends the plot to fill the entire paper
 saveas(gcf, ['Figs/EigWVSSPfit_Dispersion_BiKap' int2str(kappa) '_' int2str(Nparams) '_' int2str(N) '_' int2str(100*var) '_' int2str(deg) '.pdf'])
