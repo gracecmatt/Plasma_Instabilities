@@ -15,9 +15,9 @@ function xi = BiKappa_Disp_Using_Xie(k, sigma1, sigma2, mu, v0, beta, kappa, ini
             num2str(sigma2,16),'^2*(',num2str(kappa,16),'-3/2))).^(-',num2str(kappa,16),') )/2'];
     Fn = 0; % 0 = option to define your own F
     Nfourier = 1000; % number of Fourier coefficients to take
-    D = @(z) 1-1/k^2*zetaph(z, Fn, F, Nfourier); % dielectric function
+    % D = @(z) 1-1/k^2*zetaph(z, Fn, F, Nfourier); % dielectric function
+    D = @(z) k^2-zetaph(z, Fn, F, Nfourier); % dielectric function
     
     % ============================== solve ================================
     xi = fsolve(D, init_guess, options);
-    g=2;
 end

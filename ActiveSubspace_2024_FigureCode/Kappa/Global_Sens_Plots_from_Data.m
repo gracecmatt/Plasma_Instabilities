@@ -1,24 +1,38 @@
 %% Plot output variables
-% updated positions, fonts, sizing, and removed unused plots
-
 %May need to switch sign of parameter weights to put on the same scale
 w= -w;
 
-%Compute and plot polynomial approximation & errors
-deg = 2; %Order of polynomial approximation
-p = polyfit(Xs*w,growth,deg);
-error = abs(growth - polyval(p,Xs*w));
-l2err = error'*error
+%Compute quadratic polynomial fit 
+[fitted_curve1,gof1] = fit(Xs*w,growth,'poly2');
+% Save the coeffiecient values for p1, p2, and p3 in a vector
+p1 = coeffvalues(fitted_curve1);
+poly2error = [gof1.sse; gof1.rmse; gof1.rsquare; gof1.adjrsquare];
 
-%Plot polynomial approximation
-%Increase grid width by a factor of gw
-%NO CHANGE: gw = 1;
+%Compute atan fit
+x0 = [1 1 1 1]; 
+fitfun = fittype( @(a,b,c,d,x) d*atan(b*(x+a))+c );
+[fitted_curve2,gof2] = fit(Xs*w,growth,fitfun,'StartPoint',x0);
+% Save the coeffiecient values for a,b,c and d in a vector
+p2 = coeffvalues(fitted_curve2);
+atanerror = [gof2.sse; gof2.rmse; gof2.rsquare; gof2.adjrsquare];
+
+error = table(poly2error,atanerror,'VariableNames',["Poly2 Error","Arctan Error"],'RowNames',["sse","rmse","rsquare","adjrsquare"])
+
+% change type of error to compare by picking element 1-4
+if error.("Poly2 Error")(1)<error.("Arctan Error")(1) %choose quadratic fit
+    p = p1;
+    fitcurve = fitted_curve1;
+    deg = 2;
+elseif error.("Poly2 Error")(1)>=error.("Arctan Error")(1) %choose arctan fit
+    p = p2;
+    fitcurve = fitted_curve2;
+    deg = 4;
+end
 gw = 1.25;
 minx = min(Xs*w);
 maxx = max(Xs*w);
 gridx = [gw*minx; Xs*w; gw*maxx];
-polygrid = polyval(p,gridx);
-A = [gridx, polygrid];
+A = [gridx, fitcurve(gridx)];
 [temp, order] = sort(A(:,1));
 A = A(order,:);
 

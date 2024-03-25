@@ -1,30 +1,53 @@
 %% Plot output variables
-% updated positions, fonts, sizing, and removed unused plots
-
 %May need to switch sign of parameter weights to put on the same scale
 w= -w;
 
-% Compute the first two eigenvalue ratios
-eta(1) = evalues(1)/sum(evalues);
-eta(2) = (evalues(1)+evalues(2))/sum(evalues);
+% % %Compute quadratic polynomial fit 
+% [fitted_curve1,gof1] = fit(Xs*w,growth,'poly3');
+% % Save the coeffiecient values for p1, p2, and p3 in a vector
+% p1 = coeffvalues(fitted_curve1);
+% poly2error = [gof1.sse; gof1.rmse; gof1.rsquare; gof1.adjrsquare];
 
-%Compute and plot polynomial approximation & errors
-deg = 2; %Order of polynomial approximation
-p = polyfit(Xs*w,growth,deg);
-error = abs(growth - polyval(p,Xs*w));
-l2err = error'*error
+%Compute atan fit with +x0 
+fitfun = fittype( @(a,b,c,d,x) a*atan(b*x+c)+d );
+x0_1 = [1 1 1 1];
+[fitted_curve1,gof] = fit(Xs*w,growth,fitfun,'StartPoint',x0_1);
+% Save the coeffiecient values for a,b,c and d in a vector
+p1 = coeffvalues(fitted_curve1);
+atanerror1 = [gof.sse; gof.rmse; gof.rsquare; gof.adjrsquare];
 
-%Plot polynomial approximation
-%Increase grid width by a factor of gw
-%NO CHANGE: gw = 1;
+%Compute atan fit with -x0
+fitfun = fittype( @(a,b,c,d,x) a*atan(b*x+c)+d );
+x0_2 = [-1 1 1 1]; 
+[fitted_curve2,gof2] = fit(Xs*w,growth,fitfun,'StartPoint',x0_2);
+% Save the coeffiecient values for a,b,c and d in a vector
+p2 = coeffvalues(fitted_curve2);
+atanerror2 = [gof2.sse; gof2.rmse; gof2.rsquare; gof2.adjrsquare];
+
+error = table(atanerror1,atanerror2,'VariableNames',["Arctan Error +","Arctan Error -"],'RowNames',["sse","rmse","rsquare","adjrsquare"])
+
+% change type of error to compare by picking element 1-4
+if error.("Arctan Error +")(1)<error.("Arctan Error -")(1) %choose arctan fit +
+    p = p1;
+    fitcurve = fitted_curve1;
+    deg = 4;
+elseif error.("Arctan Error +")(1)>=error.("Arctan Error -")(1) %choose arctan fit -
+    p = p2;
+    fitcurve = fitted_curve2;
+    deg = 4;
+end
 gw = 1.25;
+y = Xs*w;
 minx = min(Xs*w);
 maxx = max(Xs*w);
 gridx = [gw*minx; Xs*w; gw*maxx];
-polygrid = polyval(p,gridx);
-A = [gridx, polygrid];
+A = [gridx, fitcurve(gridx)];
 [temp, order] = sort(A(:,1));
 A = A(order,:);
+
+for i=1:length(evalues)
+    if evalues(i)<10^(-16); evalues(i)=0; end
+end
 
 %% Subplots of Eigenvalues, Weight vector, and SSP with appx
 close all
@@ -70,7 +93,7 @@ ax = gca; ax.FontSize = 10; %use for setting tick font size
 title('Sufficient Summary Plot','Fontsize',16);
 xlabel('$w^T p_j$','FontSize',14);
 ylabel('$\gamma(p)$','FontSize',14);
-legend('Quadratic Fit','Data','FontSize',12,'Location','NorthWest','Box','off');
+legend('Fit','Data','FontSize',12,'Location','NorthWest','Box','off');
 maxgrowth = max(growth); mingrowth = min(growth);
 grid on;
 

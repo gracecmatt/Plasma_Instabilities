@@ -1,8 +1,8 @@
-clear; clc;
+% clear; clc;
 rng('shuffle');
 parpool(12); 
 % Initialize algorithm parameters
-N = 1200;                              %Number of samples for each parameter
+N = 600;                              %Number of samples for each parameter
 h = 1e-6;                                      %Finite difference step size
 kappa = 2;                              % kappa values allowed: kappa > 3/2              
 
@@ -13,7 +13,7 @@ growth_plus = zeros(N,Nparams);               %Perturbed output of interest
 grad_growth = zeros(Nparams,N);             %Gradient of output of interest 
 
 % vals = [k; sigma1; sigma2; mu; v0; beta; kappa];
-setvals = [0.5; 1; 0.7; 1; 5; 0.95; kappa];
+setvals = [0.5; 1; 0.4; 1; 5; 0.85; kappa];
 
 var = 0.05; % x 100% variation considered 
 xl = (1-var)*setvals;

@@ -3,8 +3,8 @@
 
 clear; clc; 
 %%% --------- change these values with parameter for level curve ---------
-paramARR = linspace(0.01,0.75,58);
-% paramARR = logspace(-2,0,54);
+% paramARR = linspace(0.005,0.75,150);
+paramARR = 0.5*logspace(-2.3,0,500);
 % paramARR=paramARR(10:end);
 xaxis = "k"; 
 filenameEnding = "k.png"; 
@@ -19,7 +19,7 @@ errorBG = zeros(length(kapARR),length(paramARR));
 
 % choose parameters
 k = 0.5;
-sigma = 1;
+sigma = 1.5;
 mu = 1;
 
 % initialize for symbolic root-finder vpasolve()
@@ -85,19 +85,33 @@ for j = 1:length(kapARR)
         % Bohm-Gross approximation
         omegaBohmGross(j,i) = BohmGross_Kap(k,sigma,0,kappa) + mu*k;
         
-        % % compute the relative error in the imaginary parts
-        % errorXie(j,i) = abs(imag(exact)-imag(omegaXieShiftScaled(i)))./abs(imag(exact));
-        % errorBG(j,i) = abs(imag(exact)-imag(omegaBohmGross(i)))./abs(imag(exact));
+        % compute the relative error in the imaginary parts
+        errorXie(j,i) = abs(imag(omegaExact(j,i))-imag(omegaXieShiftScaled(j,i)));%./abs(imag(omegaExact(j,i)));
+        errorBG(j,i) = abs(imag(omegaExact(j,i))-imag(omegaBohmGross(j,i)));%./abs(imag(omegaExact(j,i)));
     end
 
 end
+%%
+
+
+Xiemax = max(errorXie,[],'all');
+Xiemean = mean(errorXie,'all');
+Xiestd = std(errorXie,0,'all');
+
+
+BGmax = max(errorBG,[],'all');
+BGmean = mean(errorBG,'all');
+BGstd = std(errorBG,0,'all');
+
+save('Data/Comparison_BohmGross_kappa_2_4_data.mat')
 
 
 %% plot figures 
 % with ideal formatting (as of 1/27/24)
-% close all;
+close all;
 % colorSet = {'#dc143c','#cb2888','#9932cc','#6c4ce2','#2f5ada'};%red->blue
-color = {'#000000','#dc143c','#dc143c','#000000','#2f5ada','#2f5ada'};
+colors = {'#000000','#dc143c','#dc143c','#000000','#2f5ada','#2f5ada'};
+colors2 = {'#dc143c','#dc143c','#2f5ada','#2f5ada'};
 
 set(groot,'defaultAxesTickLabelInterpreter','latex');
 set(groot,'defaulttextinterpreter','latex');
@@ -109,44 +123,49 @@ yExact = imag(omegaExact);
 yXie = imag(omegaXieShiftScaled);
 yBG = imag(omegaBohmGross);
 
+% figure
+% loglog(paramARR,yExact(1,:),'-','linewidth',1); hold on
+% loglog(paramARR,yXie(1,:),'.','linewidth',1,'MarkerSize',8);
+% loglog(paramARR,yBG(1,:),'s','linewidth',1,'MarkerSize',5)
+% loglog(paramARR,yExact(2,:),'-','linewidth',1); 
+% loglog(paramARR,yXie(2,:),'.','linewidth',1,'MarkerSize',8);
+% loglog(paramARR,yBG(2,:),'s','linewidth',1,'MarkerSize',5);
+% title('\textbf{Kappa $\gamma(k)$ Level Curves}','FontSize',16);
+%     legend('Exact $(\kappa\!=\!2)$','Weideman $(\kappa\!=\!2)$',...
+%         'Bohm-Gross $(\kappa\!=\!2)$','Exact $(\kappa\!=\!4)$',...
+%         'Weideman $(\kappa\!=\!4)$','Bohm-Gross $(\kappa\!=\!4)$',...
+%         'Location','NorthEast','FontSize',12);
+%     xlabel('$k$','FontSize',14); xlim([paramARR(1),paramARR(end)]);
+%     ylabel('$\gamma(k)$ (negative log)','FontSize',14);
+%     set(gca, 'YGrid', 'on', 'XGrid', 'off', 'YMinorGrid', 'off');
+%     set(gca,'Yscale','log','XScale','Linear')
+%     colororder(colors)
+% 
+%     set(gcf, 'PaperPosition', [0 0 6 4.5]); %Position the plot further to the upper-left conder
+%     set(gcf, 'PaperSize', [6 4.5]); % Extends the plot to fill the entire paper
+%     saveas(gcf, 'Figs/gammak_LevelCurves_BGWeideman.pdf')
+%     saveas(gcf, 'Figs/gammak_LevelCurves_BGWeideman.fig')
+
+% plot the relative error between Xie/Weideman solution, Bohm-Gross
+% solution, and the polynomial root with the largest imaginary part
 figure
-loglog(paramARR,yExact(1,:),'-','linewidth',1); hold on
-loglog(paramARR,yXie(1,:),'.','linewidth',1,'MarkerSize',8);
-loglog(paramARR,yBG(1,:),'s','linewidth',1,'MarkerSize',5)
-loglog(paramARR,yExact(2,:),'-','linewidth',1); 
-loglog(paramARR,yXie(2,:),'.','linewidth',1,'MarkerSize',8);
-loglog(paramARR,yBG(2,:),'s','linewidth',1,'MarkerSize',5);
-title('\textbf{Kappa $\gamma(k)$ Level Curves}','FontSize',16);
-    legend('Exact $(\kappa\!=\!2)$','Weideman $(\kappa\!=\!2)$',...
-        'Bohm-Gross $(\kappa\!=\!2)$','Exact $(\kappa\!=\!4)$',...
+plot(paramARR,log10(errorXie(1,:)),'s','linewidth',1,'MarkerSize',5); hold on
+plot(paramARR,log10(errorBG(1,:)),'.','linewidth',1,'MarkerSize',10)
+plot(paramARR,log10(errorXie(2,:)),'s','linewidth',1,'MarkerSize',5);
+plot(paramARR,log10(errorBG(2,:)),'.','linewidth',1,'MarkerSize',10)
+title('\textbf{Kappa $\gamma(k)$ Relative Error}','FontSize',16);
+    legend('Weideman $(\kappa\!=\!2)$','Bohm-Gross $(\kappa\!=\!2)$',...
         'Weideman $(\kappa\!=\!4)$','Bohm-Gross $(\kappa\!=\!4)$',...
-        'Location','NorthEast','FontSize',12);
-    xlabel('$k$','FontSize',14); xlim([paramARR(1),paramARR(end)]);
-    ylabel('$\gamma(k)$ (negative log)','FontSize',14);
+        'Location','Best','FontSize',12);
+    xlabel('$k$','FontSize',14);
+    ylabel('$\big|\frac{\gamma-\gamma_{i}}{\gamma}\big|$ (log scale)','FontSize',14);
     set(gca, 'YGrid', 'on', 'XGrid', 'off', 'YMinorGrid', 'off');
-    set(gca,'Yscale','log','XScale','Linear')
-    colororder(color)
-    
+    colororder(colors2)
+    xlim([min(paramARR),max(paramARR)])
     set(gcf, 'PaperPosition', [0 0 6 4.5]); %Position the plot further to the upper-left conder
     set(gcf, 'PaperSize', [6 4.5]); % Extends the plot to fill the entire paper
-    saveas(gcf, 'Figs/gammak_LevelCurves_BGWeideman.pdf')
-    saveas(gcf, 'Figs/gammak_LevelCurves_BGWeideman.fig')
-
-% % plot the relative error between Xie/Weideman solution, Bohm-Gross
-% % solution, and the polynomial root with the largest imaginary part
-% figure
-% plot(paramARR,log10(errorXie),'.-','linewidth',1); hold on
-% plot(paramARR,log10(errorBG),'.-','linewidth',1)
-% title('\textbf{Kappa $\mathbf{\gamma(k)}$ Relative Error}','Interpreter','latex','FontSize',16);
-%     legend('Weideman/Xie Algorithm','Bohm-Gross Approximation','Location','SouthWest','Interpreter','latex','FontSize',12);
-%     xlabel('$k$','Interpreter','latex','FontSize',14);
-%     ylabel('$\big|\frac{\gamma-\gamma_{i}}{\gamma}\big|$ (log scale)','Interpreter','latex','FontSize',14);
-%     grid on; colororder(newcolors)
-%     xlim([0.01,1])
-%     set(gcf, 'PaperPosition', [0 0 6 5]); %Position the plot further to the upper-left conder
-%     set(gcf, 'PaperSize', [6 5]); % Extends the plot to fill the entire paper
-%     % saveas(gcf, 'Figs/gammaRelErrork_Kap4_BGXie.pdf')
-%     % saveas(gcf, 'Figs/gammaRelErrork_Kap4_BGXie.fig')
+    saveas(gcf, 'Figs/gammaRelErrork_Kap24_BGXie.pdf')
+    saveas(gcf, 'Figs/gammaRelErrork_Kap24_BGXie.fig')
 
 save('Data/Comparison_BohmGross_kappa_data.mat')
 

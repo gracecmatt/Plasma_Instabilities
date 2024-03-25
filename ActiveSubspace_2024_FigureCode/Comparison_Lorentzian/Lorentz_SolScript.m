@@ -1,5 +1,5 @@
 %% 1D Lorentzian Solution Script Computing Relative Error in gamma
-clear; clc; 
+clear; clc;
 %%% --- parameters to change when tuning the numerical algorithm ---
 % L (zetaph) = 1
 % M (spectral) = 2^10

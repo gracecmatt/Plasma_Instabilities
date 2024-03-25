@@ -8,25 +8,30 @@ w_1_1var = w;
 w_2_1var = w2; 
 growth_1var = growth; 
 Xs_25var = Xs; 
-cond2 = (evalues(1)+evalues(2))/sum(evalues)
+eta(1) = (evalues(1))/sum(evalues);
+eta(2) = (evalues(1)+evalues(2))/sum(evalues);
+
+set(groot,'defaultAxesTickLabelInterpreter','latex');
+set(groot,'defaulttextinterpreter','latex');
+set(groot,'defaultLegendInterpreter','latex');
 
 figure; 
-scatter(Xs*w_1_1var, Xs*w_2_1var, 60, growth_1var, 'o','filled');
-colormap(jet);
+scatter(Xs*w_1_1var, Xs*w_2_1var, 60, growth_1var, 'o','filled','MarkerEdgeColor',[0,0,0]);
+colormap(bluewhitered);
 c1 = colorbar;
-xlabel('$w_1^Tp_j$', 'Interpreter','latex','Fontsize',16,'FontWeight','bold')
-ylabel('$w_2^Tp_j$', 'Interpreter','latex','Fontsize',16,'FontWeight','bold')
-ylabel(c1,'Growth Rate','FontSize',16,'Rotation',270);
-c1.Label.Position(1) = 5;
-%title('15% variation')
-title('$25\%$ variation','Interpreter','latex','Fontsize',16,'FontWeight','bold')
-%title('Global parameter variation','Interpreter','latex','Fontsize',16,'FontWeight','bold')
+xlabel('$w_1^Tp_j$','Fontsize',14)
+ylabel('$w_2^Tp_j$','Fontsize',14)
+ylabel(c1,'Growth Rate','FontSize',14,'Rotation',270,'Interpreter','latex');
+c1.Label.Position(1) = 4;
+txt = ['Kappa Bump-on-Tail, ',int2str(var*100),'\% Variation'];
+title(txt,'FontSize',16);
 
-% ax = gca; 
-% ax.FontSize = 16; 
+set(gcf, 'PaperPosition', [0 0 6 4.5]); %Position the plot further to the upper-left conder
+set(gcf, 'PaperSize', [6 4.5]); % Extends the plot to fill the entire paper
+saveas(gcf, ['Figs/Eig2fit_Dispersion_KapBoT_' int2str(Nparams) '_' int2str(N) '_' int2str(100*var) '.pdf'])
+saveas(gcf, ['Figs/Eig2fit_Dispersion_KapBoT_' int2str(Nparams) '_' int2str(N) '_' int2str(100*var) '.fig'])
+saveas(gcf, ['Figs/Eig2fit_Dispersion_KapBoT_' int2str(Nparams) '_' int2str(N) '_' int2str(100*var) '.svg'])
 
-%set(gcf,'Units','Normalized','OuterPosition',[0 0 1 1])
-%saveas(gcf, 'SSP_BiMax_15var_2D', 'epsc')
 
 %% 3D plot of growth rate vs first two weight vectors
 % figure;

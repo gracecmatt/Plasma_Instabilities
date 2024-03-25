@@ -4,7 +4,7 @@ parpool(12);
 % Initialize algorithm parameters
 N = 1200;                              %Number of samples for each parameter
 h = 1e-6;                                      %Finite difference step size
-kappa = 4;
+kappa = 6;
 
 % Pre-allocate memory
 Nparams = 4;
@@ -13,9 +13,9 @@ growth_plus = zeros(N,Nparams);               %Perturbed output of interest
 grad_growth = zeros(Nparams,N);             %Gradient of output of interest
 
 % vals = [k, sigma, mu, kappa]
-setvals = [0.5; 3; 1; kappa];
+setvals = [0.5; 1.5; 1; kappa];
 
-var = 0.01; % x 100% variation considered 
+var = 0.05; % x 100% variation considered 
 xl = (1-var)*setvals;
 xu = (1+var)*setvals;
 
@@ -26,7 +26,7 @@ if setvals(3)==0
 end
 if kappa==2 % keep kappa in the far-equilibrium region (Livadiotis & McComas 2013)
     xu(4) = min(xu(4),2.49); % keep kappa < 2.5
-    xl(4) = max(xl(4),1.51); % keep kappa > 1.5
+    xl(4) = max(xl(4),1.525); % keep kappa > 1.5
 elseif kappa==4 % keep kappa in the near-equilibrium region
     xl(4) = max(xl(4),2.51); % keep kappa > 2.5
 end

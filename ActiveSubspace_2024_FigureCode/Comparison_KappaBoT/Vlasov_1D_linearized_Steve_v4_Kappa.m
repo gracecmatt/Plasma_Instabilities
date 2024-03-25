@@ -30,15 +30,15 @@
 function w = Vlasov_1D_linearized_Steve_v4_Kappa(k, sigma1, sigma2, mu, v0, beta, kappa)
 
 %close all                  
-Vmax = 120;%8  % choose Vmax so that f0(Vmax) < 1e-16           
+Vmax = 200;%8  % choose Vmax so that f0(Vmax) < 1e-16           
 L=2*pi/abs(k); % size of the system in x-direction
 N=1;           % 2N is a number of grid points in x-direction, Linearized code has N=1
-M=2^12;   % 2M is a number of grid points in v-direction 
+M=2^14;   % 2M is a number of grid points in v-direction 
 dv=Vmax/M;
 v=(-M:M-1)*dv;
 
 dt=0.1;                           % Time step. Error in gamma is ~ dt^2
-T_recurrence=L/dv; %min(L/dv,1000);
+T_recurrence=min(L/dv,1000);
 tfinal=T_recurrence*0.3;          % Stops the simulation before T_recurrence  
 T_period=2*pi;%sqrt(1+4*k^2);     % We need approximate the value of one period, T _period=2pi/Re[w], for Maxwellian f0(v)=exp(-v^2/2)/sqrt(2pi)   T _period=~sqrt(1+4*k^2)
 n_half_period=floor(T_period/2/dt); % Approximate half-period in terms of time steps dt 
@@ -224,7 +224,7 @@ for n = 1:nsteps
             w_RE=(E_PHASE(id_max_finish_w)-E_PHASE(id_max_start_w))/((id_max_finish_w-id_max_start_w)*dt);
 
             w=abs(w_RE)+gamma*1i;
-            % 
+
             % figure(5);
             % semilogy(dt*((0:n-1)+1/2),E_A(1:n),[id_max_finish-1/2 id_max_start-1/2]*dt,[max_finish max_start],'r*'); %.*exp([id_max_finish-1 id_max_start-1]*dt*gamma_true)
             % title(sprintf('E(t=%g)  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))
@@ -237,7 +237,7 @@ for n = 1:nsteps
             % plot(dt*((0:n-1)+1/2),E_PHASE);
             % title(sprintf('PHASE(E(t=%g))  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))
         end
-        % pause(0.01)
+        pause(0.01)
     end
 end      
 

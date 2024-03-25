@@ -17,7 +17,7 @@ grad_growth = zeros(Nparams,N);             %Gradient of output of interest
 %vals =  [k; mu1; mu2; sigma1^2; sigma2^2; beta]; 
 setvals = [0.5; 0; 4; 0.25; 0.25; 0.8];
 
-var = 0.25; % x 100% variation considered 
+var = 0.05; % x 100% variation considered 
 xl = (1-var)*setvals;
 xu = (1+var)*setvals;
 
@@ -30,7 +30,7 @@ end
 xu(6) = min(xu(6),1);
 
 % Run simulation
-tic
+tStart = tic;
 rng(sum(100*clock)+pi); 
 Xs = 2*rand(N,Nparams) - 1;
 %Baseline Parameters
@@ -69,7 +69,8 @@ parfor jj = 1:N
     grad_growth(:,jj) = (growth_plus(jj, :) - growth(jj))/h;
         
 end
-toc
+tEnd = toc(tStart); fprintf('Time to run: %d minutes and %.1f seconds\n', floor(tEnd/60), rem(tEnd,60));
+sound(sin(1:.4:400))
 
 % Compute the weights and eigenvalues
 %Compute the singular value decomposition of the matrix C
@@ -83,6 +84,7 @@ evalues = diag(S.^2);
 % Compute the first two eigenvalue ratios
 eta(1) = evalues(1)/sum(evalues);
 eta(2) = (evalues(1)+evalues(2))/sum(evalues);
+eta(3) = (evalues(1)+evalues(2)+evalues(3))/sum(evalues);
     
 %Find the difference of max and min grad_growth to check for errors
 diff_growth = max(max(grad_growth)) - min(min(grad_growth));

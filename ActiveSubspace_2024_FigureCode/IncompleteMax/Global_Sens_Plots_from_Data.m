@@ -1,6 +1,4 @@
 %% Plot output variables
-% updated positions, fonts, sizing, and removed unused plots
-
 %May need to switch sign of parameter weights to put on the same scale
 w= -w;
 
@@ -21,6 +19,10 @@ polygrid = polyval(p,gridx);
 A = [gridx, polygrid];
 [temp, order] = sort(A(:,1));
 A = A(order,:);
+
+for i=1:length(evalues)
+    if evalues(i)<10^(-16); evalues(i)=0; end
+end
 
 %% Subplots of Eigenvalues, Weight vector, and SSP with appx
 % close all
@@ -68,7 +70,7 @@ ylabel('$\gamma(p)$','FontSize',14);
 legend('Quadratic Fit','Data','FontSize',12,'Location','NorthWest','Box','off');
 maxgrowth = max(growth); mingrowth = min(growth);
 % ylim([0.9*mingrowth, 1.1*maxgrowth])
-ylim([-0.18,0.02])
+% ylim([-0.35,0.05])
 grid on;
 
 txt = ['\textbf{Incomplete Maxwellian, ',int2str(var*100),'\% Variation}'];

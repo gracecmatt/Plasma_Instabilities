@@ -9,14 +9,12 @@ h = 1e-6;           %Finite difference step size
 Nparams = 4;
 growth = zeros(N,1);                      %Output of interest (growth rate)
 growth_plus = zeros(N,Nparams);               %Perturbed output of interest
-grad_growth = zeros(Nparams,N);             %Gradient of output of interest 
-% Xs = zeros(N,Nparams);                 %To save the normalized parameters
-omega_error = zeros(N,1);           %Compare Xie/dielectric funtion results                   
+grad_growth = zeros(Nparams,N);             %Gradient of output of interest                 
 
 % vals = [k, sigma, mu, nu]
 setvals = [0.5; 1; 0; -1];
 
-var = 0.50; % x 100% variation considered
+var = 0.5; % x 100% variation considered
 xl = (1-var)*setvals;
 xu = (1+var)*setvals;
 
@@ -36,13 +34,10 @@ parfor jj = 1:N
 
     % Numerically solve 1D Vlasov-Poisson with baseline parameters
     init_guess = BohmGross_IMax(params(1),params(2),0,params(4));
-    % init_guess = Vlasov_1D_linearized_Steve_v4(params(1), params(2), 0, params(4),M); %
     xi_guess = init_guess/(params(2)*params(1)); % shifted & scaled
     
-    omega = IncompleteMax_Disp_Using_Xie(params(1)*params(2),1,0,(params(4)-params(3))/params(2),xi_guess)*params(2)*params(1);% + params(3)*params(1);  
-    % dielectric = Max_dielectric([params(1),params(2),0],init_guess/params(1))*params(1) + params(3)*params(1);
+    omega = IncompleteMax_Disp_Using_Xie(params(1)*params(2),1,0,(params(4)-params(3))/params(2),xi_guess)*params(2)*params(1);
     growth(jj) = imag(omega);
-    % omega_error(jj) = abs(real(omega)-real(dielectric)) + 1i*abs(imag(omega)-imag(dielectric));
 end
 
 parfor jj = 1:N
@@ -54,7 +49,6 @@ parfor jj = 1:N
         paramsplus = 1/2*(diag(xu - xl)*xplus + (xu + xl));
 
         init_guess_plus = BohmGross_IMax(paramsplus(1),paramsplus(2),0,paramsplus(4));
-        % init_guess_plus = Vlasov_1D_linearized_Steve_v4(paramsplus(1),paramsplus(2),0,paramsplus(4),M)
         xi_guess_plus = init_guess_plus/(paramsplus(2)*paramsplus(1)); % shifted & scaled
 
         omega_plus = IncompleteMax_Disp_Using_Xie(paramsplus(1)*paramsplus(2),1,0,(paramsplus(4)-paramsplus(3))/paramsplus(2),xi_guess_plus)*paramsplus(2)*paramsplus(1);

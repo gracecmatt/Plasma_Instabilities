@@ -1,0 +1,279 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Global_Sens_Plots_from_Data_v2</title><meta name="generator" content="MATLAB 9.14"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2024-03-05"><meta name="DC.source" content="Global_Sens_Plots_from_Data_v2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Plot output variables</a></li><li><a href="#2">Subplots of Eigenvalues, Weight vector, and SSP with appx</a></li></ul></div><h2 id="1">Plot output variables</h2><pre class="codeinput"><span class="comment">%May need to switch sign of parameter weights to put on the same scale</span>
+<span class="comment">% w= -w;</span>
+
+<span class="comment">%Compute quadratic polynomial fit</span>
+[fitted_curve1,gof1] = fit(Xs*w,growth,<span class="string">'poly2'</span>);
+<span class="comment">% Save the coeffiecient values for p1, p2, and p3 in a vector</span>
+p1 = coeffvalues(fitted_curve1);
+poly2error = [gof1.sse; gof1.rmse; gof1.rsquare; gof1.adjrsquare];
+
+<span class="comment">%Compute atan fit</span>
+x0 = [1 1 1 1];
+fitfun = fittype( @(a,b,c,d,x) d*atan(b*(x+a))+c );
+[fitted_curve2,gof2] = fit(Xs*w,growth,fitfun,<span class="string">'StartPoint'</span>,x0);
+<span class="comment">% Save the coeffiecient values for a,b,c and d in a vector</span>
+p2 = coeffvalues(fitted_curve2);
+atanerror = [gof2.sse; gof2.rmse; gof2.rsquare; gof2.adjrsquare];
+
+error = table(poly2error,atanerror,<span class="string">'VariableNames'</span>,[<span class="string">"Poly2 Error"</span>,<span class="string">"Arctan Error"</span>],<span class="string">'RowNames'</span>,[<span class="string">"sse"</span>,<span class="string">"rmse"</span>,<span class="string">"rsquare"</span>,<span class="string">"adjrsquare"</span>])
+
+<span class="comment">% change type of error to compare by picking element 1-4</span>
+<span class="keyword">if</span> error.(<span class="string">"Poly2 Error"</span>)(1)&lt;error.(<span class="string">"Arctan Error"</span>)(1) <span class="comment">%choose quadratic fit</span>
+    p = p1;
+    fitcurve = fitted_curve1;
+    deg = 2;
+<span class="keyword">elseif</span> error.(<span class="string">"Poly2 Error"</span>)(1)&gt;=error.(<span class="string">"Arctan Error"</span>)(1) <span class="comment">%choose arctan fit</span>
+    p = p2;
+    fitcurve = fitted_curve2;
+    deg = 4;
+<span class="keyword">end</span>
+gw = 1.25;
+minx = min(Xs*w);
+maxx = max(Xs*w);
+gridx = [gw*minx; Xs*w; gw*maxx];
+A = [gridx, fitcurve(gridx)];
+[temp, order] = sort(A(:,1));
+A = A(order,:);
+
+<span class="keyword">for</span> i=1:length(evalues)
+    <span class="keyword">if</span> evalues(i)&lt;10^(-16); evalues(i)=0; <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">
+error =
+
+  4&times;2 table
+
+                  Poly2 Error    Arctan Error
+                  ___________    ____________
+
+    sse              1.7069         0.97796  
+    rmse           0.053472        0.040508  
+    rsquare         0.83731         0.90679  
+    adjrsquare      0.83677         0.90632  
+
+</pre><h2 id="2">Subplots of Eigenvalues, Weight vector, and SSP with appx</h2><pre class="codeinput">close <span class="string">all</span>
+
+fig6 = figure(<span class="string">'Position'</span>, [100, 100, 900, 450]);
+<span class="keyword">if</span> kappa ==2; color = <span class="string">'#dc143c'</span>; <span class="keyword">else</span>; color = <span class="string">'#2f5ada'</span>; <span class="keyword">end</span>
+<span class="comment">% colorSet = {'#dc143c','#cb2888','#9932cc','#6c4ce2','#2f5ada'};%red-&gt;blue</span>
+<span class="comment">% kappa = 2 color: '#dc143c'; kappa = 4 color: '#2f5ada'</span>
+set(groot,<span class="string">'defaultAxesTickLabelInterpreter'</span>,<span class="string">'latex'</span>);
+set(groot,<span class="string">'defaulttextinterpreter'</span>,<span class="string">'latex'</span>);
+set(groot,<span class="string">'defaultLegendInterpreter'</span>,<span class="string">'latex'</span>);
+
+<span class="comment">% SUBPLOT 1: EIGENVALUES</span>
+pos = [0.1 0.1 0.225 0.74];
+subplot(<span class="string">'Position'</span>,pos), semilogy(1:Nparams,evalues,<span class="string">'.-'</span>,<span class="string">'Color'</span>,color,<span class="string">'MarkerSize'</span>,30,<span class="string">'linewidth'</span>,2)
+ax = gca; ax.FontSize = 10; <span class="comment">%use for setting tick font size</span>
+xlim([0,Nparams+1]);
+set(gca, <span class="string">'YGrid'</span>, <span class="string">'on'</span>, <span class="string">'XGrid'</span>, <span class="string">'off'</span>, <span class="string">'YMinorGrid'</span>, <span class="string">'off'</span>);
+title(<span class="string">'Eigenvalues of C'</span>,<span class="string">'Fontsize'</span>,16);
+xlabel(<span class="string">'$\ell$'</span>,<span class="string">'Fontsize'</span>,14)
+ylabel(<span class="string">'$\lambda_\ell$'</span>,<span class="string">'Fontsize'</span>,14)
+
+<span class="comment">% SUBPLOT 2: WEIGHT VECTOR</span>
+pos = [0.4 0.1 0.225 0.74];
+subplot(<span class="string">'Position'</span>,pos), plot(1:Nparams,w,<span class="string">'.-'</span>,<span class="string">'Color'</span>,color,<span class="string">'MarkerSize'</span>,30,<span class="string">'linewidth'</span>,2)
+ax = gca; ax.FontSize = 10; <span class="comment">%use for setting tick font size</span>
+    xaxisproperties=get(gca, <span class="string">'XAxis'</span>);
+    xaxisproperties.TickLabelInterpreter = <span class="string">'latex'</span>; <span class="comment">%latex for x-axis only</span>
+    xaxisproperties.FontSize = 12; <span class="comment">%enlarge latex font</span>
+xlim([0,Nparams+1]);  ylim([-1,1]);
+set(gca, <span class="string">'YGrid'</span>, <span class="string">'on'</span>, <span class="string">'XGrid'</span>, <span class="string">'off'</span>, <span class="string">'YMinorGrid'</span>, <span class="string">'off'</span>);
+title(<span class="string">'Weight Vector'</span>,<span class="string">'Fontsize'</span>,16);
+xlabel(<span class="string">'Parameters'</span>,<span class="string">'Fontsize'</span>,14)
+ylabel(<span class="string">'Parameter Weights'</span>,<span class="string">'Fontsize'</span>,14)
+xticks(1:Nparams)
+set(gca,<span class="string">'XTickLabel'</span>,{<span class="string">'$k$'</span> <span class="string">'$\sigma_1$'</span> <span class="string">'$\sigma_2$'</span> <span class="string">'$\mu$'</span> <span class="string">'$v_0$'</span> <span class="string">'$\beta$'</span> <span class="string">'$\kappa$'</span>})
+
+<span class="comment">% SUBPLOT 3: SUFFICIENT SUMMARY</span>
+pos = [0.7 0.1 0.225 0.74];
+subplot(<span class="string">'Position'</span>,pos);
+plot(A(:,1), A(:,2), <span class="string">'Color'</span>,color,<span class="string">'linewidth'</span>,1.5); hold <span class="string">on</span>
+plot(Xs*w,growth,<span class="string">'ko'</span>);
+ax = gca; ax.FontSize = 10; <span class="comment">%use for setting tick font size</span>
+title(<span class="string">'Sufficient Summary Plot'</span>,<span class="string">'Fontsize'</span>,16);
+xlabel(<span class="string">'$w^T p_j$'</span>,<span class="string">'FontSize'</span>,14);
+ylabel(<span class="string">'$\gamma(p)$'</span>,<span class="string">'FontSize'</span>,14);
+legend(<span class="string">'Fit'</span>,<span class="string">'Data'</span>,<span class="string">'FontSize'</span>,12,<span class="string">'Location'</span>,<span class="string">'NorthWest'</span>,<span class="string">'Box'</span>,<span class="string">'off'</span>);
+maxgrowth = max(growth); mingrowth = min(growth);
+grid <span class="string">on</span>;
+
+txt = [<span class="string">'\textbf{Kappa Bump-on-Tail ($\kappa\!=\!'</span>,int2str(kappa),<span class="string">'$), '</span>,int2str(var*100),<span class="string">'\% Variation}'</span>];
+sgtitle(txt,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'Interpreter'</span>,<span class="string">'latex'</span>,<span class="string">'FontSize'</span>,22);
+
+set(gcf, <span class="string">'PaperPosition'</span>, [0 0 9 6]); <span class="comment">%Position the plot further to the upper-left conder</span>
+set(gcf, <span class="string">'PaperSize'</span>, [9 6]); <span class="comment">% Extends the plot to fill the entire paper</span>
+saveas(gcf, [<span class="string">'Figs/EigWVSSPfit_Dispersion_KapBoT'</span> int2str(kappa) <span class="string">'_'</span> int2str(Nparams) <span class="string">'_'</span> int2str(N) <span class="string">'_'</span> int2str(100*var) <span class="string">'_'</span> int2str(deg) <span class="string">'.pdf'</span>])
+saveas(gcf, [<span class="string">'Figs/EigWVSSPfit_Dispersion_KapBoT'</span> int2str(kappa) <span class="string">'_'</span> int2str(Nparams) <span class="string">'_'</span> int2str(N) <span class="string">'_'</span> int2str(100*var) <span class="string">'_'</span> int2str(deg) <span class="string">'.fig'</span>])
+</pre><img vspace="5" hspace="5" src="Global_Sens_Plots_from_Data_v2_01.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Plot output variables
+%May need to switch sign of parameter weights to put on the same scale
+% w= -w;
+
+%Compute quadratic polynomial fit 
+[fitted_curve1,gof1] = fit(Xs*w,growth,'poly2');
+% Save the coeffiecient values for p1, p2, and p3 in a vector
+p1 = coeffvalues(fitted_curve1);
+poly2error = [gof1.sse; gof1.rmse; gof1.rsquare; gof1.adjrsquare];
+
+%Compute atan fit
+x0 = [1 1 1 1]; 
+fitfun = fittype( @(a,b,c,d,x) d*atan(b*(x+a))+c );
+[fitted_curve2,gof2] = fit(Xs*w,growth,fitfun,'StartPoint',x0);
+% Save the coeffiecient values for a,b,c and d in a vector
+p2 = coeffvalues(fitted_curve2);
+atanerror = [gof2.sse; gof2.rmse; gof2.rsquare; gof2.adjrsquare];
+
+error = table(poly2error,atanerror,'VariableNames',["Poly2 Error","Arctan Error"],'RowNames',["sse","rmse","rsquare","adjrsquare"])
+
+% change type of error to compare by picking element 1-4
+if error.("Poly2 Error")(1)<error.("Arctan Error")(1) %choose quadratic fit
+    p = p1;
+    fitcurve = fitted_curve1;
+    deg = 2;
+elseif error.("Poly2 Error")(1)>=error.("Arctan Error")(1) %choose arctan fit
+    p = p2;
+    fitcurve = fitted_curve2;
+    deg = 4;
+end
+gw = 1.25;
+minx = min(Xs*w);
+maxx = max(Xs*w);
+gridx = [gw*minx; Xs*w; gw*maxx];
+A = [gridx, fitcurve(gridx)];
+[temp, order] = sort(A(:,1));
+A = A(order,:);
+
+for i=1:length(evalues)
+    if evalues(i)<10^(-16); evalues(i)=0; end
+end
+
+%% Subplots of Eigenvalues, Weight vector, and SSP with appx
+close all
+
+fig6 = figure('Position', [100, 100, 900, 450]);
+if kappa ==2; color = '#dc143c'; else; color = '#2f5ada'; end
+% colorSet = {'#dc143c','#cb2888','#9932cc','#6c4ce2','#2f5ada'};%red->blue
+% kappa = 2 color: '#dc143c'; kappa = 4 color: '#2f5ada'
+set(groot,'defaultAxesTickLabelInterpreter','latex');
+set(groot,'defaulttextinterpreter','latex');
+set(groot,'defaultLegendInterpreter','latex');
+
+% SUBPLOT 1: EIGENVALUES
+pos = [0.1 0.1 0.225 0.74];
+subplot('Position',pos), semilogy(1:Nparams,evalues,'.-','Color',color,'MarkerSize',30,'linewidth',2)
+ax = gca; ax.FontSize = 10; %use for setting tick font size
+xlim([0,Nparams+1]);
+set(gca, 'YGrid', 'on', 'XGrid', 'off', 'YMinorGrid', 'off');
+title('Eigenvalues of C','Fontsize',16);
+xlabel('$\ell$','Fontsize',14)
+ylabel('$\lambda_\ell$','Fontsize',14)
+
+% SUBPLOT 2: WEIGHT VECTOR
+pos = [0.4 0.1 0.225 0.74];
+subplot('Position',pos), plot(1:Nparams,w,'.-','Color',color,'MarkerSize',30,'linewidth',2)
+ax = gca; ax.FontSize = 10; %use for setting tick font size
+    xaxisproperties=get(gca, 'XAxis');
+    xaxisproperties.TickLabelInterpreter = 'latex'; %latex for x-axis only
+    xaxisproperties.FontSize = 12; %enlarge latex font
+xlim([0,Nparams+1]);  ylim([-1,1]);
+set(gca, 'YGrid', 'on', 'XGrid', 'off', 'YMinorGrid', 'off');
+title('Weight Vector','Fontsize',16);
+xlabel('Parameters','Fontsize',14)
+ylabel('Parameter Weights','Fontsize',14)
+xticks(1:Nparams)
+set(gca,'XTickLabel',{'$k$' '$\sigma_1$' '$\sigma_2$' '$\mu$' '$v_0$' '$\beta$' '$\kappa$'})
+
+% SUBPLOT 3: SUFFICIENT SUMMARY
+pos = [0.7 0.1 0.225 0.74];
+subplot('Position',pos);
+plot(A(:,1), A(:,2), 'Color',color,'linewidth',1.5); hold on
+plot(Xs*w,growth,'ko');
+ax = gca; ax.FontSize = 10; %use for setting tick font size
+title('Sufficient Summary Plot','Fontsize',16);
+xlabel('$w^T p_j$','FontSize',14);
+ylabel('$\gamma(p)$','FontSize',14);
+legend('Fit','Data','FontSize',12,'Location','NorthWest','Box','off');
+maxgrowth = max(growth); mingrowth = min(growth);
+grid on;
+
+txt = ['\textbf{Kappa Bump-on-Tail ($\kappa\!=\!',int2str(kappa),'$), ',int2str(var*100),'\% Variation}'];
+sgtitle(txt,'FontWeight','bold','Interpreter','latex','FontSize',22);
+
+set(gcf, 'PaperPosition', [0 0 9 6]); %Position the plot further to the upper-left conder
+set(gcf, 'PaperSize', [9 6]); % Extends the plot to fill the entire paper
+saveas(gcf, ['Figs/EigWVSSPfit_Dispersion_KapBoT' int2str(kappa) '_' int2str(Nparams) '_' int2str(N) '_' int2str(100*var) '_' int2str(deg) '.pdf'])
+saveas(gcf, ['Figs/EigWVSSPfit_Dispersion_KapBoT' int2str(kappa) '_' int2str(Nparams) '_' int2str(N) '_' int2str(100*var) '_' int2str(deg) '.fig'])
+##### SOURCE END #####
+--></body></html>

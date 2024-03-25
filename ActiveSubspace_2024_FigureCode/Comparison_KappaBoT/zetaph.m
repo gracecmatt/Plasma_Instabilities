@@ -129,7 +129,7 @@ function [Z,aN]=hilb(z,F,N,del,L)
 %   it seems we should set del=0 for correct analytic continuation
 
     if nargin<5 % optimal choice of L = sqrt(N/sqrt(2))
-        L = 35; %3
+        L = 3; %3
     end
     if nargin<4, del = 1; end
     

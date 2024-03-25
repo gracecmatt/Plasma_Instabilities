@@ -9,8 +9,8 @@ w_1_1var = w;
 w_2_1var = w2; 
 growth_1var = growth; 
 Xs_25var = Xs; 
-eigratio1 = (evalues(1))/sum(evalues)
-eigratio2 = (evalues(1)+evalues(2))/sum(evalues)
+eta(1) = (evalues(1))/sum(evalues);
+eta(2) = (evalues(1)+evalues(2))/sum(evalues);
 
 
 set(groot,'defaultAxesTickLabelInterpreter','latex');

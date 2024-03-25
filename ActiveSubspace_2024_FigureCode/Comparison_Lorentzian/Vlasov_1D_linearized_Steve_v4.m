@@ -33,7 +33,7 @@ function w = Vlasov_1D_linearized_Steve_v4(k, sigma, mu)
 Vmax = 140;  % choose Vmax so that f0(Vmax) < 1e-16           
 L=2*pi/abs(k); % size of the system in x-direction
 N=1;           % 2N is a number of grid points in x-direction, Linearized code has N=1
-M=2^10;        % 2M is a number of grid points in v-direction 
+M=2^11;        % 2M is a number of grid points in v-direction 
 dv=Vmax/M;
 v=(-M:M-1)*dv;
 

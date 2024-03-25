@@ -8,12 +8,13 @@ paramARR = logspace(-1,0,102);
 xaxis = "k"; 
 filenameEnding = "k.png"; 
 %%% ---------- end change section ----------
-kappaIntARR = [2,3];
+% kappaIntARR = [2,3];
 % kapARR = [2,2.2,2.45,3];
-kapARR = [1.63,1.9,2.45,3.14];
+kapARR = [1.63,3.5];
 % initialize vectors
 omegaXieShiftScaled = zeros(length(kapARR),length(paramARR));
 omegaExact = zeros(length(kapARR),length(paramARR));
+omegaRelError = zeros(length(kapARR),length(paramARR));
 
 % choose parameters
 k = 0.5;
@@ -21,7 +22,7 @@ sigma = 1;
 mu = 1;
 
 % initialize for symbolic root-finder vpasolve()
-syms omega D;
+% syms omega D;
 
 % %% find the "actual" solutions -> polynomial roots
 % for j = 1:length(kappaIntARR)
@@ -135,41 +136,41 @@ title('Relative Error in $\gamma(k)$','FontSize',16)
 
 
 %% functions
-function [gamma, Omega, numSol] = getActualSol(gamma, Omega, D, paramARR)
-% this function does 2 checks:
-% it evaluates |F(gamma+i*Omega)| < tol
-% and makes sure the derivative of gamma(param) is small and not zero 
-
-    solArr = [];
-    tol = 5; % tolerance on solution value (about 0)
-    dtol = 0.25; % tolerance on derivative (should be small or negative)
-    colMax = length(gamma(1,:));
-    numSol = length(gamma(:,1));
-    z90 = floor(colMax*0.90); % index at 90% of length_k
-    z88 = floor(colMax*0.88); % index at 88% of length_k
-    for j=1:numSol
-        Fzmax = max( double(abs(D(gamma(j,:)+1i*Omega(j,:)))) );
-        dgammaEnd = (gamma(j,z90)-gamma(j,z88))/(paramARR(z90)-paramARR(z88)); %slope of gamma
-        if Fzmax < tol && dgammaEnd < dtol && dgammaEnd ~= 0.0
-            solArr = [solArr; j];
-        end
-    end
-    
-    gamma = gamma(solArr,:);
-    Omega = Omega(solArr,:);
-    numSol = length(gamma(:,1));
-end
-
-function [gamma, Omega, numSol] = getUnique(gamma, Omega)
-    N = 3; % round to account for machine error giving extra duplicates
-    ImReMatrix = [round(gamma,N), round(Omega,N)];
-
-    % ----from MATLAB Answers user Walter Roberson 14 August 2020----
-    [~,A] = uniquetol(ImReMatrix,'byrows',true); 
-    ImReMatrix(sort(A),:); % unique rows in original order
-    % ---------------------------------------------------------------
-
-    gamma = gamma(sort(A),:);
-    Omega = Omega(sort(A),:);
-    numSol = length(gamma(:,1));
-end
+% function [gamma, Omega, numSol] = getActualSol(gamma, Omega, D, paramARR)
+% % this function does 2 checks:
+% % it evaluates |F(gamma+i*Omega)| < tol
+% % and makes sure the derivative of gamma(param) is small and not zero 
+% 
+%     solArr = [];
+%     tol = 5; % tolerance on solution value (about 0)
+%     dtol = 0.25; % tolerance on derivative (should be small or negative)
+%     colMax = length(gamma(1,:));
+%     numSol = length(gamma(:,1));
+%     z90 = floor(colMax*0.90); % index at 90% of length_k
+%     z88 = floor(colMax*0.88); % index at 88% of length_k
+%     for j=1:numSol
+%         Fzmax = max( double(abs(D(gamma(j,:)+1i*Omega(j,:)))) );
+%         dgammaEnd = (gamma(j,z90)-gamma(j,z88))/(paramARR(z90)-paramARR(z88)); %slope of gamma
+%         if Fzmax < tol && dgammaEnd < dtol && dgammaEnd ~= 0.0
+%             solArr = [solArr; j];
+%         end
+%     end
+% 
+%     gamma = gamma(solArr,:);
+%     Omega = Omega(solArr,:);
+%     numSol = length(gamma(:,1));
+% end
+% 
+% function [gamma, Omega, numSol] = getUnique(gamma, Omega)
+%     N = 3; % round to account for machine error giving extra duplicates
+%     ImReMatrix = [round(gamma,N), round(Omega,N)];
+% 
+%     % ----from MATLAB Answers user Walter Roberson 14 August 2020----
+%     [~,A] = uniquetol(ImReMatrix,'byrows',true); 
+%     ImReMatrix(sort(A),:); % unique rows in original order
+%     % ---------------------------------------------------------------
+% 
+%     gamma = gamma(sort(A),:);
+%     Omega = Omega(sort(A),:);
+%     numSol = length(gamma(:,1));
+% end
