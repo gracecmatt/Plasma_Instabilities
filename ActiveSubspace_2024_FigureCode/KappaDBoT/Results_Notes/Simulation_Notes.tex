@@ -1,0 +1,109 @@
+\documentclass{article}
+
+% Set left margin - The default is 1 inch, so the following 
+% command sets a 1.25-inch left margin.
+\setlength{\oddsidemargin}{0.25in}
+
+% Set width of the text - What is left will be the right margin.
+% In this case, right margin is 8.5in - 1.25in - 6in = 1.25in.
+\setlength{\textwidth}{6in}
+
+% Set top margin - The default is 1 inch, so the following 
+% command sets a 0.75-inch top margin.
+\setlength{\topmargin}{-0.25in}
+
+% Set height of the text - What is left will be the bottom margin.
+% In this case, bottom margin is 11in - 0.75in - 9.5in = 0.75in
+\setlength{\textheight}{8in}
+\setlength{\parindent}{0pt}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\setlength{\parskip}{5pt} 
+\pagestyle{plain}
+
+\newcommand{\defbox}[1]{\begin{center} \fbox{\begin{minipage}{0.90\textwidth} #1\end{minipage}\begin{minipage}{0.05\textwidth}   \phantom{a} \end{minipage}} \end{center}}
+
+\begin{document}
+
+\begin{center}
+\textbf{\large Kappa Bump-on-Tail Simulation Notes 2/28}
+\end{center}
+
+\textbf{\large Base Parameters}
+\begin{itemize}
+	\item $p_1 = k = 0.5$ (wave number)
+	\item $p_2 = \sigma_1 = 1.5$ (scale parameter)
+	\item $p_3 = \sigma_2 = 0.7$ (scale parameter)
+	\item $p_4 = \mu = 1$ (mean velocity)
+	\item $p_5 = v_0 = 5$
+	\item $p_6 = \beta = 0.95$ (size of bump)
+	\item $p_7 = \kappa = \{2,4\}$ (spectral index)
+\end{itemize}
+
+\textbf{\large Numerical Parameters}
+\begin{itemize}
+	\item $Nparams = 7$
+	\item $N = 1200$ (number of samples)
+	\item $h=10^{-6}$ (finite difference step size)
+	\item $N_{fourier} = 1000$ (number of Fourier coefficients)
+	\item $L=4$ (parameter of basis transformation for FFT)
+	\item $V_{max} = 86$
+	\item $M = 2^{11}$, $2M = $ number of $v$ grid points
+\end{itemize}
+
+\textbf{Quantitative Results}
+Eigenvalue ratio:
+$$\nu_k = \frac{\sum_{i=1}^{k} \lambda_i}{\sum_{i=1}^{Nparams} \lambda_i}$$
+Polynomial fit:
+$$h(\omega^Tp) = h(y) = a_0 + a_1y + a_2y^2$$
+Parameter weights:
+$$\omega^Tp = \sum_{i=1}^{Nparams} \omega_i p_i$$
+
+\newpage
+\begin{center}
+Table 1: Quantitative Data for $\kappa = 2$
+
+\begin{tabular}{|c||c|c||c|c|c|}
+	\hline & \multicolumn{2}{c||}{\textbf{Eigenvalue Ratios}} & \multicolumn{3}{c|}{\textbf{Polynomial Fit}} \\ \hline
+	Variation & $\nu_1$ (\%) & $\nu_2$ (\%) & $a_0$ & $a_1$ & $a_2$ \\ \hline \hline
+	1\% & 99.97 & 99.9999 & -0.0831 & 0.0026 & 3.434E-5 \\ \hline
+	5\% & 99.1112 & 99.9655 & -0.0828 & 0.0131 & -8.875E-4 \\ \hline
+	15\% & 89.4741 & 98.8380 & -0.0810 & 0.0394 & -0.0070 \\ \hline
+	25\% & 75.6416 & 92.5143 & -0.0851 & 0.0533 & 0.0508 \\ \hline
+\end{tabular}
+
+\begin{tabular}{|c||c|c|c|c|c|c|c|}
+	\hline & \multicolumn{7}{c|}{\textbf{Parameter Weights}} \\ \hline
+	Variation & $\omega_1$ & $\omega_2$ & $\omega_3$ & $\omega_4$ & $\omega_5$ & $\omega_6$ & $\omega_7$ \\ \hline \hline
+	1\% & -0.6475 & -0.6512 & 0.0022 & 0 & 0.0011 & 0.1558 & -0.3640 \\ \hline
+	5\% & -0.6448 & -0.6484 & 0.0024 & 0 & 0.0013 & 0.1440 & -0.3782 \\ \hline
+	15\% & -0.6102 & -0.6165 & 0.0021 & 0 & 0.0014 & 0.0981 & -0.4878 \\ \hline
+	25\% & -0.6891 & -0.0248 & 0.0051 & 0 & -0.6900 & -0.2111 & 0.0625 \\ \hline
+\end{tabular}
+
+
+\vspace{0.5in} Table 2: Quantitative Data for $\kappa = 4$
+
+\begin{tabular}{|c||c|c||c|c|c|}
+	\hline & \multicolumn{2}{c||}{\textbf{Eigenvalue Ratios}} & \multicolumn{3}{c|}{\textbf{Polynomial Fit}} \\ \hline
+	Variation & $\nu_1$ (\%) & $\nu_2$ (\%) & $a_0$ & $a_1$ & $a_2$ \\ \hline \hline
+	1\% & 0.9999 & 0.9999 & -0.0864 & 0.0035 & -4.663E-5 \\ \hline
+	5\% & 0.9995 & 0.9999 & -0.0865 & 0.0179 & -0.0012 \\ \hline
+	15\% & 0.7237 & 0.9967 & -0.0892 & 0.0528 & -0.0079 \\ \hline
+	25\% & 0.7564 & 0.9553 & -0.0982 & 0.0954 & 0.0536 \\ \hline
+\end{tabular}
+
+\begin{tabular}{|c||c|c|c|c|c|c|c|}
+	\hline & \multicolumn{7}{c|}{\textbf{Parameter Weights}} \\ \hline
+	Variation & $\omega_1$ & $\omega_2$ & $\omega_3$ & $\omega_4$ & $\omega_5$ & $\omega_6$ & $\omega_7$ \\ \hline \hline
+	1\% & -0.6913 & -0.6910 & 0.0020 & 0 & -0.0022 & 0.1944 & 0.0819 \\ \hline
+	5\% & -0.6933 & -0.6930 & 0.0023 & 0 & -0.0024 & 0.1803 & 0.0812 \\ \hline
+	15\% & -0.7877 & -0.5448 & 0.0287 & 0 & -0.2755 & 0.0416 & 0.0657 \\ \hline
+	25\% & -0.7281 & -0.1254 & 0.0007 & 0 & -0.6537 & -0.1590 & 0.0402 \\ \hline
+\end{tabular}
+
+\end{center}
+
+\end{document}
