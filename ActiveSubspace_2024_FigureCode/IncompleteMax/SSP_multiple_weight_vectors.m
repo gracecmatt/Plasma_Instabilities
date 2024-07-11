@@ -5,7 +5,7 @@
 %load('Dispersion_Rate_BiMax_P7_N512_0.05data_par.mat')
 %load('Dispersion_Rate_V2_P3_N512_0.25data_par2.mat')
 w_1_1var = w; 
-w_2_1var = w2; 
+w_2_1var = -w2; 
 growth_1var = growth; 
 Xs_25var = Xs; 
 
@@ -21,7 +21,7 @@ xlabel('$w_1^Tp_j$','Fontsize',14)
 ylabel('$w_2^Tp_j$','Fontsize',14)
 ylabel(c1,'Growth Rate','FontSize',14,'Rotation',270,'Interpreter','latex');
 c1.Label.Position(1) = 4;
-txt = ['Incomplete Maxwellian, ',int2str(var*100),'\% Variation'];
+txt = ['\textbf{Incomplete Maxwellian, ',int2str(var*100),'\% Variation}'];
 title(txt,'FontSize',16);
 set(gcf, 'PaperPosition', [0 0 6 4.5]); %Position the plot further to the upper-left conder
 set(gcf, 'PaperSize', [6 4.5]); % Extends the plot to fill the entire paper

@@ -16,6 +16,14 @@ function xi = KappaBoT_Disp_Using_Xie(k, sigma1, sigma2, mu, v0, beta, kappa, in
     D = @(z) 1-1/k^2*zetaph(z, Fn, F, Nfourier); % dielectric function
     
     % ============================== solve ================================
-    xi = fsolve(D, init_guess, options);
+    % xi = fsolve(D, init_guess, options);
+
+    xi1 = fsolve(D, init_guess, options);
+    xi2 = fsolve(D, -real(init_guess)+1i*imag(init_guess), options);
+    if imag(xi1)>imag(xi2)
+        xi = xi1;
+    else
+        xi = xi2;
+    end
 
 end

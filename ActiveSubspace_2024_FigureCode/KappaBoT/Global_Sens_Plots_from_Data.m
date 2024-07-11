@@ -9,7 +9,8 @@ p1 = coeffvalues(fitted_curve1);
 poly2error = [gof1.sse; gof1.rmse; gof1.rsquare; gof1.adjrsquare];
 
 %Compute atan fit
-x0 = -[1 1 1 1]; 
+% x0 = [-1 1 1 1]; 
+x0 = [-1 1 -0.5 0.1];
 fitfun = fittype( @(a,b,c,d,x) d*atan(b*(x+a))+c );
 [fitted_curve2,gof2] = fit(Xs*w,growth,fitfun,'StartPoint',x0);
 % Save the coeffiecient values for a,b,c and d in a vector
@@ -19,15 +20,15 @@ atanerror = [gof2.sse; gof2.rmse; gof2.rsquare; gof2.adjrsquare];
 error = table(poly2error,atanerror,'VariableNames',["Poly2 Error","Arctan Error"],'RowNames',["sse","rmse","rsquare","adjrsquare"])
 
 % change type of error to compare by picking element 1-4
-% if error.("Poly2 Error")(1)<error.("Arctan Error")(1) %choose quadratic fit
-%     p = p1;
-%     fitcurve = fitted_curve1;
-%     deg = 2;
-% elseif error.("Poly2 Error")(1)>=error.("Arctan Error")(1) %choose arctan fit
+if error.("Poly2 Error")(1)<error.("Arctan Error")(1) %choose quadratic fit
+    p = p1;
+    fitcurve = fitted_curve1;
+    fitUsed = 'quadratic';
+elseif error.("Poly2 Error")(1)>=error.("Arctan Error")(1) %choose arctan fit
     p = p2;
     fitcurve = fitted_curve2;
-    deg = 4;
-% end
+   fitUsed = 'arctan';
+end
 gw = 1.25;
 y = Xs*w;
 minx = min(Xs*w);
@@ -42,7 +43,7 @@ for i=1:length(evalues)
 end
 
 %% Subplots of Eigenvalues, Weight vector, and SSP with appx
-close all
+% close all
 
 fig6 = figure('Position', [100, 100, 900, 450]);
 if kappa ==2; color = '#dc143c'; else; color = '#2f5ada'; end
@@ -55,25 +56,25 @@ set(groot,'defaultLegendInterpreter','latex');
 % SUBPLOT 1: EIGENVALUES
 pos = [0.1 0.1 0.225 0.74];
 subplot('Position',pos), semilogy(1:Nparams,evalues,'.-','Color',color,'MarkerSize',30,'linewidth',2)
-ax = gca; ax.FontSize = 10; %use for setting tick font size
+ax = gca; ax.FontSize = 12; %use for setting tick font size
 xlim([0,Nparams+1]);
 set(gca, 'YGrid', 'on', 'XGrid', 'off', 'YMinorGrid', 'off');
-title('Eigenvalues of C','Fontsize',16);
-xlabel('$\ell$','Fontsize',14)
-ylabel('$\lambda_\ell$','Fontsize',14)
+title('Eigenvalues of C','Fontsize',18);
+xlabel('$\ell$','Fontsize',16)
+ylabel('$\lambda_\ell$','Fontsize',16)
 
 % SUBPLOT 2: WEIGHT VECTOR
 pos = [0.4 0.1 0.225 0.74];
 subplot('Position',pos), plot(1:Nparams,w,'.-','Color',color,'MarkerSize',30,'linewidth',2)
-ax = gca; ax.FontSize = 10; %use for setting tick font size
+ax = gca; ax.FontSize = 12; %use for setting tick font size
     xaxisproperties=get(gca, 'XAxis');
     xaxisproperties.TickLabelInterpreter = 'latex'; %latex for x-axis only
-    xaxisproperties.FontSize = 12; %enlarge latex font
-xlim([0,Nparams+1]);  ylim([-1,1]);
+    xaxisproperties.FontSize = 13; %enlarge latex font
+xlim([0,Nparams+1]);  ylim([-1,1]); 
 set(gca, 'YGrid', 'on', 'XGrid', 'off', 'YMinorGrid', 'off');
-title('Weight Vector','Fontsize',16);
-xlabel('Parameters','Fontsize',14)
-ylabel('Parameter Weights','Fontsize',14)
+title('Weight Vector','Fontsize',18);
+xlabel('Parameters','Fontsize',16)
+ylabel('Parameter Weights','Fontsize',16)
 xticks(1:Nparams)
 set(gca,'XTickLabel',{'$k$' '$\sigma_1$' '$\sigma_2$' '$\mu$' '$v_0$' '$\beta$' '$\kappa$'})
 
@@ -82,11 +83,11 @@ pos = [0.7 0.1 0.225 0.74];
 subplot('Position',pos);
 plot(A(:,1), A(:,2), 'Color',color,'linewidth',1.5); hold on
 plot(Xs*w,growth,'ko');
-ax = gca; ax.FontSize = 10; %use for setting tick font size
-title('Sufficient Summary Plot','Fontsize',16);
-xlabel('$w^T p_j$','FontSize',14);
-ylabel('$\gamma(p)$','FontSize',14);
-legend('Fit','Data','FontSize',12,'Location','NorthWest','Box','off');
+ax = gca; ax.FontSize = 12; %use for setting tick font size
+title('Sufficient Summary Plot','Fontsize',18);
+xlabel('$\mathbf{w}^T \mathbf{p}_j$','FontSize',16); xlim([-2,2]);
+ylabel('$\gamma(\mathbf{p})$','FontSize',16); ylim([-0.3,0.34]); 
+legend('Fit','Data','FontSize',14,'Location','NorthWest','Box','off');
 maxgrowth = max(growth); mingrowth = min(growth);
 grid on;
 
@@ -95,8 +96,6 @@ sgtitle(txt,'FontWeight','bold','Interpreter','latex','FontSize',22);
 
 set(gcf, 'PaperPosition', [0 0 9 6]); %Position the plot further to the upper-left conder
 set(gcf, 'PaperSize', [9 6]); % Extends the plot to fill the entire paper
-saveas(gcf, ['Figs/EigWVSSPfit_Dispersion_KapBoT' int2str(kappa) '_' int2str(Nparams) '_' int2str(N) '_' int2str(100*var) '_' int2str(deg) '.pdf'])
-saveas(gcf, ['Figs/EigWVSSPfit_Dispersion_KapBoT' int2str(kappa) '_' int2str(Nparams) '_' int2str(N) '_' int2str(100*var) '_' int2str(deg) '.svg'])
-saveas(gcf, ['Figs/EigWVSSPfit_Dispersion_KapBoT' int2str(kappa) '_' int2str(Nparams) '_' int2str(N) '_' int2str(100*var) '_' int2str(deg) '.fig'])
-
-save(['Data/Fits_KappaBoT' int2str(kappa) '_var' int2str(var*100) '_data.mat'],"y","fitcurve")
+saveas(gcf, ['Figs/EigWVSSPfit_Dispersion_KapBoT' int2str(kappa) '_' int2str(Nparams) '_' int2str(N) '_' int2str(100*var) '_' fitUsed '.pdf'])
+saveas(gcf, ['Figs/EigWVSSPfit_Dispersion_KapBoT' int2str(kappa) '_' int2str(Nparams) '_' int2str(N) '_' int2str(100*var) '_' fitUsed '.svg'])
+saveas(gcf, ['Figs/EigWVSSPfit_Dispersion_KapBoT' int2str(kappa) '_' int2str(Nparams) '_' int2str(N) '_' int2str(100*var) '_' fitUsed '.fig'])

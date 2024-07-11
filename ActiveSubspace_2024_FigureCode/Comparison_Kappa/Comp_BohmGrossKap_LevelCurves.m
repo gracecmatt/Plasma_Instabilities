@@ -4,7 +4,7 @@
 clear; clc; 
 %%% --------- change these values with parameter for level curve ---------
 % paramARR = linspace(0.005,0.75,150);
-paramARR = 0.5*logspace(-2.3,0,500);
+paramARR = 0.5*logspace(-2.3,-0.39,300);
 % paramARR=paramARR(10:end);
 xaxis = "k"; 
 filenameEnding = "k.png"; 
@@ -93,7 +93,6 @@ for j = 1:length(kapARR)
 end
 %%
 
-
 Xiemax = max(errorXie,[],'all');
 Xiemean = mean(errorXie,'all');
 Xiestd = std(errorXie,0,'all');
@@ -103,9 +102,17 @@ BGmax = max(errorBG,[],'all');
 BGmean = mean(errorBG,'all');
 BGstd = std(errorBG,0,'all');
 
+% plot the imaginary part of the solutions found using Xie algorithm and
+% Bohm-Gross approximation
+yExact = imag(omegaExact);
+maxGamma = max(abs(yExact'));
+yXie = imag(omegaXieShiftScaled)./maxGamma';
+yBG = imag(omegaBohmGross)./maxGamma';
+
+errorXie = errorXie./maxGamma';
+errorBG = errorBG./maxGamma';
+
 save('Data/Comparison_BohmGross_kappa_2_4_data.mat')
-
-
 %% plot figures 
 % with ideal formatting (as of 1/27/24)
 close all;
@@ -117,11 +124,6 @@ set(groot,'defaultAxesTickLabelInterpreter','latex');
 set(groot,'defaulttextinterpreter','latex');
 set(groot,'defaultLegendInterpreter','latex');
 
-% plot the imaginary part of the solutions found using Xie algorithm and
-% Bohm-Gross approximation
-yExact = imag(omegaExact);
-yXie = imag(omegaXieShiftScaled);
-yBG = imag(omegaBohmGross);
 
 % figure
 % loglog(paramARR,yExact(1,:),'-','linewidth',1); hold on
@@ -149,17 +151,19 @@ yBG = imag(omegaBohmGross);
 % plot the relative error between Xie/Weideman solution, Bohm-Gross
 % solution, and the polynomial root with the largest imaginary part
 figure
-plot(paramARR,log10(errorXie(1,:)),'s','linewidth',1,'MarkerSize',5); hold on
-plot(paramARR,log10(errorBG(1,:)),'.','linewidth',1,'MarkerSize',10)
-plot(paramARR,log10(errorXie(2,:)),'s','linewidth',1,'MarkerSize',5);
-plot(paramARR,log10(errorBG(2,:)),'.','linewidth',1,'MarkerSize',10)
-title('\textbf{Kappa $\gamma(k)$ Relative Error}','FontSize',16);
-    legend('Weideman $(\kappa\!=\!2)$','Bohm-Gross $(\kappa\!=\!2)$',...
-        'Weideman $(\kappa\!=\!4)$','Bohm-Gross $(\kappa\!=\!4)$',...
+plot(paramARR,(errorXie(1,:)),'s','linewidth',1,'MarkerSize',5); hold on
+plot(paramARR,(errorBG(1,:)),'.','linewidth',1,'MarkerSize',10)
+plot(paramARR,(errorXie(2,:)),'s','linewidth',1,'MarkerSize',5);
+plot(paramARR,(errorBG(2,:)),'.','linewidth',1,'MarkerSize',10)
+title('\textbf{Relative Error in $\gamma(\mathbf{k})$ Level Curves}','FontSize',16);
+    legend('Xie $(\kappa\!=\!2)$','Bohm-Gross $(\kappa\!=\!2)$',...
+        'Xie $(\kappa\!=\!4)$','Bohm-Gross $(\kappa\!=\!4)$',...
         'Location','Best','FontSize',12);
-    xlabel('$k$','FontSize',14);
-    ylabel('$\big|\frac{\gamma-\gamma_{i}}{\gamma}\big|$ (log scale)','FontSize',14);
-    set(gca, 'YGrid', 'on', 'XGrid', 'off', 'YMinorGrid', 'off');
+    xlabel('$k$ (log scale)','FontSize',14);
+    ylabel('$\frac{|\gamma-\gamma_{i}|}{\max{(|\gamma|)}}$ (log scale)','FontSize',14);
+    set(gca, 'YGrid', 'on', 'XGrid', 'on', 'YMinorGrid', 'off', 'XMinorGrid', 'off');
+    set(gca,'Yscale','log','XScale','log')
+    ylim([5*10^(-19),1])
     colororder(colors2)
     xlim([min(paramARR),max(paramARR)])
     set(gcf, 'PaperPosition', [0 0 6 4.5]); %Position the plot further to the upper-left conder

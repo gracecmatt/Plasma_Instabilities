@@ -2,7 +2,7 @@ close all;
 rng('shuffle');
 parpool(4);
 % Initialize algorithm parameters
-N = 128;                              %Number of samples for each parameter
+N = 300;                              %Number of samples for each parameter
 h = 1e-6;                                      %Finite difference step size
 
 kappa = 2;                              % kappa values allowed: kappa > 3/2
@@ -16,9 +16,9 @@ Xs = zeros(N,Nparams);                   %To save the normalized parameters
 omega_error = zeros(N,1);           %Compare Xie/dielectric funtion results
 
 % vals = [k, sigma, mu]
-setvals = [0.5; 2; 1];
+setvals = [0.5; 1.5; 1];
 
-var = 0.05; % x 100% variation considered 
+var = 0.25; % x 100% variation considered 
 xl = (1-var)*setvals;
 xu = (1+var)*setvals;
 
@@ -37,14 +37,14 @@ parfor jj = 1:N
     params = 1/2*(diag(xu - xl)*Xs(jj,:)' + (xu + xl));
     
     % Numerically solve 1D Vlasov-Poisson with randomly drawn parameters
-    init_guess = BohmGross_Kap(params(1),params(2),0,kappa);
-    % init_guess = Vlasov_1D_linearized_Steve_v4_Kappa(params(1),params(2),0,kappa);
+    % init_guess = BohmGross_Kap(params(1),params(2),0,kappa);
+    init_guess = Vlasov_1D_linearized_Steve_v4_Kappa(params(1),params(2),0,kappa);
     xi_guess = init_guess/(params(1)*params(2)); % shifted and scaled
 
     omega = Kappa_Disp_Using_Xie(params(1)*params(2),1,0,kappa,xi_guess)*params(1)*params(2) + params(3)*params(1);
     dielectric = Kappa_dielectric(params(1),params(2),0,kappa,init_guess) + params(3)*params(1);
     growth(jj) = imag(omega);
-    omega_error(jj) = abs(real(omega)-real(dielectric)) + 1i*abs(imag(omega)-imag(dielectric));
+    % omega_error(jj) = abs(real(omega)-real(dielectric)) + 1i*abs(imag(omega)-imag(dielectric));
 end
 
 parfor jj = 1:N
@@ -55,8 +55,8 @@ parfor jj = 1:N
         xplus = randparams + h*I(:,kk);
         paramsplus = 1/2*(diag(xu - xl)*xplus + (xu + xl));
         
-        init_guess_plus = BohmGross_Kap(paramsplus(1),paramsplus(2),0,kappa);
-        % init_guess_plus = Vlasov_1D_linearized_Steve_v4_Kappa(params(1),params(2),0,kappa);
+        % init_guess_plus = BohmGross_Kap(paramsplus(1),paramsplus(2),0,kappa);
+        init_guess_plus = Vlasov_1D_linearized_Steve_v4_Kappa(paramsplus(1),paramsplus(2),0,kappa);
         xi_guess_plus = init_guess_plus/(paramsplus(1)*paramsplus(2)); % shifted and scaled
     
         omega0_plus = Kappa_Disp_Using_Xie(paramsplus(1)*paramsplus(2),1,0,kappa,xi_guess_plus)*paramsplus(1)*paramsplus(2);
@@ -84,7 +84,7 @@ cond = evalues(1)/sum(evalues);
 diff_growth = max(max(grad_growth)) - min(min(grad_growth));
    
 %Save the trial data
-save(['Dispersion_Kappa' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N) '_var' int2str(var*100) '_data.mat'])
+% save(['Dispersion_Kappa' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N) '_var' int2str(var*100) '_data.mat'])
 
 %exit
 delete(gcp('nocreate'))

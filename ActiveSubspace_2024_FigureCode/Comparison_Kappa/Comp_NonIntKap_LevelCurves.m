@@ -1,112 +1,177 @@
 %% Kappa Distribution Comparison Level Curves
-% GM 1/11/24
+% GM 5/15/24
 
 clear; clc; 
-%%% --------- change these values with parameter for level curve ---------
-% paramARR = linspace(0.001,1,200);
-paramARR = logspace(-1,0,102);
-xaxis = "k"; 
-filenameEnding = "k.png"; 
-%%% ---------- end change section ----------
-% kappaIntARR = [2,3];
-% kapARR = [2,2.2,2.45,3];
-kapARR = [1.63,3.5];
-% initialize vectors
-omegaXieShiftScaled = zeros(length(kapARR),length(paramARR));
-omegaExact = zeros(length(kapARR),length(paramARR));
-omegaRelError = zeros(length(kapARR),length(paramARR));
 
 % choose parameters
-k = 0.5;
-sigma = 1;
-mu = 1;
+M = 10;
+kARR = linspace(0.25,1,M);
+sigmaARR = linspace(0.5,3,M);
+muARR = linspace(0,2,M);
+kapARR = [2 3 4];
+% initialize vectors
+omegaXieShiftScaled = zeros(length(kapARR),M);
+omegaExact = zeros(length(kapARR),M);
+omegaRelError = zeros(length(kapARR),M);
 
 % initialize for symbolic root-finder vpasolve()
-% syms omega D;
+syms omega D;
 
 % %% find the "actual" solutions -> polynomial roots
-% for j = 1:length(kappaIntARR)
-%     kappa = kappaIntARR(j);
-%     gamma = []; Omega = [];
-%     for i = 1:length(paramARR)
-%         k=paramARR(i); %%% -- level curve parameter ----------
-% 
-%         % dielectric functions exported from Wolfram Mathematica (w/ zero mean)
-%         if (kappa==2)
-%             D(omega) = 1+(-2).*k.^(-2).*(2.*omega.^2+k.^2.*sigma.^2).^(-3).*(4.*k.^2.*omega.^4+ ...
-%               12.*k.^4.*omega.^2.*sigma.^2+(sqrt(-1)*(-8)).*2.^(1/2).*k.^5.*omega.* ...
-%               sigma.^3+(-3).*k.^6.*sigma.^4);
-%         elseif (kappa==3)
-%             D(omega) = 1+(-2).*k.^(-2).*(2.*omega.^2+3.*k.^2.*sigma.^2).^(-4).*(8.*k.^2.* ...
-%               omega.^6+60.*k.^4.*omega.^4.*sigma.^2+270.*k.^6.*omega.^2.*sigma.^4+( ...
-%               sqrt(-1)*(-144)).*6.^(1/2).*k.^7.*omega.*sigma.^5+(-135).*k.^8.* ...
-%               sigma.^6); 
-%         elseif (kappa==4)
-%             D(omega) = 1+(-2).*k.^(-2).*(2.*omega.^2+5.*k.^2.*sigma.^2).^(-5).*(16.*k.^2.* ...
-%               omega.^8+224.*k.^4.*omega.^6.*sigma.^2+1400.*k.^6.*omega.^4.*sigma.^4+ ...
-%               7000.*k.^8.*omega.^2.*sigma.^6+(sqrt(-1)*(-3200)).*10.^(1/2).*k.^9.* ...
-%               omega.*sigma.^7+(-4375).*k.^10.*sigma.^8);
-%         else
-%             % error statement here
-%         end
-% 
-%         % symbolic root finder finds all roots, Y is a complex vector
-%         % mu*k is added, applying invariance of dielectric function
-%         Y = double(vpasolve(D(omega)==0,omega)) + mu*k;
-% 
-%         gamma = [gamma, imag(Y)];
-%         Omega = [Omega, real(Y)];
-%     end
-%     numSol = length(gamma(:,1));
-% 
-%     % Run to get only unique solutions
-%     [gamma, Omega, numSol] = getUnique(gamma, Omega);
-% 
-%     % Run to get only actual solutions (real part is not zero or increasing for large k)
-%     [gamma, Omega, numSol] = getActualSol(gamma, Omega, D, paramARR);
-% 
-%     for i = 1:length(paramARR)
-%         k = paramARR(i);
-% 
-%         % find the root with the largest imaginary part
-%         Y = Omega(:,i)+1i*gamma(:,i);
-%         temp = sort(1i*Y,'ComparisonMethod','real');
-%         omegaExact(j,i) = -1i*temp(1);
-%     end
-% end
+for j = 1:length(kappaARR)
+    kappa = kappaARR(j);
+    gamma = []; Omega = [];
+    for i = 1:length(paramARR)
+        k=kARR(i); %%% -- level curve parameter ----------
+
+        % dielectric functions exported from Wolfram Mathematica (w/ zero mean)
+        if (kappa==2)
+            D(omega) = 1+(-2).*k.^(-2).*(2.*omega.^2+k.^2.*sigma.^2).^(-3).*(4.*k.^2.*omega.^4+ ...
+              12.*k.^4.*omega.^2.*sigma.^2+(sqrt(-1)*(-8)).*2.^(1/2).*k.^5.*omega.* ...
+              sigma.^3+(-3).*k.^6.*sigma.^4);
+        elseif (kappa==3)
+            D(omega) = 1+(-2).*k.^(-2).*(2.*omega.^2+3.*k.^2.*sigma.^2).^(-4).*(8.*k.^2.* ...
+              omega.^6+60.*k.^4.*omega.^4.*sigma.^2+270.*k.^6.*omega.^2.*sigma.^4+( ...
+              sqrt(-1)*(-144)).*6.^(1/2).*k.^7.*omega.*sigma.^5+(-135).*k.^8.* ...
+              sigma.^6); 
+        elseif (kappa==4)
+            D(omega) = 1+(-2).*k.^(-2).*(2.*omega.^2+5.*k.^2.*sigma.^2).^(-5).*(16.*k.^2.* ...
+              omega.^8+224.*k.^4.*omega.^6.*sigma.^2+1400.*k.^6.*omega.^4.*sigma.^4+ ...
+              7000.*k.^8.*omega.^2.*sigma.^6+(sqrt(-1)*(-3200)).*10.^(1/2).*k.^9.* ...
+              omega.*sigma.^7+(-4375).*k.^10.*sigma.^8);
+        else
+            % error statement here
+        end
+
+        % symbolic root finder finds all roots, Y is a complex vector
+        % mu*k is added, applying invariance of dielectric function
+        Y = double(vpasolve(D(omega)==0,omega)) + mu*k;
+
+        gamma = [gamma, imag(Y)];
+        Omega = [Omega, real(Y)];
+    end
+    numSol = length(gamma(:,1));
+
+    % Run to get only unique solutions
+    [gamma, Omega, numSol] = getUnique(gamma, Omega);
+
+    % Run to get only actual solutions (real part is not zero or increasing for large k)
+    [gamma, Omega, numSol] = getActualSol(gamma, Omega, D, paramARR);
+
+    for i = 1:length(paramARR)
+        k = paramARR(i);
+
+        % find the root with the largest imaginary part
+        Y = Omega(:,i)+1i*gamma(:,i);
+        temp = sort(1i*Y,'ComparisonMethod','real');
+        omegaExact(j,i) = -1i*temp(1);
+    end
+end
 
 %% compute solutions using Xie/Weideman algorithm
 
-for i = 1:length(paramARR)
-    k = paramARR(i);
+
+kARR = kARR(randsample(M,M));
+sigmaARR = sigmaARR(randsample(M,M));
+muARRRR = muARR(randsample(M,M));
     
     for j = 1:length(kapARR)
         kappa = kapARR(j);
+        for i=1:M
+            k=kARR(i);
+            sigma=sigmaARR(i);
+            mu=muARR(i);
 
-        % Xie/Weideman algorithm
-        init_guess = Vlasov_1D_linearized_Steve_v4_Kappa(k,sigma,0,kappa) + mu*k;
-        xi_guess_shiftscaled = (init_guess/k-mu)/sigma; % shifted & scaled
-        omegaXieShiftScaled(j,i) = Kappa_Disp_Using_Xie(k*sigma,1,0,kappa,xi_guess_shiftscaled)*sigma*k + mu*k;
+
+            % dielectric functions exported from Wolfram Mathematica (w/ zero mean)
+            if (kappa==2)
+                D(omega) = 1+(-2).*k.^(-2).*(2.*omega.^2+k.^2.*sigma.^2).^(-3).*(4.*k.^2.*omega.^4+ ...
+                  12.*k.^4.*omega.^2.*sigma.^2+(sqrt(-1)*(-8)).*2.^(1/2).*k.^5.*omega.* ...
+                  sigma.^3+(-3).*k.^6.*sigma.^4);
+            elseif (kappa==3)
+                D(omega) = 1+(-2).*k.^(-2).*(2.*omega.^2+3.*k.^2.*sigma.^2).^(-4).*(8.*k.^2.* ...
+                  omega.^6+60.*k.^4.*omega.^4.*sigma.^2+270.*k.^6.*omega.^2.*sigma.^4+( ...
+                  sqrt(-1)*(-144)).*6.^(1/2).*k.^7.*omega.*sigma.^5+(-135).*k.^8.* ...
+                  sigma.^6); 
+            elseif (kappa==4)
+                D(omega) = 1+(-2).*k.^(-2).*(2.*omega.^2+5.*k.^2.*sigma.^2).^(-5).*(16.*k.^2.* ...
+                  omega.^8+224.*k.^4.*omega.^6.*sigma.^2+1400.*k.^6.*omega.^4.*sigma.^4+ ...
+                  7000.*k.^8.*omega.^2.*sigma.^6+(sqrt(-1)*(-3200)).*10.^(1/2).*k.^9.* ...
+                  omega.*sigma.^7+(-4375).*k.^10.*sigma.^8);
+            else
+                % error statement here
+            end
     
-        omegaExact(j,i) = Kappa_exact(k*sigma,kappa,xi_guess_shiftscaled)*sigma*k + mu*k;
-
-        % omegaError(j,i) = abs(real(omegaXieShiftScaled(j,i))-real(omegaExact(j,i)))+1i*(imag(omegaXieShiftScaled(j,i))-imag(omegaExact(j,i)));
-        omegaRelError(j,i) = abs(omegaExact(j,i)-omegaXieShiftScaled(j,i))/abs(omegaExact(j,i));
+            % symbolic root finder finds all roots, Y is a complex vector
+            % mu*k is added, applying invariance of dielectric function
+            Y = double(vpasolve(D(omega)==0,omega)) + mu*k;
+    
+            gamma = [gamma, imag(Y)];
+            Omega = [Omega, real(Y)];
+        end
     end
-   
-end
+        numSol = length(gamma(:,1));
+
+    % Run to get only unique solutions
+    [gamma, Omega, numSol] = getUnique(gamma, Omega);
+
+    % Run to get only actual solutions (real part is not zero or increasing for large k)
+    [gamma, Omega, numSol] = getActualSol(gamma, Omega, D, paramARR);
+
+
+    for j = 1:length(kapARR)
+        kappa = kapARR(j);
+        for i=1:M
+            k=kARR(i);
+            sigma=sigmaARR(i);
+            mu=muARR(i);
+    
+            % Xie/Weideman algorithm
+            init_guess = Vlasov_1D_linearized_Steve_v4_Kappa(k,sigma,0,kappa) + mu*k;
+            xi_guess_shiftscaled = (init_guess/k-mu)/sigma; % shifted & scaled
+            omegaXieShiftScaled(j,i) = Kappa_Disp_Using_Xie(k*sigma,1,0,kappa,xi_guess_shiftscaled)*sigma*k + mu*k;
+        
+            % omegaExact(j,i) = Kappa_exact(k*sigma,kappa,xi_guess_shiftscaled)*sigma*k + mu*k;
+    
+            % omegaError(j,i) = abs(real(omegaXieShiftScaled(j,i))-real(omegaExact(j,i)))+1i*(imag(omegaXieShiftScaled(j,i))-imag(omegaExact(j,i)));
+            omegaRelError(j,i) = abs(omegaExact(j,i)-omegaXieShiftScaled(j,i))/abs(omegaExact(j,i));
+
+        end
+    end
+
 
 
 %% plot figures 
 % % with ideal formatting (as of 1/27/24)
 close all;
 
-% color = {'#dc143c','#cb2888','#9932cc','#6c4ce2','#2f5ada'};%red->blue
-% color = {'#000000','#dc143c','#cb2888','#9932cc','#000000','#6c4ce2','#2f5ada'};
+color = {'#dc143c','#dc3798','#a700f7','#6344fc','#5684ff','#2f5ada'};%red->blue
+color2 = {'#f21642','#e71a4b','#dc1d54','#d2205d','#c82465','#bd276e','#b32a76','#a92d7f','#9e3187','#943490','#7e3ca3','#733fac','#6943b5','#5f46bd','#5549c6','#4a4cce','#404fd7','#3653df','#2247df','#1548e8','#084af0'};
 set(groot,'defaultAxesTickLabelInterpreter','latex');
 set(groot,'defaulttextinterpreter','latex');
 set(groot,'defaultLegendInterpreter','latex');
 
+% error = omegaRelError';
+error = abs(imag(omegaExact)-imag(omegaXieShiftScaled))';
+
+
+plot(kapARR,mean(error),'k-','linewidth',1); hold on
+for j = 1:length(kapARR)
+    plot(kapARR(j),mean(error(:,j)),'*','linewidth',2); 
+end
+    grid on; %ylim([0.025,0.35]); 
+    xlim([1.45,5.15])
+    colororder(color2);
+    xlabel("Kappa Value $(\kappa)$",'FontSize',14);
+    ylabel("Mean Error $\left( |\gamma_{Gauss}-\gamma_{Xie}| \right)$",'FontSize',14)
+    title("Mean Error in Root vs. $\kappa$",'FontSize',16)
+    set(gcf, 'PaperPosition', [0 0 6 4.5]); %Position the plot further to the upper-left conder
+    set(gcf, 'PaperSize', [6 4.5]); % Extends the plot to fill the entire paper
+    saveas(gcf, 'Figs/omegaCompare_smallKapLimit.pdf')
+    saveas(gcf, 'Figs/omegaCompare_smallKapLimit.fig')
+
+
+%%
 figure
 % loglog(paramARR,imag(omegaExact(1,:)),'-','linewidth',2); hold on
 % loglog(paramARR,imag(omegaXieShiftScaled(1,:)),'s','linewidth',2,'MarkerSize',5); 

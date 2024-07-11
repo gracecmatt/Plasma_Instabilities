@@ -13,7 +13,7 @@ function xi = Kappa_Disp_Using_Xie(k, sigma, mu, kappa, init_guess)
     % num2str(kappa,16),'))*(1+v.^2/',num2str(kappa,16),').^(-',num2str(kappa,16),'-1)'];
 
     Fn = 0; % 0 = option to define your own F
-    Nfourier = 900; % number of Fourier coefficients to take
+    Nfourier = 1000; % number of Fourier coefficients to take
     D = @(z) 1-1/k^2*zetaph(z, Fn, F, Nfourier); % dielectric function
     
     %% Solve using initial guess as is

@@ -7,11 +7,11 @@ clear; clc;
 
 N = 80; % number of samples in level curves
 Nparams = 4;
-M = 9; % slope of erf approximation to step function, for spectral code
+% M = 9; % slope of erf approximation to step function, for spectral code
 
 % parameters = [k, sigma, mu, nu]
-baseparams = [0.5; 2; 1; -19];
-txtparams = ["k","\sigma","\mu","\nu"];
+baseparams = [0.5; 1.68; 1; 10];
+txtparams = ["k","\sigma","\mu","v_0"];
 
 % set variations
 var = 0.05; % x 100% variation considered,
@@ -47,9 +47,9 @@ for i = 1:Nparams
             k=params(1);
             sigma=params(2);
             mu=params(3);
-            nu=params(4);
+            v0=params(4);
     
-        init_guess = BohmGross_IMax(k,sigma,0,nu) + mu*k;
+        init_guess = BohmGross_IMax(k,sigma,0,v0) + mu*k;
 %         init_guess = Vlasov_1D_linearized_Steve_v4(k, sigma, 0, nu, M) + mu*k;
 
         xi_guess = init_guess/k;
@@ -57,9 +57,9 @@ for i = 1:Nparams
         xi_guess_shiftscaled = (init_guess/k-mu)/sigma;
 
         omega.init(i,j) = init_guess; 
-        omega.xie(i,j) = IncompleteMax_Disp_Using_Xie(k,sigma,mu,nu,xi_guess)*k;
-        omega.xie_shift(i,j) = IncompleteMax_Disp_Using_Xie(k,sigma,0,(nu-mu),xi_guess_shift)*k + mu*k;
-        omega.xie_shiftscaled(i,j) = IncompleteMax_Disp_Using_Xie(sigma*k,1,0,(nu-mu)/sigma,xi_guess_shiftscaled)*k*sigma + mu*k;
+        omega.xie(i,j) = IncompleteMax_Disp_Using_Xie(k,sigma,mu,v0,xi_guess)*k;
+        omega.xie_shift(i,j) = IncompleteMax_Disp_Using_Xie(k,sigma,0,v0,xi_guess_shift)*k + mu*k;
+        omega.xie_shiftscaled(i,j) = IncompleteMax_Disp_Using_Xie(sigma*k,1,0,v0/sigma,xi_guess_shiftscaled)*k*sigma + mu*k;
         omega.dielectric(i,j) = Max_dielectric([k,sigma,0],xi_guess-mu)*k + mu*k;
     end
 
@@ -80,7 +80,7 @@ errorIm.xie_shiftscaled = abs(imag(omega.dielectric)-imag(omega.xie_shiftscaled)
 
 %% Plot Level Curves and Percent Errors
 close all
-txtbase = string(['$(k,\sigma,\mu,\nu)$=(',num2str(baseparams(1)),...
+txtbase = string(['$(k,\sigma,\mu,v_0)$=(',num2str(baseparams(1)),...
     ',',num2str(baseparams(2)),',',num2str(baseparams(3)),',',num2str(baseparams(4)),')']);
 txtleg1 = {'Bohm-Gross','Xie','Shifted Xie','Shifted & Scaled Xie','Max Dielectric Func.'};
 txtleg2 = {'Bohm-Gross','Xie','Shifted Xie','Shifted & Scaled Xie'};

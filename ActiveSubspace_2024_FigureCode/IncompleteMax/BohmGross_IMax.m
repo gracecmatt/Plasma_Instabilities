@@ -1,11 +1,13 @@
-function omega = BohmGross_IMax(k,sigma,mu,nu)
+function omega = BohmGross_IMax(k,sigma,mu,v0)
 % Maxwellian; approximation works for small k
 
 %     f0 = @(z) 1/sqrt(pi*sigma^2)*exp(-(z-mu).^2/sigma^2);
 %     f0p = @(z) 2.*(z-mu)/sigma^2 .* 1/sqrt(pi*sigma^2).*exp(-(z-mu).^2/sigma^2);
-    f0 = @(z) 2*heaviside(z-nu)/sqrt(pi*sigma^2).*exp(-(z-mu).^2/(sigma^2))/(1+erf(mu-nu)/sigma);
-    f0p = @(z) 2*dirac(z-nu).*exp(-((z-mu)/sigma).^2)/(sqrt(pi*sigma^2)*(1+erf((mu-nu)/sigma))) ...
-        - 4*(z-mu).*heaviside(z-nu).*exp(-((z-mu)/sigma).^2)/(sqrt(pi*sigma^6)*(1+erf((mu-nu)/sigma)));
+    % f0 = @(z) 2*heaviside(z-nu)/sqrt(pi*sigma^2).*exp(-(z-mu).^2/(sigma^2))/(1+erf(mu-nu)/sigma);
+    % f0p = @(z) 2*dirac(z-nu).*exp(-((z-mu)/sigma).^2)/(sqrt(pi*sigma^2)*(1+erf((mu-nu)/sigma))) ...
+    %     - 4*(z-mu).*heaviside(z-nu).*exp(-((z-mu)/sigma).^2)/(sqrt(pi*sigma^6)*(1+erf((mu-nu)/sigma)));
+    f0 = @(z) 2*heaviside(z-(mu-v0))/sqrt(pi*sigma^2).*exp(-(z-mu).^2/sigma^2)/(1+erf(v0/sigma));
+    f0p = @(z) 2*exp(-((z-mu)/sigma).^2)/(sqrt(pi*sigma^2)*(1+erf(v0/sigma))).*( dirac(z-(mu-v0)) - 2*(z-mu)./sigma^2.*heaviside(z-(mu-v0)) );
     
     % REAL PART (Omega)
     C1 = -2*integral(@(v) v.*f0(v),-Inf,Inf); %second moment

@@ -224,7 +224,7 @@ for n = 1:nsteps
             w_RE=(E_PHASE(id_max_finish_w)-E_PHASE(id_max_start_w))/((id_max_finish_w-id_max_start_w)*dt);
 
             w=abs(w_RE)+gamma*1i;
-
+            % 
             % figure(5);
             % semilogy(dt*((0:n-1)+1/2),E_A(1:n),[id_max_finish-1/2 id_max_start-1/2]*dt,[max_finish max_start],'r*'); %.*exp([id_max_finish-1 id_max_start-1]*dt*gamma_true)
             % title(sprintf('E(t=%g)  after %4i time steps with %ix%i grid points    w=%1.8g+%0.8g*i', t,n,N,2*M,real(w),imag(w)))

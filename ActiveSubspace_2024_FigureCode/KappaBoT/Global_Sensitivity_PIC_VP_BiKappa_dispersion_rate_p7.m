@@ -2,9 +2,9 @@ clear; clc;
 rng('shuffle');
 parpool('Processes',12); 
 % Initialize algorithm parameters
-N = 1200;                              %Number of samples for each parameter
+N = 600;                              %Number of samples for each parameter
 h = 1e-6;                                      %Finite difference step size
-kappa = 4;                              % kappa values allowed: kappa > 3/2              
+kappa = 6;                              %kappa values allowed: kappa > 3/2              
 
 % Pre-allocate memory
 Nparams = 7;
@@ -13,7 +13,7 @@ growth_plus = zeros(N,Nparams);               %Perturbed output of interest
 grad_growth = zeros(Nparams,N);             %Gradient of output of interest 
 
 % vals = [k; sigma1; sigma2; mu; v0; beta; kappa];
-setvals = [0.5; 1; 0.38; 1; 4; 0.86; kappa];
+setvals = [0.5; 1; 1.5; 1; 4; 0.9; kappa];
 
 var = 0.05; % x 100% variation considered 
 xl = (1-var)*setvals;
@@ -89,6 +89,8 @@ diff_growth = max(max(grad_growth)) - min(min(grad_growth));
 
 %Save the trial data
 save(['Data/Dispersion_KappaBoT' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N) '_var' int2str(var*100) '_data.mat'])
+
+format long; mean(growth)
 
 %exit
 delete(gcp('nocreate'))

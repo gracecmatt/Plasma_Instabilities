@@ -1,10 +1,11 @@
-close all; clear;clc
+% close all; 
+clear;clc
 rng('shuffle');
 parpool(12);
 % Initialize algorithm parameters
-N = 1200;                              %Number of samples for each parameter
+N = 300;                              %Number of samples for each parameter
 h = 1e-6;                                      %Finite difference step size
-kappa = 6;
+kappa = 20;
 
 % Pre-allocate memory
 Nparams = 4;
@@ -24,10 +25,10 @@ if setvals(3)==0
     xl(3) = -var;
     xu(3) = var;
 end
-if kappa==2 % keep kappa in the far-equilibrium region (Livadiotis & McComas 2013)
+if kappa<2.5 % keep kappa in the far-equilibrium region (Livadiotis & McComas 2013)
     xu(4) = min(xu(4),2.49); % keep kappa < 2.5
-    xl(4) = max(xl(4),1.525); % keep kappa > 1.5
-elseif kappa==4 % keep kappa in the near-equilibrium region
+    xl(4) = max(xl(4),1.55); % keep kappa > 1.5
+elseif kappa>2.5 % keep kappa in the near-equilibrium region
     xl(4) = max(xl(4),2.51); % keep kappa > 2.5
 end
 
@@ -86,6 +87,8 @@ diff_growth = max(max(grad_growth)) - min(min(grad_growth));
    
 % Save the trial data
 save(['Data/Dispersion_Kappa' int2str(kappa) '_P' int2str(Nparams) '_N' int2str(N) '_var' int2str(var*100) '_data.mat'])
+
+format long; mean(growth)
 
 %exit
 delete(gcp('nocreate'))

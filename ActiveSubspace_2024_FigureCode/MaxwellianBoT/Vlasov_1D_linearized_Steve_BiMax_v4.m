@@ -27,7 +27,7 @@
 
 % Output of this function is w = Re[w]+1i*Im[w]
 
-function w = Vlasov_1D_linearized_Steve_BiMax(p)
+function w = Vlasov_1D_linearized_Steve_BiMax_v4(p)
 %close all                  
 
 k=p(1);

@@ -5,16 +5,16 @@
 % spectral code for the initial guess, and the Xie code shifted and scaled
 clear; clc;
 
-N = 50; % number of samples in level curves
+N = 72; % number of samples in level curves
 Nparams = 6;
-kappa = 2; % kappa = 2 or 4
+kappa = 4; % kappa = 2 or 4
 
 % parameters = [k, sigma1, sigma2, mu, v0, beta]
-baseparams = [0.5; 1; 0.7; 0; 4; 0.85];
+baseparams = [0.5; 1; 1; 1; 4; 0.9];
 txtparams = ["k","\sigma_1","\sigma_2","\mu","v_0","\beta"];
 
 % set variations
-var = 0.5; % x 100% variation considered
+var = 0.10; % x 100% variation considered
 xl = (1-var)*baseparams;
 xu = (1+var)*baseparams;
 xu(6) = min(xu(6),0.995); % keep beta < 1
@@ -31,30 +31,34 @@ omega.dielectric = zeros(Nparams,N);
 errorRand.omega = zeros(1,N^2);
 errorRand.spectral = zeros(1,N^2);
 
-% % plot center distribution
-% figure
-% sigma1=baseparams(2);sigma2=baseparams(3);mu=baseparams(4);v0=baseparams(5);beta=baseparams(6);
-% C1=(pi*sigma1^2*(kappa-1.5))^(-1/2)*exp(gammaln(kappa)-gammaln(kappa-0.5));
-% C2=(pi*sigma2^2*(kappa-1.5))^(-1/2)*exp(gammaln(kappa)-gammaln(kappa-0.5));
-% f = @(v) beta*C1*(1+(v-mu).^2/((kappa-1.5)*sigma1^2)).^(-kappa) + ...
-%     (1-beta)*C2*( (1+(v-(mu+v0)).^2/((kappa-1.5)*sigma2^2)).^(-kappa) );
-% plot(linspace(mu-6,mu+6,1000),f(linspace(mu-6,mu+6,1000)),"Linewidth",2); grid on
-%     title('Kappa Bump-on-Tail Distribution','Interpreter','latex','FontSize',14);
-%     xlabel('$v$','Interpreter','latex','FontSize',12);
-%     ylabel('$f(v)$','Interpreter','latex','FontSize',12);
-% pause(0.5) % pause to let figures show up
+% plot center distribution
+figure
+sigma1=baseparams(2);sigma2=baseparams(3);mu=baseparams(4);v0=baseparams(5);beta=baseparams(6);
+C1=(pi*sigma1^2*(kappa-1.5))^(-1/2)*exp(gammaln(kappa)-gammaln(kappa-0.5));
+C2=(pi*sigma2^2*(kappa-1.5))^(-1/2)*exp(gammaln(kappa)-gammaln(kappa-0.5));
+f = @(v) beta*C1*(1+(v-mu).^2/((kappa-1.5)*sigma1^2)).^(-kappa) + ...
+    (1-beta)*C2*( (1+(v-(mu+v0)).^2/((kappa-1.5)*sigma2^2)).^(-kappa) );
+plot(linspace(mu-6,mu+6,1000),f(linspace(mu-6,mu+6,1000)),"Linewidth",2); grid on
+    title('Kappa Bump-on-Tail Distribution','Interpreter','latex','FontSize',14);
+    xlabel('$v$','Interpreter','latex','FontSize',12);
+    ylabel('$f(v)$','Interpreter','latex','FontSize',12);
+pause(0.5) % pause to let figures show up
+close all
 
 %% Run level curves in each parameter
 % initialize parameters to base 
 params = baseparams;
 
 % iterate through each parameter, set its array, and compute level curves
-for i = 1:Nparams
+for i = 5%1:Nparams
     % fix upper/lower bound if base parameter is zero
     if baseparams(i)==0
         xl(i) = -var;
         xu(i) = var;
     end
+    xl(i) = 0;
+    xu(i) = 4.5;
+
     % define parameter array around base using variation
     paramsarr(i,:) = linspace(xl(i),xu(i),N);
 
@@ -76,8 +80,8 @@ for i = 1:Nparams
         xi_guess_shiftscaled = (init_guess/k-mu)/sigma1;
 
         omega.spectral(i,j) = init_guess; 
-        omega.xie(i,j) = KappaBoT_Disp_Using_Xie(k,sigma1,sigma2,mu,v0,beta,kappa,xi_guess)*k;
-        omega.xie_shift(i,j) = KappaBoT_Disp_Using_Xie(k,sigma1,sigma2,0,v0,beta,kappa,xi_guess_shift)*k + mu*k;
+        % omega.xie(i,j) = KappaBoT_Disp_Using_Xie(k,sigma1,sigma2,mu,v0,beta,kappa,xi_guess)*k;
+        % omega.xie_shift(i,j) = KappaBoT_Disp_Using_Xie(k,sigma1,sigma2,0,v0,beta,kappa,xi_guess_shift)*k + mu*k;
         omega.xie_shiftscaled(i,j) = KappaBoT_Disp_Using_Xie(k*sigma1,1,sigma2/sigma1,0,v0/sigma1,beta,kappa,xi_guess_shiftscaled)*sigma1*k + mu*k;
         omega.dielectric(i,j) = KappaBoT_dielectric(k,sigma1,sigma2,0,v0,beta,kappa,init_guess-mu*k)+mu*k;
         % omega.analytic(i,j) = AnalyticApproxKappa(k,sigma1,sigma2,v0,beta,kappa)+mu*k;
@@ -89,14 +93,14 @@ end
 
 % calculate relative error
 errorRe.spectral = abs(real(omega.dielectric)-real(omega.spectral))./abs(real(omega.dielectric));
-errorRe.xie = abs(real(omega.dielectric)-real(omega.xie))./abs(real(omega.dielectric));
-errorRe.xie_shift = abs(real(omega.dielectric)-real(omega.xie_shift))./abs(real(omega.dielectric));
+% errorRe.xie = abs(real(omega.dielectric)-real(omega.xie))./abs(real(omega.dielectric));
+% errorRe.xie_shift = abs(real(omega.dielectric)-real(omega.xie_shift))./abs(real(omega.dielectric));
 errorRe.xie_shiftscaled = abs(real(omega.dielectric)-real(omega.xie_shiftscaled))./abs(real(omega.dielectric));
 % errorRe.analytic = abs(real(omega.dielectric)-real(omega.analytic))./abs(real(omega.dielectric));
 
 errorIm.spectral = abs(imag(omega.dielectric)-imag(omega.spectral))./abs(imag(omega.dielectric));
-errorIm.xie = abs(imag(omega.dielectric)-imag(omega.xie))./abs(imag(omega.dielectric));
-errorIm.xie_shift = abs(imag(omega.dielectric)-imag(omega.xie_shift))./abs(imag(omega.dielectric));
+% errorIm.xie = abs(imag(omega.dielectric)-imag(omega.xie))./abs(imag(omega.dielectric));
+% errorIm.xie_shift = abs(imag(omega.dielectric)-imag(omega.xie_shift))./abs(imag(omega.dielectric));
 errorIm.xie_shiftscaled = abs(imag(omega.dielectric)-imag(omega.xie_shiftscaled))./abs(imag(omega.dielectric));
 % errorIm.analytic = abs(imag(omega.dielectric)-imag(omega.analytic))./abs(imag(omega.dielectric));
 
@@ -105,53 +109,68 @@ close all
 txtbase = string(['$(k,\sigma_1,\sigma_2,\mu,v_0,\beta)$=(',num2str(baseparams(1)),...
     ',',num2str(baseparams(2)),',',num2str(baseparams(3)),',',num2str(baseparams(4)),...
     ',',num2str(baseparams(5)),',',num2str(baseparams(6)),')']);
-txtleg1 = {'Spectral','Xie','Shifted Xie','Shifted & Scaled Xie','Dielectric Func.'};
+% txtleg1 = {'Spectral','Xie','Shifted Xie','Shifted & Scaled Xie','Dielectric Func.'};
+txtleg1 = {'Spectral','Xie','Dielectric Func.'};
 txtleg2 = {'Spectral','Xie','Shifted Xie','Shifted & Scaled Xie'};
 
 % if kappa ==2; color = '#dc143c'; else; color = '#2f5ada'; end
-colorSet = {'#dc143c','#cb2888','#9932cc','#6c4ce2','#2f5ada'};%red->blue
+% colorSet = {'#dc143c','#cb2888','#9932cc','#6c4ce2','#2f5ada'};%red->blue
 
 
 % plot the level curves
-fig1 = figure; tiledlayout(3,2);
-for i=1:Nparams
+fig1 = figure;% tiledlayout(3,2);
+tiledlayout(1,2)
+for i=5%1:Nparams
     nexttile
-    plot(paramsarr(i,:), imag(omega.spectral(i,:)),'.-'); hold on
-    plot(paramsarr(i,:), imag(omega.xie(i,:)),'.-');
-    plot(paramsarr(i,:), imag(omega.xie_shift(i,:)),'.-');
-    plot(paramsarr(i,:), imag(omega.xie_shiftscaled(i,:)),'.-');
-    plot(paramsarr(i,:), imag(omega.dielectric(i,:)),'k');
+    plot(paramsarr(i,:), imag(omega.spectral(i,:)),'.-','linewidth',1.5); hold on
+    % plot(paramsarr(i,:), imag(omega.xie(i,:)),'.-');
+    % plot(paramsarr(i,:), imag(omega.xie_shift(i,:)),'.-');
+    plot(paramsarr(i,:), imag(omega.xie_shiftscaled(i,:)),'.-','linewidth',1.5);
+    plot(paramsarr(i,:), imag(omega.dielectric(i,:)),':k','linewidth',1.5);
     % plot(paramsarr(i,:), imag(omega.analytic(i,:)),'.-');
-        title('$\gamma('+txtparams(i)+')$ Level Curves','Interpreter','latex','FontSize',14);
+        title('$\gamma('+txtparams(i)+')$ $(\kappa='+kappa+')$','Interpreter','latex','FontSize',14);
         xlabel('$'+txtparams(i)+'$','Interpreter','latex','FontSize',12);
         ylabel('$\gamma('+txtparams(i)+')$','Interpreter','latex','FontSize',12);
         xlim([paramsarr(i,1),paramsarr(i,end)]);
-        colororder(colorSet);
+        grid on; ylim([-0.1,0.15])
+        % colororder(colorSet);
 end
-    leg = legend(txtleg1,'Orientation','Horizontal','FontSize',8);
-    leg.Layout.Tile = 'north';
-    txt = 'Kappa Bump-on-Tail $\gamma(p)$ around';
-    sgtitle({txt,txtbase},'Interpreter','latex','FontSize',16);
+    % leg = legend(txtleg1,'Orientation','Horizontal','FontSize',8);
+    % leg.Layout.Tile = 'north';
+    % txt = 'Kappa Bump-on-Tail $\gamma(p)$ around';
+    % sgtitle({txt,txtbase},'Interpreter','latex','FontSize',16);
 
-fig2 = figure; tiledlayout(3,2);
-for i=1:Nparams
+% fig2 = figure; % tiledlayout(3,2);
+% tiledlayout(1,1)
+for i=5%1:Nparams
     nexttile
-    plot(paramsarr(i,:), real(omega.spectral(i,:)),'.-'); hold on
-    plot(paramsarr(i,:), real(omega.xie(i,:)),'.-');
-    plot(paramsarr(i,:), real(omega.xie_shift(i,:)),'.-');
-    plot(paramsarr(i,:), real(omega.xie_shiftscaled(i,:)),'.-');
-    plot(paramsarr(i,:), real(omega.dielectric(i,:)),'k');
+    plot(paramsarr(i,:), real(omega.spectral(i,:)),'.-','linewidth',1.5); hold on
+    % plot(paramsarr(i,:), real(omega.xie(i,:)),'.-');
+    % plot(paramsarr(i,:), real(omega.xie_shift(i,:)),'.-');
+    plot(paramsarr(i,:), real(omega.xie_shiftscaled(i,:)),'.-','linewidth',1.5);
+    plot(paramsarr(i,:), real(omega.dielectric(i,:)),':k','linewidth',1.5);
     % plot(paramsarr(i,:), real(omega.analytic(i,:)),'.-');
-        title('$\Omega('+txtparams(i)+')$ Level Curves','Interpreter','latex','FontSize',14);
+        title('$\Omega('+txtparams(i)+')$','Interpreter','latex','FontSize',14);
         xlabel('$'+txtparams(i)+'$','Interpreter','latex','FontSize',12);
         ylabel('$\Omega('+txtparams(i)+')$','Interpreter','latex','FontSize',12);
         xlim([paramsarr(i,1),paramsarr(i,end)]);
-        colororder(colorSet);
+        grid on
+        % colororder(colorSet);
 end
     leg = legend(txtleg1,'Orientation','Horizontal','FontSize',8);
     leg.Layout.Tile = 'north';
-    txt = 'Kappa Bump-on-Tail $\Omega(p)$ around';
-    sgtitle({txt,txtbase},'Interpreter','latex','FontSize',16);
+    txtbase = string(['\textbf{$(k,\sigma_1,\sigma_2,\mu,\beta)$=(',num2str(baseparams(1)),...
+    ',',num2str(baseparams(2)),',',num2str(baseparams(3)),',',num2str(baseparams(4)),...
+    ',',num2str(baseparams(6)),')}']);
+    txt = '\textbf{Kappa Bump-on-Tail Level Curves using }' + txtbase;
+    % txt = 'Kappa Bump-on-Tail $\Omega(p)$ around';
+    % sgtitle({txt,txtbase},'Interpreter','latex','FontSize',16);
+    sgtitle(txt,'Interpreter','latex','FontSize',16);
+    set(gcf, 'PaperPosition', [0 0 9 4]); %Position the plot further to the upper-left conder
+    set(gcf, 'PaperSize', [9 4]); % Extends the plot to fill the entire paper
+    saveas(gcf, ['KapBoT4_LevelCurves_v0.svg'])
+    saveas(gcf, ['KapBoT4_LevelCurves_v0.fig'])
+g=2;
 
 % plot the percent error
 fig3 = figure; tiledlayout(3,2);

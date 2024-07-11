@@ -2,7 +2,7 @@ clear; clc
 rng('shuffle');
 parpool(12);
 % Initialize algorithm parameters
-N = 1200;            %Number of samples for each parameter
+N = 400;            %Number of samples for each parameter
 h = 1e-6;           %Finite difference step size
 
 % Pre-allocate memory
@@ -11,10 +11,10 @@ growth = zeros(N,1);                      %Output of interest (growth rate)
 growth_plus = zeros(N,Nparams);               %Perturbed output of interest
 grad_growth = zeros(Nparams,N);             %Gradient of output of interest                 
 
-% vals = [k, sigma, mu, nu]
-setvals = [0.5; 1; 0; -1];
+% vals = [k, sigma, mu, v0]
+setvals = [0.5; 1; 1; 4];
 
-var = 0.5; % x 100% variation considered
+var = 0.25; % x 100% variation considered
 xl = (1-var)*setvals;
 xu = (1+var)*setvals;
 
@@ -36,7 +36,7 @@ parfor jj = 1:N
     init_guess = BohmGross_IMax(params(1),params(2),0,params(4));
     xi_guess = init_guess/(params(2)*params(1)); % shifted & scaled
     
-    omega = IncompleteMax_Disp_Using_Xie(params(1)*params(2),1,0,(params(4)-params(3))/params(2),xi_guess)*params(2)*params(1);
+    omega = IncompleteMax_Disp_Using_Xie(params(1)*params(2),1,0,params(4)/params(2),xi_guess)*params(2)*params(1);
     growth(jj) = imag(omega);
 end
 
@@ -51,7 +51,7 @@ parfor jj = 1:N
         init_guess_plus = BohmGross_IMax(paramsplus(1),paramsplus(2),0,paramsplus(4));
         xi_guess_plus = init_guess_plus/(paramsplus(2)*paramsplus(1)); % shifted & scaled
 
-        omega_plus = IncompleteMax_Disp_Using_Xie(paramsplus(1)*paramsplus(2),1,0,(paramsplus(4)-paramsplus(3))/paramsplus(2),xi_guess_plus)*paramsplus(2)*paramsplus(1);
+        omega_plus = IncompleteMax_Disp_Using_Xie(paramsplus(1)*paramsplus(2),1,0,paramsplus(4)/paramsplus(2),xi_guess_plus)*paramsplus(2)*paramsplus(1);
         growth_plus(jj,kk) = imag(omega_plus);
     end
 end
@@ -78,7 +78,7 @@ eta(2) = (evalues(1)+evalues(2))/sum(evalues);
 diff_growth = max(max(grad_growth)) - min(min(grad_growth));
 
 %Save the trial data
-save(['Data/Dispersion_IncompleteMax_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '_data.mat'])
+% save(['Data/Dispersion_IncompleteMax_P' int2str(Nparams) '_N' int2str(N) '_var' num2str(var*100) '_data.mat'])
 
 % exit
 delete(gcp('nocreate'))

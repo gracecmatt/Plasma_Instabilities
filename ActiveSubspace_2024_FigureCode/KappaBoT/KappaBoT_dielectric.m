@@ -23,5 +23,12 @@ function omega = KappaBoT_dielectric(k,sigma1,sigma2,mu,v0,beta,kappa,init_guess
     end
 
     options = optimoptions('fsolve','Display','off');
-    omega = fsolve(D, init_guess, options);
+    % omega = fsolve(D, init_guess, options);
+    omega1 = fsolve(D, init_guess, options);
+    omega2 = fsolve(D, -real(init_guess)+1i*imag(init_guess), options);
+    if imag(omega1)>imag(omega2)
+        omega = omega1;
+    else
+        omega = omega2;
+    end
 end

@@ -5,13 +5,13 @@ clear; clc;
 % M (spectral) = 2^10
 % Vmax (spectral) = 140
 
-N = 40;
+N = 60;
 kARR = linspace(0.25,2,N); % k array
-sigARR = linspace(0.5,4,N); % sigma array
+sigARR = linspace(0.25,4,N); % sigma array
 
 errorXieIM = zeros(N,N); % relative error of imaginary part of root
 
-mu = 10; % mean velocity
+mu = 1; % mean velocity
 
 for i = 1:N % iterate through k array,
     k = kARR(i);
@@ -26,11 +26,13 @@ for i = 1:N % iterate through k array,
         omegaXieShiftScaled =  Lorentzian_Disp_Using_Xie(k*sigma,1,0,xi_guess_shiftscaled)*sigma*k + mu*k;
     
         errorXieIM(i,j) = abs(imag(exact)-imag(omegaXieShiftScaled))./abs(imag(exact));
-        if errorXieIM(i,j) == 0; errorXieIM(i,j) = 10^(-16); end
+        if errorXieIM(i,j) == 0; errorXieIM(i,j) = 10^(-18); end
     end
 end
 
 %%
-mean(errorXieIM,"all")
-std(errorXieIM,0,"all")
-max(errorXieIM,[],"all")
+Err_mean = mean(errorXieIM,"all")
+Err_std = std(errorXieIM,0,"all")
+Err_max = max(errorXieIM,[],"all")
+
+save('ErrorData.mat')

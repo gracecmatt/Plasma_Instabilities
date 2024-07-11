@@ -1,4 +1,4 @@
-function [Zp]=zetaph_IMax(z,Fn,F,N,mu,sigma,nu)
+function [Zp]=zetaph_IMax(z,Fn,F,N,mu,sigma,v0)
 % Hua-sheng XIE, huashengxie@gmail.com, IFTS-ZJU, 2013-05-26 23:37
 % Calculate GPDF, Generalized Plasma Dispersion Function, see [Xie2013]
 % 
@@ -57,12 +57,12 @@ function [Zp]=zetaph_IMax(z,Fn,F,N,mu,sigma,nu)
 %        Z=calZ(z,F,N);
 %        Zp=calZ(z,Fp,N);
     elseif(Fn==5) % incomplete Maxwellian distribution
-       F=['2.*heaviside(v-',num2str(nu,16),')./sqrt(pi*',num2str(sigma,16),'^2).*exp(-(v-',num2str(mu,16),').^2/(',num2str(sigma,16),'^2))./(1+erf(',num2str(mu,16),'-',num2str(nu,16),')./',num2str(sigma,16),'))'];
-       Fp=['heaviside(abs(v)-',num2str(nu,16),').*-2.*(v-',num2str(mu,16),').*exp(-(v-',num2str(mu,16),').^2/',num2str(sigma,16),'^2)/sqrt(pi*',num2str(sigma,16),'^2)'];
+       F=['2.*heaviside(v-',num2str(mu-v0,16),')./sqrt(pi*',num2str(sigma,16),'^2).*exp(-(v-',num2str(mu,16),').^2/(',num2str(sigma,16),'^2))./(1+erf(',num2str(v0,16),'./',num2str(sigma,16),'))'];
+       Fp=['heaviside(abs(v)-',num2str(mu-v0,16),').*-2.*(v-',num2str(mu,16),')./(',num2str(sigma,16),'^2).*exp(-(v-',num2str(mu,16),').^2/',num2str(sigma,16),'^2)'];
        % [Fp,F]=calFp(F);
        % Z=calZ(z,F,N);
        Zp=calZ(z,Fp,N);
-       Zp=Zp-exp(-(nu-mu).^2)./sqrt(pi*sigma^2)./(z-nu); % with correction ???????????????????????????
+       Zp=(Zp - exp(-v0.^2./sigma^2)./(z-(mu-v0)) ) / (sqrt(pi*sigma^2)*1/2*(1+erf(v0/sigma))); % with correction
 %     elseif(Fn==6) % slowing down
 %        % using heaviside() instead of abs() to support complex v in F(v) 
 %        vt=1.0; vc=4;
@@ -83,7 +83,7 @@ function [Zp]=zetaph_IMax(z,Fn,F,N,mu,sigma,nu)
 %        Zp=calZ(z,Fp,N);
 %        Zp=Zp+3*sqrt(3)*vt^2/(4*pi)/(vc^3+vt^3).*(1./(z-vc)-...
 %            1./(z+vc)); % with correction
-    elseif(Fn==0) % for arbitrary analytical input function F ***********************************
+    elseif(Fn==0) % for arbitrary analytical input function F 
        [Fp,F]=calFp(F);
        Z=calZ(z,F,N);
        Zp=calZ(z,Fp,N);
